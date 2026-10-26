@@ -10,32 +10,46 @@
 <link rel="icon" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect width="32" height="32" rx="7" fill="%230c0e11"/><text x="16" y="22" font-family="ui-monospace,Menlo,monospace" font-size="17" font-weight="700" fill="%23ffb454" text-anchor="middle">R</text></svg>'>
 <style>
   :root{
-    --bg:#0c0e11; --ink:#e9e7e2; --dim:#98a1ab; --line:#1d2229; --accent:#ffb454; --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+    --bg:#0c0e11; --ink:#e9e7e2; --dim:#98a1ab; --line:#1d2229; --accent:#ffb454;
+    --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
   }
   *{box-sizing:border-box}
   html{color-scheme:dark}
   body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.65 ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased}
-  main{max-width:46rem;margin:0 auto;padding:3rem 1.25rem 4rem}
+  main{max-width:48rem;margin:0 auto;padding:3rem 1.25rem 4rem}
   a{color:var(--ink)}
   .top{display:flex;gap:.6rem;flex-wrap:wrap;align-items:center;margin-bottom:3.5rem}
-  .chip{font:600 .72rem/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--dim);border:1px solid var(--line);border-radius:999px;padding:.5rem .75rem}
+  .chip{font:600 .72rem/1.1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--dim);border:1px solid var(--line);border-radius:999px;padding:.5rem .75rem}
   .chip.live{border-color:color-mix(in srgb,var(--accent) 45%,transparent);color:var(--accent)}
   a.chip:hover{color:var(--accent);text-decoration:none}
   h1{font-size:clamp(3.6rem,11vw,6.5rem);line-height:1;letter-spacing:-.045em;margin:0}
-  .tag{font:500 1.05rem/1.6 var(--mono);color:var(--accent);margin:.4rem 0 2.2rem}
-  .lede{font-size:clamp(1.15rem,2.4vw,1.35rem);line-height:1.6;color:var(--ink);max-width:36rem;margin:0 0 2.8rem}
-  .lede strong{color:var(--ink);font-weight:650;box-shadow:inset 0 -1px var(--line)}
+  .dict{font:.85rem/1.5 var(--mono);color:var(--dim);margin:.55rem 0 .5rem}
+  .tag{font:500 1.05rem/1.6 var(--mono);color:var(--accent);margin:0 0 1.9rem}
+  .lede{font-size:clamp(1.15rem,2.4vw,1.35rem);line-height:1.6;max-width:37rem;margin:0 0 1.6rem}
+  .lede strong{font-weight:650;box-shadow:inset 0 -1px var(--line)}
+  .proof{display:flex;gap:.55rem;flex-wrap:wrap;margin:0 0 3.2rem}
+  .proof span{font:600 .72rem/1.2 var(--mono);color:var(--ink);border:1px solid var(--line);border-radius:8px;padding:.55rem .7rem;background:#0f1216}
+  .proof b{color:var(--accent);font-weight:700}
+  section{margin:0 0 3.6rem}
+  h2.sec{font:600 .75rem/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--dim);margin:0 0 1.1rem}
+  p.body{color:var(--dim);max-width:40rem;margin:0}
+  p.body b{color:var(--ink);font-weight:600}
+  p.body code,li code{font:.85em var(--mono);color:var(--ink);background:#0f1216;border:1px solid var(--line);border-radius:6px;padding:.1em .35em}
   .cap{font:600 .68rem/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--dim);margin:0 0 .6rem}
-  pre.manifest{background:#0f1216;border:1px solid var(--line);border-radius:12px;padding:1.1rem 1.25rem;overflow-x:auto;font:.82rem/1.7 var(--mono);color:var(--ink);margin:0 0 3.6rem}
-  .k{color:var(--accent)} .s{color:#8fd6a4} .p{color:var(--dim)}
-  .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:1.8rem;border-top:1px solid var(--line);padding-top:2.4rem}
-  .lbl{font:700 .78rem/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin:.2rem 0 .7rem}
-  .steps p{color:var(--dim);font-size:.95rem;margin:0}
-  .steps p b{color:var(--ink);font-weight:550}
+  pre.manifest{background:#0f1216;border:1px solid var(--line);border-radius:12px;padding:1.1rem 1.25rem;overflow-x:auto;font:.82rem/1.7 var(--mono);margin:0 0 .5rem}
+  .k{color:var(--accent)} .s{color:#8fd6a4}
+  svg{display:block;width:100%;height:auto}
+  .status{font:.78rem/1.7 var(--mono);color:var(--dim);margin:.8rem 0 0}
+  .status b{color:var(--accent);font-weight:700}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem}
+  .card{border:1px solid var(--line);border-radius:12px;padding:1.1rem 1.2rem;background:#0f1216}
+  .card h3{font:700 .78rem/1.3 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin:0 0 .6rem}
+  .card p{color:var(--dim);font-size:.92rem;margin:0}
+  .card p b{color:var(--ink);font-weight:600}
   footer{border-top:1px solid var(--line);margin-top:4rem;padding-top:1.4rem;color:var(--dim);font-size:.9rem}
   footer code{font:600 .85rem var(--mono);color:var(--ink)}
   footer a{color:var(--dim);text-decoration-color:var(--line)} footer a:hover{color:var(--accent)}
-  @media(max-width:640px){.steps{grid-template-columns:1fr;gap:1.3rem}main{padding-top:2.2rem}}
+  @media(max-width:640px){.grid2{grid-template-columns:1fr}main{padding-top:2.2rem}}
 </style>
 </head>
 <body>
@@ -46,6 +60,7 @@
   </div>
 
   <h1>Remit</h1>
+  <p class="dict">remit · rɪˈmɪt · <b style="color:var(--ink)">n.</b> — the scope of someone's authority.</p>
   <p class="tag">least privilege for agent skills</p>
 
   <p class="lede">
@@ -54,8 +69,20 @@
     and <strong>dies everywhere within a day</strong> if it turns bad.
   </p>
 
-  <p class="cap">what one skill declares · illustrative</p>
-<pre class="manifest">{
+  <div class="proof">
+    <span><b>static</b> — ≈20 high-signal rules</span>
+    <span><b>canary</b> — every skill runs boxed</span>
+    <span><b>revoke</b> — signed feed, daily sync</span>
+  </div>
+
+  <section>
+    <h2 class="sec">the state of skills today</h2>
+    <p class="body">Today a skill vouches for itself: <b>a description in prose</b>, some stars, maybe a README skim. Nothing runs it in a box before your agent loads it. Nothing watches what it does after. And nothing revokes it when a maintainer turns hostile at&nbsp;2am — so <b>install a stranger's skill and pray</b>. The same "summarize notes" skill can ship <code>"curl … | sh"</code> or quietly read <code>~/.ssh</code>: our detection corpus keeps specimens of exactly that, and they fool a human skim.</p>
+  </section>
+
+  <section>
+    <p class="cap">what one skill declares · illustrative</p>
+<pre class="manifest"><span class="k">{</span>
   <span class="k">"name"</span>: <span class="s">"summarize-notes"</span>,
   <span class="k">"remit"</span>: {
     <span class="k">"read"</span>:    [<span class="s">"~/Documents/notes/**"</span>],
@@ -65,24 +92,106 @@
   },
   <span class="k">"proof"</span>: <span class="s">"static scan clean · canary 0 outbound · sha 9f8e…"</span>
 }</pre>
+  </section>
 
-  <section class="steps">
-    <div>
-      <h2 class="lbl">01 · declare</h2>
-      <p>Each skill ships a <b>remit</b> — the narrow scope it may act in. No remit, no trust: the description alone is marketing.</p>
+  <section>
+    <h2 class="sec">the loop — sources to kill-switch</h2>
+    <svg viewBox="0 0 940 380" role="img" aria-label="Remit pipeline: sources flow into ingest, then static scan, declared remit and a canary sandbox all feed a score; allow installs lockfile-pinned; runtime is watched live and a signed feed kills revoked skills within a day">
+      <defs>
+        <marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#5a626d"/></marker>
+        <marker id="ahA" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#ffb454"/></marker>
+      </defs>
+      <g font-family="ui-monospace,Menlo,Consolas,monospace" font-size="11">
+        <!-- boxes -->
+        <rect x="16" y="36" width="136" height="112" rx="10" fill="#0f1216" stroke="#1d2229"/>
+        <text x="84" y="57" text-anchor="middle" fill="#e9e7e2" font-weight="700">SOURCES</text>
+        <text x="84" y="77" text-anchor="middle" fill="#98a1ab" font-size="9">skills.sh index</text>
+        <text x="84" y="91" text-anchor="middle" fill="#98a1ab" font-size="9">GitHub repos</text>
+        <text x="84" y="105" text-anchor="middle" fill="#98a1ab" font-size="9">agent dirs (4)</text>
+        <text x="84" y="119" text-anchor="middle" fill="#98a1ab" font-size="9">skillctl create</text>
+
+        <rect x="192" y="36" width="104" height="112" rx="10" fill="#0f1216" stroke="#1d2229"/>
+        <text x="244" y="57" text-anchor="middle" fill="#e9e7e2" font-weight="700">INGEST</text>
+        <text x="244" y="77" text-anchor="middle" fill="#98a1ab" font-size="9">SKILL.md</text>
+        <text x="244" y="91" text-anchor="middle" fill="#98a1ab" font-size="9">scripts</text>
+        <text x="244" y="105" text-anchor="middle" fill="#98a1ab" font-size="9">metadata</text>
+        <text x="244" y="119" text-anchor="middle" fill="#98a1ab" font-size="9">sha256</text>
+
+        <rect x="318" y="36" width="140" height="44" rx="10" fill="#0f1216" stroke="#1d2229"/>
+        <text x="388" y="55" text-anchor="middle" fill="#e9e7e2" font-weight="700">STATIC SCAN</text>
+        <text x="388" y="70" text-anchor="middle" fill="#98a1ab" font-size="9">≈20 high-signal rules</text>
+
+        <rect x="318" y="88" width="140" height="44" rx="10" fill="#0f1216" stroke="#1d2229"/>
+        <text x="388" y="107" text-anchor="middle" fill="#e9e7e2" font-weight="700">DECLARED REMIT</text>
+        <text x="388" y="122" text-anchor="middle" fill="#98a1ab" font-size="9">read · write · net · exec</text>
+
+        <rect x="318" y="150" width="140" height="52" rx="10" fill="#0f1216" stroke="#1d2229"/>
+        <text x="388" y="170" text-anchor="middle" fill="#e9e7e2" font-weight="700">CANARY SANDBOX</text>
+        <text x="388" y="185" text-anchor="middle" fill="#98a1ab" font-size="9">disposable · fake secrets</text>
+        <text x="388" y="197" text-anchor="middle" fill="#98a1ab" font-size="9">strace · network proxy</text>
+
+        <rect x="524" y="94" width="160" height="88" rx="10" fill="#0f1216" stroke="#ffb454"/>
+        <text x="604" y="118" text-anchor="middle" fill="#e9e7e2" font-weight="700">SCORE</text>
+        <text x="604" y="134" text-anchor="middle" fill="#98a1ab" font-size="9">findings vs declared remit</text>
+        <text x="604" y="147" text-anchor="middle" fill="#98a1ab" font-size="9">coverage · confidence</text>
+        <text x="604" y="170" text-anchor="middle" fill="#ffb454" font-size="10" font-weight="700">allow · review · deny</text>
+
+        <rect x="724" y="94" width="150" height="54" rx="10" fill="#0f1216" stroke="#1d2229"/>
+        <text x="799" y="116" text-anchor="middle" fill="#e9e7e2" font-weight="700">INSTALL</text>
+        <text x="799" y="134" text-anchor="middle" fill="#98a1ab" font-size="9">gated · lockfile sha256</text>
+
+        <rect x="724" y="196" width="200" height="56" rx="10" fill="#0f1216" stroke="#1d2229"/>
+        <text x="824" y="219" text-anchor="middle" fill="#e9e7e2" font-weight="700">RUNTIME</text>
+        <text x="824" y="234" text-anchor="middle" fill="#98a1ab" font-size="9">MCP router · load on demand</text>
+        <text x="824" y="246" text-anchor="middle" fill="#98a1ab" font-size="9">hook-guard · update diffs</text>
+
+        <rect x="724" y="304" width="200" height="56" rx="10" fill="#0f1216" stroke="#ffb454"/>
+        <text x="824" y="328" text-anchor="middle" fill="#ffb454" font-weight="700">SIGNED FEED</text>
+        <text x="824" y="344" text-anchor="middle" fill="#98a1ab" font-size="9">Ed25519 · daily sync</text>
+
+        <!-- arrows -->
+        <path d="M152,92 H189" stroke="#5a626d" fill="none" marker-end="url(#ah)"/>
+        <path d="M296,58 H315" stroke="#5a626d" fill="none" marker-end="url(#ah)"/>
+        <path d="M296,110 H315" stroke="#5a626d" fill="none" marker-end="url(#ah)"/>
+        <path d="M296,144 H308 V176 H315" stroke="#5a626d" fill="none" marker-end="url(#ah)"/>
+        <path d="M458,58 H500 V102 H521" stroke="#5a626d" fill="none" marker-end="url(#ah)"/>
+        <path d="M458,110 H510 V130 H521" stroke="#5a626d" fill="none" marker-end="url(#ah)"/>
+        <path d="M458,176 H510 V158 H521" stroke="#5a626d" fill="none" marker-end="url(#ah)"/>
+        <path d="M684,120 H721" stroke="#5a626d" fill="none" marker-end="url(#ah)"/>
+        <path d="M799,148 V193" stroke="#5a626d" fill="none" marker-end="url(#ah)"/>
+        <path d="M824,304 V255" stroke="#ffb454" fill="none" marker-end="url(#ahA)"/>
+
+        <!-- captions -->
+        <text x="524" y="200" fill="#98a1ab" font-size="9">review / deny → park + evidence receipt</text>
+        <text x="708" y="328" text-anchor="end" fill="#98a1ab" font-size="9">revoked digest → dead everywhere ≤ 1 day ·</text>
+        <text x="708" y="341" text-anchor="end" fill="#98a1ab" font-size="9">remit-home copies removed · user files parked</text>
+      </g>
+    </svg>
+    <p class="status"><b>shipped:</b> static scan · canary receipts · signed feed + daily-sync kill · MCP router · hook-guard (observe) · lockfile rug-pull alerts · fleet dashboard 　<b>in flight:</b> install-gating on every path · sandbox network hardening</p>
+  </section>
+
+  <section>
+    <h2 class="sec">how existing skills are handled</h2>
+    <div class="grid2">
+      <div class="card"><h3>your current fleet</h3><p>Point <code>skillctl audit</code> at the skill dirs your agents already use — Claude Code, Codex, Cursor and friends. Every skill gets findings plus a canary diff, not a hunch. <b>Measured on one real machine:</b> 123 skills across 4 agent dirs, 114 duplicate registrations found and collapsed.</p></div>
+      <div class="card"><h3>new installs</h3><p>Marketplace search (skills.sh + GitHub) funnels installs through one gate: <b>clone → scan → policy → digest</b> — before files ever land. Gating is being extended to every install path, honestly tracked in the repo.</p></div>
+      <div class="card"><h3>updates & rug-pulls</h3><p>A lockfile pins every skill's <b>sha256</b>. If a maintainer re-publishes a skill you installed, update time runs a semantic diff — changed behavior is flagged, never silently adopted.</p></div>
+      <div class="card"><h3>running & revocation</h3><p>The MCP router loads skills on demand — <b>~150 tokens vs 15,238</b> of eager context on one real machine. <code>hook-guard</code> watches live sessions against network allow-lists, and the Ed25519 feed syncs daily: revoked skills are killed; hand-installed copies get parked with a removal note, never silently touched.</p></div>
     </div>
-    <div>
-      <h2 class="lbl">02 · prove</h2>
-      <p>Before it loads, the skill detonates in a <b>disposable canary sandbox</b>. You see observed behavior against the declared scope — static findings plus runtime diff — before install.</p>
-    </div>
-    <div>
-      <h2 class="lbl">03 · die</h2>
-      <p>A <b>signed revocation feed</b> with daily sync means a skill that turns bad is dead on every machine within a day.</p>
+  </section>
+
+  <section>
+    <h2 class="sec">why this is different</h2>
+    <div class="grid2">
+      <div class="card"><h3>neutral measurement layer</h3><p>Not a marketplace with inventory to protect. Not an agent selling you its own skills. Remit is the <b>evidence layer</b> on top of whatever supply chain your agent already uses.</p></div>
+      <div class="card"><h3>verdicts with receipts</h3><p>Every verdict ships as an <b>evidence scorecard</b>: the rule hits, the canary diff, the pinned sha256, the signature. You can re-run the proof yourself — trust is verifiable, not vibes.</p></div>
+      <div class="card"><h3>revocation with a deadline</h3><p>Security without a kill switch is theater. The signed feed gives every install a clock: <b>dead everywhere within a day</b>, herd-wide.</p></div>
+      <div class="card"><h3>local-first, runs anywhere</h3><p>Index, scanner and sandbox detonations run on your machine; the fleet API self-hosts or embeds. <b>No cloud round-trip needed for a trust decision</b> — and works offline.</p></div>
     </div>
   </section>
 
   <footer>
-    <p>built by <a href="https://github.com/remitlabs">remitlabs</a> · cli: <code>skillctl</code> · docs in the repo</p>
+    <p>built by <a href="https://github.com/remitlabs">remitlabs</a> · cli: <code>skillctl</code> · every claim above is verifiable in the repo</p>
   </footer>
 </main>
 </body>
