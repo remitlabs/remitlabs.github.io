@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Remit — least privilege for agent skills</title>
+<meta name="description" content="Every AI-agent skill declares what it may do, proves it in a sandbox before install, and dies everywhere within a day if it turns bad.">
+<meta property="og:title" content="Remit — least privilege for agent skills">
+<meta property="og:description" content="Every AI-agent skill declares what it may do, proves it in a sandbox before install, and dies everywhere within a day if it turns bad.">
+<link rel="icon" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect width="32" height="32" rx="7" fill="%230c0e11"/><text x="16" y="22" font-family="ui-monospace,Menlo,monospace" font-size="17" font-weight="700" fill="%23ffb454" text-anchor="middle">R</text></svg>'>
+<style>
+  :root{
+    --bg:#0c0e11; --ink:#e9e7e2; --dim:#98a1ab; --line:#1d2229; --accent:#ffb454; --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  }
+  *{box-sizing:border-box}
+  html{color-scheme:dark}
+  body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.65 ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased}
+  main{max-width:46rem;margin:0 auto;padding:3rem 1.25rem 4rem}
+  a{color:var(--ink)}
+  .top{display:flex;gap:.6rem;flex-wrap:wrap;align-items:center;margin-bottom:3.5rem}
+  .chip{font:600 .72rem/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--dim);border:1px solid var(--line);border-radius:999px;padding:.5rem .75rem}
+  .chip.live{border-color:color-mix(in srgb,var(--accent) 45%,transparent);color:var(--accent)}
+  a.chip:hover{color:var(--accent);text-decoration:none}
+  h1{font-size:clamp(3.6rem,11vw,6.5rem);line-height:1;letter-spacing:-.045em;margin:0}
+  .tag{font:500 1.05rem/1.6 var(--mono);color:var(--accent);margin:.4rem 0 2.2rem}
+  .lede{font-size:clamp(1.15rem,2.4vw,1.35rem);line-height:1.6;color:var(--ink);max-width:36rem;margin:0 0 2.8rem}
+  .lede strong{color:var(--ink);font-weight:650;box-shadow:inset 0 -1px var(--line)}
+  .cap{font:600 .68rem/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--dim);margin:0 0 .6rem}
+  pre.manifest{background:#0f1216;border:1px solid var(--line);border-radius:12px;padding:1.1rem 1.25rem;overflow-x:auto;font:.82rem/1.7 var(--mono);color:var(--ink);margin:0 0 3.6rem}
+  .k{color:var(--accent)} .s{color:#8fd6a4} .p{color:var(--dim)}
+  .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:1.8rem;border-top:1px solid var(--line);padding-top:2.4rem}
+  .lbl{font:700 .78rem/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin:.2rem 0 .7rem}
+  .steps p{color:var(--dim);font-size:.95rem;margin:0}
+  .steps p b{color:var(--ink);font-weight:550}
+  footer{border-top:1px solid var(--line);margin-top:4rem;padding-top:1.4rem;color:var(--dim);font-size:.9rem}
+  footer code{font:600 .85rem var(--mono);color:var(--ink)}
+  footer a{color:var(--dim);text-decoration-color:var(--line)} footer a:hover{color:var(--accent)}
+  @media(max-width:640px){.steps{grid-template-columns:1fr;gap:1.3rem}main{padding-top:2.2rem}}
+</style>
+</head>
+<body>
+<main>
+  <div class="top">
+    <span class="chip live">pre-release · applying YC W27</span>
+    <a class="chip" href="https://github.com/remitlabs/Remit">github.com/remitlabs/Remit</a>
+  </div>
+
+  <h1>Remit</h1>
+  <p class="tag">least privilege for agent skills</p>
+
+  <p class="lede">
+    Every AI-agent skill <strong>declares what it may do</strong>,
+    <strong>proves it in a sandbox</strong> before install,
+    and <strong>dies everywhere within a day</strong> if it turns bad.
+  </p>
+
+  <p class="cap">what one skill declares · illustrative</p>
+<pre class="manifest">{
+  <span class="k">"name"</span>: <span class="s">"summarize-notes"</span>,
+  <span class="k">"remit"</span>: {
+    <span class="k">"read"</span>:    [<span class="s">"~/Documents/notes/**"</span>],
+    <span class="k">"write"</span>:   [],
+    <span class="k">"network"</span>: [],
+    <span class="k">"exec"</span>:    []
+  },
+  <span class="k">"proof"</span>: <span class="s">"static scan clean · canary 0 outbound · sha 9f8e…"</span>
+}</pre>
+
+  <section class="steps">
+    <div>
+      <h2 class="lbl">01 · declare</h2>
+      <p>Each skill ships a <b>remit</b> — the narrow scope it may act in. No remit, no trust: the description alone is marketing.</p>
+    </div>
+    <div>
+      <h2 class="lbl">02 · prove</h2>
+      <p>Before it loads, the skill detonates in a <b>disposable canary sandbox</b>. You see observed behavior against the declared scope — static findings plus runtime diff — before install.</p>
+    </div>
+    <div>
+      <h2 class="lbl">03 · die</h2>
+      <p>A <b>signed revocation feed</b> with daily sync means a skill that turns bad is dead on every machine within a day.</p>
+    </div>
+  </section>
+
+  <footer>
+    <p>built by <a href="https://github.com/remitlabs">remitlabs</a> · cli: <code>skillctl</code> · docs in the repo</p>
+  </footer>
+</main>
+</body>
+</html>
