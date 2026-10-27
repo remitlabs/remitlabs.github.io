@@ -4,10 +4,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Remit — least privilege for agent skills</title>
-<meta name="description" content="Every AI-agent skill declares what it may do, is observed in a sandbox before install, and can be revoked everywhere from a signed daily feed if it drifts.">
+<meta name="description" content="Every AI-agent skill declares its scope, is observed in a sandbox when a container is available, and can be blocked at load if it drifts.">
 <meta name="theme-color" content="#131110">
 <meta property="og:title" content="Remit — least privilege for agent skills">
-<meta property="og:description" content="Every AI-agent skill declares what it may do, is observed in a sandbox before install, and can be revoked everywhere from a signed daily feed if it drifts.">
+<meta property="og:description" content="Every AI-agent skill declares its scope, is observed in a sandbox when a container is available, and can be blocked at load if it drifts.">
 <link rel="icon" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect width="32" height="32" rx="7" fill="%23131110"/><text x="16" y="22" font-family="ui-monospace,Menlo,monospace" font-size="17" font-weight="700" fill="%23FFB454" text-anchor="middle">R</text></svg>'>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -162,7 +162,7 @@
         <h1 data-reveal>Remit</h1>
         <p class="dict" data-reveal><b>remit</b> · rɪˈmɪt · n. the scope of someone's authority.</p>
         <p class="tag" data-reveal>least privilege for agent skills</p>
-        <p class="lede" data-reveal>Every skill <strong>declares what it may do</strong>, <strong>is observed in a sandbox</strong>, and <strong>can be revoked everywhere</strong> if it drifts.</p>
+        <p class="lede" data-reveal>Every skill <strong>declares its scope</strong>, <strong>is observed in a sandbox when available</strong>, and <strong>can be blocked at load</strong> if it drifts.</p>
         <div class="install" id="install" data-reveal>
           <div class="cmd"><span class="p">$</span><code>npx @remitlabs/cli@latest start</code><button type="button" data-copy>copy</button></div>
           <div class="cta-row">
