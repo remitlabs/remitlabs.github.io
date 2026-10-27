@@ -4,14 +4,14 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Remit — least privilege for agent skills</title>
-<meta name="description" content="Every AI-agent skill declares what it may do, proves it in a sandbox before install, and dies everywhere within a day if it turns bad.">
+<meta name="description" content="Every AI-agent skill declares what it may do, is observed in a sandbox before install, and can be revoked everywhere from a signed daily feed if it drifts.">
 <meta name="theme-color" content="#131110">
 <meta property="og:title" content="Remit — least privilege for agent skills">
-<meta property="og:description" content="Every AI-agent skill declares what it may do, proves it in a sandbox before install, and dies everywhere within a day if it turns bad.">
+<meta property="og:description" content="Every AI-agent skill declares what it may do, is observed in a sandbox before install, and can be revoked everywhere from a signed daily feed if it drifts.">
 <link rel="icon" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect width="32" height="32" rx="7" fill="%23131110"/><text x="16" y="22" font-family="ui-monospace,Menlo,monospace" font-size="17" font-weight="700" fill="%23FFB454" text-anchor="middle">R</text></svg>'>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet">
 <style>
   :root{
     --casing:#131110; --surface:#1B1815; --ink:#EAE2D3; --dim:#9B9285;
@@ -66,6 +66,20 @@
   pre.man{font:.8rem/1.75 var(--mono);margin:0 0 1rem;white-space:pre;overflow-x:auto}
   .k{color:var(--amber)} .s{color:var(--ok)} .c{color:var(--dim)}
 
+  /* install */
+  .install{margin:1.7rem 0 0;max-width:34rem}
+  .cmd{display:flex;align-items:center;gap:.7rem;background:var(--surface);border:1px solid var(--hair);border-radius:8px;padding:.75rem .9rem;font:.86rem/1.4 var(--mono);overflow-x:auto}
+  .cmd .p{color:var(--amber)}
+  .cmd code{color:var(--ink);white-space:nowrap}
+  .cmd button{margin-left:auto;background:transparent;border:1px solid var(--hair);color:var(--dim);font:.72rem var(--mono);padding:.35rem .55rem;border-radius:5px;cursor:pointer}
+  .cmd button:hover{color:var(--amber);border-color:var(--amber)}
+  .cta-row{display:flex;gap:.7rem;flex-wrap:wrap;margin:.8rem 0 0;font:.78rem var(--mono)}
+  .cta{display:inline-block;border:1px solid var(--amber);color:var(--amber);text-decoration:none;padding:.55rem .8rem;border-radius:6px}
+  .cta:hover{background:var(--amber);color:var(--casing)}
+  .cta.ghost{border-color:var(--hair);color:var(--dim)}
+  .cta.ghost:hover{border-color:var(--amber);color:var(--amber);background:transparent}
+  .note{font:.75rem/1.6 var(--mono);color:var(--dim);margin:.65rem 0 0}
+
   /* sections */
   .tail{padding-top:clamp(2.4rem,5vw,4rem);border-top:1px solid var(--hair)}
   .sec-head{font:500 clamp(1.9rem,3.6vw,2.7rem)/1.15 var(--serif);letter-spacing:-.02em;
@@ -74,6 +88,7 @@
   .prose{font:400 clamp(1.05rem,1.7vw,1.18rem)/1.7 var(--serif);color:var(--dim);
     max-width:56ch;margin:0}
   .prose b{color:var(--ink);font-weight:600}
+  .prose + .prose{margin-top:1rem}
   .prose code,.code-inline{font:.83em var(--mono);color:var(--ink);background:var(--surface);
     border:1px solid var(--hair);border-radius:6px;padding:.08em .4em;white-space:nowrap}
 
@@ -135,8 +150,9 @@
   <header class="mast">
     <a class="brand" href="/">remit <em>— agent-skill trust layer</em></a>
     <nav class="chips" aria-label="page links">
-      <a class="chip" href="https://github.com/remitlabs/Remit">github.com/remitlabs/Remit</a>
-      <span class="chip warm">pre-release, applying to YC W27</span>
+      <a class="chip" href="#install">install</a>
+      <a class="chip" href="https://www.npmjs.com/package/@remitlabs/cli">npm: @remitlabs/cli</a>
+      <span class="chip warm">public beta</span>
     </nav>
   </header>
 
@@ -146,16 +162,24 @@
         <h1 data-reveal>Remit</h1>
         <p class="dict" data-reveal><b>remit</b> · rɪˈmɪt · n. the scope of someone's authority.</p>
         <p class="tag" data-reveal>least privilege for agent skills</p>
-        <p class="lede" data-reveal>Every skill <strong>declares what it may do</strong>, <strong>proves it in a sandbox</strong>, and <strong>dies everywhere within a day</strong> if it turns bad.</p>
+        <p class="lede" data-reveal>Every skill <strong>declares what it may do</strong>, <strong>is observed in a sandbox</strong>, and <strong>can be revoked everywhere</strong> if it drifts.</p>
+        <div class="install" id="install" data-reveal>
+          <div class="cmd"><span class="p">$</span><code>npx @remitlabs/cli@latest start</code><button type="button" data-copy>copy</button></div>
+          <div class="cta-row">
+            <a class="cta" href="https://www.npmjs.com/package/@remitlabs/cli">view on npm</a>
+            <a class="cta ghost" href="#limits">what this does not prove</a>
+          </div>
+          <p class="note">free public beta · Node 22.5+ · no account · runs locally</p>
+        </div>
         <div class="facts" data-reveal>
-          <div class="fact"><em>static</em> <b>≈20 high-signal rules</b> — secret paths, curl-pipe-sh, reverse shells, hidden instructions</div>
-          <div class="fact"><em>canary</em> <b>every skill runs boxed</b> — disposable container, fake secrets, strace + network proxy</div>
-          <div class="fact"><em>revoke</em> <b>signed feed, daily sync</b> — a revoked skill is dead on every machine within a day</div>
+          <div class="fact"><em>static</em> <b>64 high-signal rules</b> — secret paths, curl-pipe-sh, reverse shells, hidden instructions</div>
+          <div class="fact"><em>canary</em> <b>boxed when Docker or Podman is present</b> — disposable container, fake secrets, strace + network proxy</div>
+          <div class="fact"><em>revoke</em> <b>signed feed, daily sync</b> — revoked digests are blocked at load; hand-installed copies are surfaced</div>
         </div>
       </div>
 
       <aside class="receipt" data-reveal aria-label="illustrative evidence receipt">
-        <div class="rc-head"><span>evidence receipt nº 0001</span><span class="st">verified</span></div>
+        <div class="rc-head"><span>evidence receipt nº 0001</span><span class="st">sample</span></div>
 <pre class="man"><span class="c">// what one skill declares — illustrative</span>
 {
   <span class="k">"name"</span>: <span class="s">"summarize-notes"</span>,
@@ -165,10 +189,11 @@
     <span class="k">"network"</span>: [],
     <span class="k">"exec"</span>:    []
   },
-  <span class="k">"proof"</span>: <span class="s">"static clean · canary 0 outbound"</span>,
-  <span class="k">"sha256"</span>: <span class="s">"9f8e…"</span>
+  <span class="k">"evidence"</span>: <span class="s">"static clean · canary 0 outbound"</span>,
+  <span class="k">"sha256"</span>: <span class="s">"9f8e…"</span>,
+  <span class="k">"limits"</span>: <span class="s">"one observed run · not a guarantee"</span>
 }</pre>
-        <p class="rc-note">every verdict in Remit ships as one of these: findings, canary diff, digest, signature. re-runnable.</p>
+        <p class="rc-note">every verdict ships with its evidence: findings, canary diff when it ran, digest, feed status. re-runnable.</p>
       </aside>
     </section>
 
@@ -188,7 +213,7 @@
       <h2 class="sec-head" data-reveal>The loop, sources to kill-switch</h2>
       <div class="plate" data-reveal>
         <div class="scroller">
-        <svg viewBox="0 0 940 380" role="img" aria-label="Remit pipeline: sources flow into ingest; static scan, declared remit and a canary sandbox feed a score; allow installs lockfile-pinned; runtime is watched live and a signed feed kills revoked skills within a day">
+        <svg viewBox="0 0 940 380" role="img" aria-label="Remit pipeline: sources flow into ingest; static scan, declared remit and a canary sandbox feed a score; allow installs lockfile-pinned; runtime is watched live and a signed feed blocks revoked digests at load time">
           <defs>
             <marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#5A544B"/></marker>
             <marker id="ahA" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#FFB454"/></marker>
@@ -210,7 +235,7 @@
 
             <rect x="318" y="36" width="140" height="44" rx="10" fill="#161311" stroke="#2A2520"/>
             <text x="388" y="55" text-anchor="middle" fill="#EAE2D3" font-weight="600">STATIC SCAN</text>
-            <text x="388" y="70" text-anchor="middle" fill="#9B9285" font-size="9">≈20 high-signal rules</text>
+            <text x="388" y="70" text-anchor="middle" fill="#9B9285" font-size="9">64 high-signal rules</text>
 
             <rect x="318" y="88" width="140" height="44" rx="10" fill="#161311" stroke="#2A2520"/>
             <text x="388" y="107" text-anchor="middle" fill="#EAE2D3" font-weight="600">DECLARED REMIT</text>
@@ -218,7 +243,7 @@
 
             <rect x="318" y="150" width="140" height="52" rx="10" fill="#161311" stroke="#2A2520"/>
             <text x="388" y="170" text-anchor="middle" fill="#EAE2D3" font-weight="600">CANARY SANDBOX</text>
-            <text x="388" y="185" text-anchor="middle" fill="#9B9285" font-size="9">disposable, fake secrets</text>
+            <text x="388" y="185" text-anchor="middle" fill="#9B9285" font-size="9">observer-first, fake secrets</text>
             <text x="388" y="197" text-anchor="middle" fill="#9B9285" font-size="9">strace and net proxy</text>
 
             <rect x="524" y="94" width="160" height="88" rx="10" fill="#161311" stroke="#FFB454"/>
@@ -252,13 +277,13 @@
             <path d="M824,304 V255" stroke="#FFB454" fill="none" marker-end="url(#ahA)"/>
 
             <text x="524" y="200" fill="#9B9285" font-size="9">review / deny, park + evidence receipt</text>
-            <text x="708" y="328" text-anchor="end" fill="#9B9285" font-size="9">revoked digest, dead everywhere:</text>
-            <text x="708" y="341" text-anchor="end" fill="#9B9285" font-size="9">one day or less, no copy survives</text>
+            <text x="708" y="328" text-anchor="end" fill="#9B9285" font-size="9">revoked digest blocked at load,</text>
+            <text x="708" y="341" text-anchor="end" fill="#9B9285" font-size="9">hand-installed copies surfaced</text>
           </g>
         </svg>
         </div>
       </div>
-      <p class="status" data-reveal><b>shipped</b> <i>static scan, canary receipts, signed feed + daily-sync kill, MCP router, hook-guard (observe), lockfile rug-pull alerts, fleet dashboard</i> — <b>in flight</b> <i>install-gating on every path, sandbox network hardening</i>. tracked publicly in the repo.</p>
+      <p class="status" data-reveal><b>shipped</b> <i>static scan, canary receipts, signed feed + daily sync, MCP router, hook-guard (observe), lockfile rug-pull alerts, fleet dashboard</i> — <b>open boundaries</b> <i>canary containment is observer-first (egress enforcement only with an allowlist), and team identity is not built. A receipt is one observed run, not a safety guarantee.</i></p>
     </section>
 
     <section class="tail">
@@ -266,11 +291,11 @@
       <div class="ledger" data-reveal>
         <div class="row">
           <div class="t">audit</div>
-          <p>Point <code>skillctl audit</code> at the skill dirs your agents already use — Claude Code, Codex, Cursor and friends. Every skill gets findings plus a canary diff, not a hunch. <span class="n">123 skills, 4 agent dirs, 114 duplicate registrations found and collapsed,</span> measured on the machine this was built on.</p>
+          <p>Point <code>skillctl audit</code> at the skill dirs your agents already use — Claude Code, Codex, Cursor and friends. Every skill gets static findings; when Docker or Podman is available, a canary diff too. <span class="n">123 skills, 4 agent dirs, 114 duplicate registrations found,</span> measured on the machine this was built on.</p>
         </div>
         <div class="row">
           <div class="t">install</div>
-          <p>Marketplace search (skills.sh + GitHub) funnels installs through one gate: <span class="n">clone, scan, policy, digest</span> — before files ever land. Gating is being extended to every install path, tracked publicly in the repo.</p>
+          <p>Marketplace search (skills.sh + GitHub) funnels installs through one gate: <span class="n">clone, scan, policy, digest</span> — before files ever land. CLI and marketplace installs share the same decision.</p>
         </div>
         <div class="row">
           <div class="t">update</div>
@@ -278,7 +303,7 @@
         </div>
         <div class="row">
           <div class="t">revoke</div>
-          <p>The MCP router loads skills on demand (<span class="n">~150 tokens vs 15,238</span> of eager context, measured). <code>hook-guard</code> watches live sessions against network allow-lists, and the Ed25519 feed syncs daily: revoked skills die. Remit-home copies are removed; hand-installed files get parked with a removal note, never silently touched.</p>
+          <p>The MCP router loads skills on demand (<span class="n">~150 tokens vs 15,238</span> of eager context, measured). <code>hook-guard</code> watches live sessions against network allow-lists, and the Ed25519 feed syncs daily: revoked digests are blocked by the router and feed. Remit-home copies are removed; hand-installed files get parked with a removal note, never silently touched.</p>
         </div>
       </div>
     </section>
@@ -292,11 +317,11 @@
         </div>
         <div class="row">
           <div class="t">receipts</div>
-          <p>Every verdict ships as an <b>evidence receipt</b>: the rule hits, the canary diff, the pinned digest, the signature. You can re-run the proof yourself — trust here is verifiable, not asked for.</p>
+          <p>Every verdict ships with its evidence: the rule hits, the canary diff when it ran, the pinned digest, and the signed-feed status. You can re-run the proof yourself — trust here is verifiable, not asked for.</p>
         </div>
         <div class="row">
           <div class="t">deadline</div>
-          <p>Security without a kill switch is theater. The signed feed gives every install a clock: <b>dead everywhere within a day,</b> herd-wide.</p>
+          <p>Security without a kill switch is theater. The signed feed gives every install a clock: <b>a revoked digest is blocked at load time, herd-wide, on the next daily sync.</b></p>
         </div>
         <div class="row">
           <div class="t">local</div>
@@ -305,14 +330,34 @@
       </div>
     </section>
 
+    <section class="tail" id="limits">
+      <h2 class="sec-head" data-reveal>What this does not prove</h2>
+      <p class="prose" data-reveal>A finding is a rule match, not proof of intent. A canary receipt is one observed run in a container, not a guarantee that a skill is safe. Static coverage can be partial; compiled or encrypted files are blind spots. The canary is observer-first by default — it enforces egress only when you pass an allowlist. Remit is defense in depth, not a clean bill of health.</p>
+      <p class="prose" data-reveal>Run <code>npx @remitlabs/cli@latest start</code> and judge the evidence yourself. The output tells you which layers ran and what they could not see.</p>
+    </section>
+
     <footer class="foot">
-      <span>built by <a href="https://github.com/remitlabs">remitlabs</a>, cli: <b style="color:var(--ink)">skillctl</b></span>
-      <span>every claim above is verifiable in <a href="https://github.com/remitlabs/Remit">the repo</a></span>
+      <span>built by <a href="https://www.npmjs.com/org/remitlabs">remitlabs</a>, cli: <b style="color:var(--ink)">skillctl</b></span>
+      <span>don't trust the page — <a href="#install">run the audit</a></span>
     </footer>
   </main>
 </div>
 
 <script>
+  const copyButton = document.querySelector('[data-copy]');
+  if (copyButton) {
+    copyButton.addEventListener('click', async () => {
+      const command = 'npx @remitlabs/cli@latest start';
+      try {
+        await navigator.clipboard.writeText(command);
+        copyButton.textContent = 'copied';
+      } catch {
+        copyButton.textContent = command;
+      }
+      setTimeout(() => { copyButton.textContent = 'copy'; }, 1800);
+    });
+  }
+
   if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
     const io = new IntersectionObserver((entries) => {
       entries.forEach((e) => {
