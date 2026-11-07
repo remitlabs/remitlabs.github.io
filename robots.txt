@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://remitlabs.github.io/sitemap.xml

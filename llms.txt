@@ -1,0 +1,39 @@
+# Remit
+
+> Least-privilege and lifecycle control for AI agent skills.
+
+Remit audits the skills your coding agents already have, records static findings,
+runs a behavioral canary when a container is available, pins installs by digest,
+and blocks revoked digests at load time. Local-first, no account. Apache-2.0.
+
+It is not a scanner score and not a marketplace. It is the evidence and lifecycle
+layer under whatever registry or agent you already use. A finding is a rule match,
+not proof of intent; a canary receipt is one observed run, not a guarantee.
+
+## Start
+
+- [Install and quick start](https://remitlabs.github.io/docs.html)
+- [Pricing](https://remitlabs.github.io/pricing.md)
+- [Security model and limits](https://remitlabs.github.io/security.html)
+- [npm package](https://www.npmjs.com/package/@remitlabs/cli)
+
+## Learn
+
+- [How to audit your Claude Code skills](https://remitlabs.github.io/blog/audit-claude-code-skills.html)
+- [The MCP security checklist](https://remitlabs.github.io/blog/mcp-security-checklist.html)
+- [Compare with Socket, Snyk, registries, and platform signing](https://remitlabs.github.io/compare.html)
+- [Blog index](https://remitlabs.github.io/blog/)
+
+## Facts
+
+- 8 published `@remitlabs/*` packages at 0.1.1, Apache-2.0.
+- 64 high-signal static rules.
+- 73-specimen detection corpus: 64 attacks, 9 benign; static-only recall 64/64, benign flagged 0/9. Self-authored regression ceiling, not field accuracy.
+- Measured on the founder's machine: 123 skills, 4 agent directories, 114 duplicate registrations.
+- Eager context ~15,238 tokens vs ~150 with the MCP router (measured).
+- Node.js 22.5+; Docker or Podman optional.
+
+## Contact
+
+- Security: singhgaurprahalad@gmail.com with `[security]` in the subject.
+- Machine-readable disclosure: https://remitlabs.github.io/.well-known/security.txt

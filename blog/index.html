@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Notes on agent-skill trust — Remit blog</title>
+<meta name="description" content="Original research, teardowns, and how-tos on AI agent skill security, MCP, and lifecycle. Every claim has a method and a limit.">
+<meta name="theme-color" content="#131110">
+<link rel="canonical" href="https://remitlabs.github.io/blog/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Notes on agent-skill trust — Remit blog">
+<meta property="og:description" content="Original research, teardowns, and how-tos on AI agent skill security, MCP, and lifecycle.">
+<meta property="og:url" content="https://remitlabs.github.io/blog/">
+<meta property="og:image" content="https://remitlabs.github.io/assets/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect width="32" height="32" rx="7" fill="%23131110"/><text x="16" y="22" font-family="ui-monospace,Menlo,monospace" font-size="17" font-weight="700" fill="%23FFB454" text-anchor="middle">R</text></svg>'>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css">
+<script>document.documentElement.classList.add('js');</script>
+</head>
+<body>
+<div class="wrap">
+  <header class="mast">
+    <a class="brand" href="/">remit <em>— agent-skill trust layer</em></a>
+    <nav class="nav" aria-label="primary">
+      <a href="/pricing.html">pricing</a>
+      <a href="/security.html">security</a>
+      <a href="/compare.html">compare</a>
+      <a href="/docs.html">docs</a>
+      <a href="/blog/">blog</a>
+      <a class="pill" href="/#install">run the audit</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero" style="grid-template-columns:1fr;padding-bottom:1.4rem">
+      <div>
+        <h1 data-reveal style="font-size:clamp(2.6rem,6vw,4.2rem);line-height:1.02">Notes on agent-skill trust.</h1>
+        <p class="lede" data-reveal style="max-width:48ch;margin-top:1.1rem">Original research, teardowns, and how-tos. Every claim has a method and a limit.</p>
+      </div>
+    </section>
+
+    <section class="tail" style="border-top:0;padding-top:0;margin-top:0">
+      <div class="grid two" data-reveal>
+        <a class="post-card" href="/blog/audit-claude-code-skills.html">
+          <span class="meta">how-to · 8 min</span>
+          <h2>How to audit your Claude Code skills</h2>
+          <p>A five-minute audit: what is installed, what each skill can touch, duplicates, and the patterns a human skim misses.</p>
+          <span class="more">read →</span>
+        </a>
+        <a class="post-card" href="/blog/mcp-security-checklist.html">
+          <span class="meta">checklist · 10 min</span>
+          <h2>The MCP security checklist</h2>
+          <p>Five controls that survive an audit, in the order that matters — and what none of them prove.</p>
+          <span class="more">read →</span>
+        </a>
+      </div>
+    </section>
+
+    <section class="tail">
+      <h2 class="sec-head" data-reveal>Coming next</h2>
+      <div class="ledger" data-reveal>
+        <div class="row"><div class="t">research</div><p>We audited 100 popular skills. Here is what we found — method, numbers, and limits. <span class="n">in progress</span></p></div>
+        <div class="row"><div class="t">explainer</div><p>What a skill rug pull is, and how digest pinning turns it into a blocked update.</p></div>
+        <div class="row"><div class="t">measurement</div><p>Your agent loads 15,000 tokens of skills before it reads your prompt. The router, measured.</p></div>
+      </div>
+    </section>
+
+    <section class="tail">
+      <h2 class="sec-head" data-reveal>The Remit Ledger</h2>
+      <p class="prose" data-reveal>One incident, one control, one command. Every other week. No hype, no roundup filler.</p>
+      <div class="cta-row" data-reveal style="margin-top:1.2rem">
+        <a class="cta" href="mailto:singhgaurprahalad@gmail.com?subject=Subscribe%20to%20The%20Remit%20Ledger">subscribe by email</a>
+        <a class="cta ghost" href="/blog/audit-claude-code-skills.html">start with the audit</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <div class="col">
+      <span class="brand">remit <em>— agent-skill trust layer</em></span>
+      <p>built by <a href="https://www.npmjs.com/org/remitlabs" style="display:inline;color:var(--ink)">remitlabs</a> · cli: skillctl · Apache-2.0</p>
+    </div>
+    <div class="col">
+      <h4>Product</h4>
+      <a href="/pricing.html">pricing</a>
+      <a href="/security.html">security</a>
+      <a href="/compare.html">compare</a>
+      <a href="/docs.html">docs</a>
+    </div>
+    <div class="col">
+      <h4>Learn</h4>
+      <a href="/blog/">blog</a>
+      <a href="/blog/audit-claude-code-skills.html">audit your skills</a>
+      <a href="/blog/mcp-security-checklist.html">mcp checklist</a>
+      <a href="/llms.txt">llms.txt</a>
+    </div>
+    <div class="col">
+      <h4>Elsewhere</h4>
+      <a href="https://www.npmjs.com/package/@remitlabs/cli">npm</a>
+      <a href="https://github.com/remitlabs">github</a>
+      <a href="/.well-known/security.txt">security.txt</a>
+    </div>
+    <div class="bottom">
+      <span>don't trust the page — <a href="/#install" style="display:inline">run the audit</a></span>
+      <span>© 2026 Remit Labs · public beta</span>
+    </div>
+  </footer>
+</div>
+<script src="../site.js" defer></script>
+</body>
+</html>

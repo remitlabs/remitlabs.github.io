@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Security model and limits — Remit</title>
+<meta name="description" content="How Remit collects evidence, what each layer can and cannot see, how the signed feed works, and how to report a vulnerability.">
+<meta name="theme-color" content="#131110">
+<link rel="canonical" href="https://remitlabs.github.io/security.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Security model and limits — Remit">
+<meta property="og:description" content="How Remit collects evidence, what each layer can and cannot see, and how to report a vulnerability.">
+<meta property="og:url" content="https://remitlabs.github.io/security.html">
+<meta property="og:image" content="https://remitlabs.github.io/assets/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect width="32" height="32" rx="7" fill="%23131110"/><text x="16" y="22" font-family="ui-monospace,Menlo,monospace" font-size="17" font-weight="700" fill="%23FFB454" text-anchor="middle">R</text></svg>'>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<script>document.documentElement.classList.add('js');</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    { "@type": "Question", "name": "Does Remit upload my code?", "acceptedAnswer": { "@type": "Answer", "text": "No. The local scan runs on your machine. The self-hosted API runs on your infrastructure. The hosted team tier will publish a data-flow diagram and subprocessor list before general availability." } },
+    { "@type": "Question", "name": "Is a clean scan a guarantee that a skill is safe?", "acceptedAnswer": { "@type": "Answer", "text": "No. A finding is a rule match, not proof of intent. A canary receipt is one observed run in a container, not a guarantee. Remit is defense in depth, not a clean bill of health." } },
+    { "@type": "Question", "name": "How does revocation work?", "acceptedAnswer": { "@type": "Answer", "text": "A revoked digest is published in an Ed25519-signed feed. Clients verify the feed and block the digest at MCP load time on the next sync. Remit-managed copies are removed; hand-installed copies are surfaced and parked, never silently touched." } }
+  ]
+}
+</script>
+</head>
+<body>
+<div class="wrap">
+  <header class="mast">
+    <a class="brand" href="/">remit <em>— agent-skill trust layer</em></a>
+    <nav class="nav" aria-label="primary">
+      <a href="/pricing.html">pricing</a>
+      <a href="/security.html">security</a>
+      <a href="/compare.html">compare</a>
+      <a href="/docs.html">docs</a>
+      <a href="/blog/">blog</a>
+      <a class="pill" href="/#install">run the audit</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero" style="grid-template-columns:1fr;padding-bottom:1rem">
+      <div>
+        <h1 data-reveal style="font-size:clamp(2.6rem,6vw,4.4rem);line-height:1.02">The evidence chain,<br><span style="color:var(--dim)">and where it stops.</span></h1>
+        <p class="lede" data-reveal style="max-width:46ch;margin-top:1.2rem">Remit is not a scanner with a badge. It is a chain: source → digest → findings → observed behavior → policy → install → update diff → revoke. Each link states what it saw and what it could not see.</p>
+      </div>
+    </section>
+
+    <section class="tail" style="border-top:0;padding-top:1rem;margin-top:0">
+      <h2 class="sec-head" data-reveal>The chain</h2>
+      <div class="grid three" data-reveal>
+        <div class="card"><span class="num">source</span><h3>Where it came from</h3><p>Registry, repo, or local author. Recorded, not trusted. A source is a claim; the digest is the fact.</p></div>
+        <div class="card"><span class="num">digest</span><h3>The exact bytes</h3><p>A clean verdict is bound to a content hash, not to a name. A clean yesterday cannot be inherited by a changed skill today.</p></div>
+        <div class="card"><span class="num">static</span><h3>64 rules</h3><p>Rule matches over <code>SKILL.md</code> and scripts: secret paths, curl-pipe-shell, reverse shells, hidden unicode, encoded instructions. Not proof of intent.</p></div>
+        <div class="card"><span class="num">canary</span><h3>One observed run</h3><p>A disposable container with fake secrets, strace, and a logging proxy. Records credential touches, egress, file writes, and shell commands. Observer-first.</p></div>
+        <div class="card"><span class="num">policy</span><h3>Allow, monitor, review, deny</h3><p>Each decision carries its reason and its missing coverage. Review-level loads refuse unless you opt in.</p></div>
+        <div class="card"><span class="num">revoke</span><h3>A signed kill switch</h3><p>An Ed25519-signed feed. A revoked digest is blocked at MCP load and on the next sync; hand-installed copies are surfaced.</p></div>
+      </div>
+    </section>
+
+    <section class="tail">
+      <h2 class="sec-head" data-reveal>Threat model</h2>
+      <div class="ledger" data-reveal>
+        <div class="row"><div class="t">prompt injection</div><p>A <code>SKILL.md</code> that turns the agent into a credential thief without a single malicious script. The model reads the text as direction.</p></div>
+        <div class="row"><div class="t">install ritual</div><p>"Run this first" instructions that ship a stealer. ClawHavoc installed Atomic Stealer on macOS this way.</p></div>
+        <div class="row"><div class="t">rug pull</div><p>A clean skill that turns malicious after install. The lockfile and semantic update diff catch changed bytes.</p></div>
+        <div class="row"><div class="t">hidden payloads</div><p>Hidden unicode, base64 blobs, encoded instructions, oversized or compiled files that a human skim will not read.</p></div>
+        <div class="row"><div class="t">over-broad scope</div><p>File and network access that exceeds the declared remit. Declared vs observed is the diff that matters.</p></div>
+        <div class="row"><div class="t">fleet drift</div><p>Duplicate, stale, or revoked copies across four agent directories, and no way to reach 40 laptops.</p></div>
+      </div>
+    </section>
+
+    <section class="tail">
+      <h2 class="sec-head" data-reveal>What each layer cannot see</h2>
+      <div class="table-wrap" data-reveal>
+        <table>
+          <thead><tr><th>Layer</th><th>Cannot see</th></tr></thead>
+          <tbody>
+            <tr><td><b>Static scan</b></td><td>Intent; compiled, encrypted, or oversized files; behavior at runtime.</td></tr>
+            <tr><td><b>Canary</b></td><td>Other hosts; TLS bodies; the model's reasoning; a conditional trigger that did not fire.</td></tr>
+            <tr><td><b>Digest / lockfile</b></td><td>Whether the original author was honest — only whether the bytes changed.</td></tr>
+            <tr><td><b>Revocation feed</b></td><td>Skills that never sync; hand-installed copies (surfaced, not silently removed).</td></tr>
+            <tr><td><b>MCP router</b></td><td>Tool calls outside the router; a compromised host.</td></tr>
+            <tr><td><b>hook-guard</b></td><td>Commands outside the hook; enforcement is opt-in (<code>REMIT_ENFORCE=1</code>).</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="table-note">A clean scan is not proof that a skill is benign. The product says so on every receipt.</p>
+    </section>
+
+    <section class="tail">
+      <h2 class="sec-head" data-reveal>Data handling</h2>
+      <div class="grid two" data-reveal>
+        <div class="card"><h3>Local scan</h3><p>Runs on your machine. No upload. The index, scanner, and container detonation are local.</p></div>
+        <div class="card"><h3>Local dashboard</h3><p>Binds to <code>127.0.0.1:8787</code>. Nothing is exposed to the network by default.</p></div>
+        <div class="card"><h3>Self-hosted API</h3><p>Runs on your infrastructure (Postgres, PGlite, or SQLite). The evidence stays yours.</p></div>
+        <div class="card"><h3>Hosted team tier</h3><p>Not yet shipped. Before GA we will publish a data-flow diagram, subprocessor list, retention policy, and DPA.</p></div>
+        <div class="card"><h3>Telemetry</h3><p>Opt-in only. Aggregate activation events. No skill content, no file paths, no code.</p></div>
+        <div class="card"><h3>Deletion</h3><p>Export everything as JSON/markdown for 30 days after cancellation, then delete on request.</p></div>
+      </div>
+    </section>
+
+    <section class="tail">
+      <h2 class="sec-head" data-reveal>Report a vulnerability</h2>
+      <p class="prose" data-reveal>Please do not open a public issue for a security problem. Email <a href="mailto:singhgaurprahalad@gmail.com?subject=%5Bsecurity%5D%20Remit">singhgaurprahalad@gmail.com</a> with <code>[security]</code> in the subject and include the package version, a minimal reproduction, and the impact. We aim to acknowledge within 72 hours.</p>
+      <p class="prose" data-reveal>Machine-readable contact: <a href="/.well-known/security.txt">/.well-known/security.txt</a>. There is no bug bounty yet; we will credit reporters who want it.</p>
+    </section>
+
+    <section class="tail">
+      <h2 class="sec-head" data-reveal>Status</h2>
+      <p class="prose" data-reveal>Public beta. The local tool is stable enough to use daily; the team control plane is in design-partner development. We label features as they ship rather than implying they exist.</p>
+      <div class="cta-row" data-reveal style="margin-top:1.4rem">
+        <a class="cta" href="/docs.html">read the docs</a>
+        <a class="cta ghost" href="/compare.html">compare the alternatives</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <div class="col">
+      <span class="brand">remit <em>— agent-skill trust layer</em></span>
+      <p>built by <a href="https://www.npmjs.com/org/remitlabs" style="display:inline;color:var(--ink)">remitlabs</a> · cli: skillctl · Apache-2.0</p>
+    </div>
+    <div class="col">
+      <h4>Product</h4>
+      <a href="/pricing.html">pricing</a>
+      <a href="/security.html">security</a>
+      <a href="/compare.html">compare</a>
+      <a href="/docs.html">docs</a>
+    </div>
+    <div class="col">
+      <h4>Learn</h4>
+      <a href="/blog/">blog</a>
+      <a href="/blog/audit-claude-code-skills.html">audit your skills</a>
+      <a href="/blog/mcp-security-checklist.html">mcp checklist</a>
+      <a href="/llms.txt">llms.txt</a>
+    </div>
+    <div class="col">
+      <h4>Elsewhere</h4>
+      <a href="https://www.npmjs.com/package/@remitlabs/cli">npm</a>
+      <a href="https://github.com/remitlabs">github</a>
+      <a href="/.well-known/security.txt">security.txt</a>
+    </div>
+    <div class="bottom">
+      <span>don't trust the page — <a href="/#install" style="display:inline">run the audit</a></span>
+      <span>© 2026 Remit Labs · public beta</span>
+    </div>
+  </footer>
+</div>
+<script src="site.js" defer></script>
+</body>
+</html>

@@ -3,164 +3,72 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Remit — least privilege for agent skills</title>
-<meta name="description" content="Every AI-agent skill declares its scope, is observed in a sandbox when a container is available, and can be blocked at load if it drifts.">
+<title>Remit — audit and revoke AI agent skills</title>
+<meta name="description" content="Audit every AI agent skill on your machine, see what it can touch, pin it by digest, and block revoked versions at load. Free, local-first, Apache-2.0.">
 <meta name="theme-color" content="#131110">
-<meta property="og:title" content="Remit — least privilege for agent skills">
-<meta property="og:description" content="Every AI-agent skill declares its scope, is observed in a sandbox when a container is available, and can be blocked at load if it drifts.">
+<link rel="canonical" href="https://remitlabs.github.io/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Remit">
+<meta property="og:title" content="Remit — audit and revoke AI agent skills">
+<meta property="og:description" content="Audit every AI agent skill on your machine, see what it can touch, pin it by digest, and block revoked versions at load. Free, local-first, Apache-2.0.">
+<meta property="og:url" content="https://remitlabs.github.io/">
+<meta property="og:image" content="https://remitlabs.github.io/assets/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Remit — audit and revoke AI agent skills">
+<meta name="twitter:description" content="Audit every AI agent skill on your machine, see what it can touch, pin it by digest, and block revoked versions at load.">
+<meta name="twitter:image" content="https://remitlabs.github.io/assets/og.png">
 <link rel="icon" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect width="32" height="32" rx="7" fill="%23131110"/><text x="16" y="22" font-family="ui-monospace,Menlo,monospace" font-size="17" font-weight="700" fill="%23FFB454" text-anchor="middle">R</text></svg>'>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet">
-<style>
-  :root{
-    --casing:#131110; --surface:#1B1815; --ink:#EAE2D3; --dim:#9B9285;
-    --hair:#2A2520; --amber:#FFB454; --ok:#86C08A; --deny:#D96F5C;
-    --serif:'Newsreader','Iowan Old Style',Charter,Georgia,serif;
-    --mono:'JetBrains Mono','SF Mono',Menlo,Consolas,monospace;
-  }
-  *{box-sizing:border-box}
-  html{color-scheme:dark;scroll-behavior:smooth}
-  body{margin:0;background:var(--casing);color:var(--ink);
-    font:16px/1.7 var(--serif);-webkit-font-smoothing:antialiased}
-  .wrap{max-width:1160px;margin:0 auto;padding:0 clamp(1.1rem,4vw,2.5rem)}
-  a{color:inherit}
-  a:focus-visible{outline:2px solid var(--amber);outline-offset:3px;border-radius:4px}
-
-  /* masthead */
-  .mast{display:flex;justify-content:space-between;align-items:center;gap:.8rem;flex-wrap:wrap;
-    padding:1.4rem 0;border-bottom:1px solid var(--hair)}
-  .mast .brand{font:600 .95rem var(--mono);color:var(--ink);text-decoration:none}
-  .mast .brand em{font:400 .95rem var(--serif);font-style:italic;color:var(--dim)}
-  .chips{display:flex;gap:.6rem;flex-wrap:wrap}
-  .chip{font:500 .78rem var(--mono);color:var(--dim);border:1px solid var(--hair);border-radius:6px;padding:.45rem .65rem;text-decoration:none;background:transparent}
-  .chip.warm{color:var(--amber);border-color:color-mix(in srgb,var(--amber) 40%,transparent)}
-  .chip.warm:hover,.chip:hover{color:var(--amber);border-color:var(--amber)}
-
-  /* hero */
-  .hero{display:grid;grid-template-columns:1.15fr .85fr;gap:clamp(2rem,5vw,4rem);
-    padding:clamp(3rem,7vw,5.5rem) 0 clamp(2.6rem,5vw,4rem);align-items:start}
-  .hero>*,.duo>*{min-width:0}
-  .hero h1{font:500 clamp(4.4rem,11vw,8rem)/0.95 var(--serif);letter-spacing:-.03em;margin:0 0 .5rem}
-  .dict{font:.9rem/1.6 var(--mono);color:var(--dim);margin:0 0 1.2rem;max-width:44ch}
-  .dict b{color:var(--ink);font-weight:600}
-  .tag{font:500 clamp(.95rem,1.6vw,1.1rem) var(--mono);color:var(--amber);margin:0 0 1.9rem;letter-spacing:.01em}
-  .lede{font:400 clamp(1.25rem,2.3vw,1.5rem)/1.55 var(--serif);color:var(--ink);
-    max-width:26ch;margin:0 0 2rem}
-  .lede strong{font-weight:600;color:var(--amber)}
-  .facts{display:grid;gap:.55rem;max-width:26rem}
-  .fact{font:.82rem/1.5 var(--mono);color:var(--dim);border-top:1px dashed var(--hair);padding-top:.55rem}
-  .fact:first-child{border-top:0;padding-top:0}
-  .fact b{color:var(--ink);font-weight:600}
-  .fact em{color:var(--amber);font-style:normal}
-
-  /* the receipt */
-  .receipt{background:var(--surface);border:1px solid var(--hair);border-radius:10px;
-    padding:1.15rem 1.25rem 1.3rem;position:relative;overflow:hidden}
-  .receipt::after{content:"";position:absolute;inset:0;pointer-events:none;border-radius:10px;
-    background:radial-gradient(520px 220px at 85% -10%,rgba(255,180,84,.05),transparent 65%)}
-  .rc-head{display:flex;justify-content:space-between;align-items:baseline;gap:.75rem;
-    font:.72rem/1.3 var(--mono);color:var(--dim);border-bottom:1px dashed var(--hair);
-    padding-bottom:.75rem;margin-bottom:.9rem;letter-spacing:.05em}
-  .rc-head .st{color:var(--ok)}
-  .rc-note{font:.72rem/1.6 var(--mono);color:var(--dim);margin:0}
-  pre.man{font:.8rem/1.75 var(--mono);margin:0 0 1rem;white-space:pre;overflow-x:auto}
-  .k{color:var(--amber)} .s{color:var(--ok)} .c{color:var(--dim)}
-
-  /* install */
-  .install{margin:1.7rem 0 0;max-width:34rem;min-width:0}
-  .cmd{display:flex;align-items:center;gap:.7rem;background:var(--surface);border:1px solid var(--hair);border-radius:8px;padding:.75rem .9rem;font:.86rem/1.4 var(--mono);overflow-x:auto;min-width:0}
-  .cmd .p{color:var(--amber)}
-  .cmd code{color:var(--ink);white-space:nowrap}
-  .cmd button{margin-left:auto;background:transparent;border:1px solid var(--hair);color:var(--dim);font:.72rem var(--mono);padding:.35rem .55rem;border-radius:5px;cursor:pointer}
-  .cmd button:hover{color:var(--amber);border-color:var(--amber)}
-  .cta-row{display:flex;gap:.7rem;flex-wrap:wrap;margin:.8rem 0 0;font:.78rem var(--mono)}
-  .cta{display:inline-block;border:1px solid var(--amber);color:var(--amber);text-decoration:none;padding:.55rem .8rem;border-radius:6px}
-  .cta:hover{background:var(--amber);color:var(--casing)}
-  .cta.ghost{border-color:var(--hair);color:var(--dim)}
-  .cta.ghost:hover{border-color:var(--amber);color:var(--amber);background:transparent}
-  .note{font:.75rem/1.6 var(--mono);color:var(--dim);margin:.65rem 0 0}
-
-  /* sections */
-  .tail{padding-top:clamp(2.4rem,5vw,4rem);border-top:1px solid var(--hair)}
-  .sec-head{font:500 clamp(1.9rem,3.6vw,2.7rem)/1.15 var(--serif);letter-spacing:-.02em;
-    margin:0 0 .9rem;max-width:22ch}
-  .sec-head em{font-style:italic;color:var(--dim)}
-  .prose{font:400 clamp(1.05rem,1.7vw,1.18rem)/1.7 var(--serif);color:var(--dim);
-    max-width:56ch;margin:0}
-  .prose b{color:var(--ink);font-weight:600}
-  .prose + .prose{margin-top:1rem}
-  .prose code,.code-inline{font:.83em var(--mono);color:var(--ink);background:var(--surface);
-    border:1px solid var(--hair);border-radius:6px;padding:.08em .4em;white-space:nowrap}
-
-  .duo{display:grid;grid-template-columns:1fr 240px;gap:clamp(2rem,5vw,4rem);align-items:start}
-  .margin-notes{display:grid;gap:.9rem;border-left:1px solid var(--hair);padding-left:1.1rem}
-  .margin-notes div{font:.78rem/1.55 var(--mono);color:var(--dim)}
-  .margin-notes b{display:block;color:var(--amber);font-weight:600}
-
-  /* diagram */
-  .plate{background:var(--surface);border:1px solid var(--hair);border-radius:10px;padding:clamp(.9rem,2vw,1.6rem)}
-  .scroller{overflow-x:auto}
-  .plate svg{display:block;width:100%;min-width:820px;height:auto}
-  .status{font:.78rem/1.8 var(--mono);color:var(--dim);margin:1rem 0 0;max-width:74ch}
-  .status b{color:var(--amber);font-weight:600}
-  .status i{font-style:normal;color:var(--ink)}
-
-  /* ledger rows */
-  .ledger{border-top:1px solid var(--hair)}
-  .row{display:grid;grid-template-columns:168px 1fr;gap:1.4rem;
-    padding:1.25rem 0;border-bottom:1px solid var(--hair)}
-  .row .t{font:600 .85rem/1.5 var(--mono);color:var(--amber);padding-top:.15rem}
-  .row p{font:400 1.02rem/1.7 var(--serif);color:var(--dim);margin:0;max-width:62ch}
-  .row p b{color:var(--ink);font-weight:600}
-  .row p code,.row p .code-inline{font-size:.82em}
-  .row p .n{color:var(--ink);font:600 .8em var(--mono)}
-
-  /* footer */
-  .foot{display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap;align-items:baseline;
-    border-top:1px solid var(--hair);margin-top:clamp(2.6rem,5vw,4rem);padding:1.5rem 0 3rem;
-    font:.9rem/1.6 var(--mono);color:var(--dim)}
-  .foot a{color:var(--dim);text-decoration-color:var(--hair)}
-  .foot a:hover{color:var(--amber)}
-
-  /* reveal (single orchestrated entrance, reduced-motion respected) */
-  html.js [data-reveal]{opacity:0;transform:translateY(14px);
-    transition:opacity .7s cubic-bezier(.16,1,.3,1),transform .7s cubic-bezier(.16,1,.3,1)}
-  html.js .in{opacity:1;transform:none}
-  @media (prefers-reduced-motion: reduce){
-    html{scroll-behavior:auto}
-    html.js [data-reveal]{opacity:1;transform:none;transition:none}
-  }
-
-  @media (max-width:920px){
-    .hero{grid-template-columns:1fr}
-    .duo{grid-template-columns:1fr}
-    .margin-notes{border-left:0;padding-left:0;border-top:1px dashed var(--hair);padding-top:1rem;grid-template-columns:1fr 1fr}
-    .row{grid-template-columns:1fr;gap:.4rem;padding:1.1rem 0}
-  }
-  @media (max-width:560px){
-    .margin-notes{grid-template-columns:1fr}
-    .mast{padding:1.1rem 0}
-    .cmd{font-size:.78rem;gap:.5rem;padding:.65rem .7rem}
-    .cmd button{padding:.3rem .45rem}
-    .fact{overflow-wrap:anywhere}
-  }
-  @media (max-width:380px){
-    .cmd{font-size:.72rem;gap:.45rem;padding:.6rem .65rem}
-    .cmd .p{display:none}
-  }
-</style>
+<link rel="stylesheet" href="styles.css">
+<script>document.documentElement.classList.add('js');</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://remitlabs.github.io/#org",
+      "name": "Remit Labs",
+      "url": "https://remitlabs.github.io/",
+      "logo": "https://remitlabs.github.io/assets/og.png",
+      "sameAs": ["https://github.com/remitlabs", "https://www.npmjs.com/org/remitlabs"]
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://remitlabs.github.io/#site",
+      "url": "https://remitlabs.github.io/",
+      "name": "Remit",
+      "publisher": { "@id": "https://remitlabs.github.io/#org" }
+    },
+    {
+      "@type": "SoftwareApplication",
+      "name": "Remit",
+      "applicationCategory": "DeveloperApplication",
+      "operatingSystem": "macOS, Linux, Windows",
+      "description": "Least-privilege and lifecycle control for AI agent skills: audit, behavioral canary, digest pinning, and revocation.",
+      "softwareVersion": "0.1.1",
+      "license": "https://www.apache.org/licenses/LICENSE-2.0",
+      "url": "https://remitlabs.github.io/",
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+    }
+  ]
+}
+</script>
 </head>
 <body>
-<script>document.documentElement.classList.add('js');</script>
 <div class="wrap">
 
   <header class="mast">
     <a class="brand" href="/">remit <em>— agent-skill trust layer</em></a>
-    <nav class="chips" aria-label="page links">
-      <a class="chip" href="#install">install</a>
-      <a class="chip" href="https://www.npmjs.com/package/@remitlabs/cli">npm: @remitlabs/cli</a>
-      <span class="chip warm">public beta</span>
+    <nav class="nav" aria-label="primary">
+      <a href="/pricing.html">pricing</a>
+      <a href="/security.html">security</a>
+      <a href="/compare.html">compare</a>
+      <a href="/docs.html">docs</a>
+      <a href="/blog/">blog</a>
+      <a class="pill" href="#install">run the audit</a>
     </nav>
   </header>
 
@@ -170,14 +78,14 @@
         <h1 data-reveal>Remit</h1>
         <p class="dict" data-reveal><b>remit</b> · rɪˈmɪt · n. the scope of someone's authority.</p>
         <p class="tag" data-reveal>least privilege for agent skills</p>
-        <p class="lede" data-reveal>Every skill <strong>declares its scope</strong>, <strong>is observed in a sandbox when available</strong>, and <strong>can be blocked at load</strong> if it drifts.</p>
+        <p class="lede" data-reveal>Every skill <strong>declares its scope</strong>, <strong>is observed in a container when one is available</strong>, and <strong>can be blocked at load</strong> if it drifts.</p>
         <div class="install" id="install" data-reveal>
           <div class="cmd"><span class="p">$</span><code>npx @remitlabs/cli@latest start</code><button type="button" data-copy>copy</button></div>
-          <div class="cta-row">
-            <a class="cta" href="https://www.npmjs.com/package/@remitlabs/cli">view on npm</a>
-            <a class="cta ghost" href="#limits">what this does not prove</a>
+          <div class="cta-row" style="margin-top:.9rem">
+            <a class="cta solid" href="https://www.npmjs.com/package/@remitlabs/cli">run the free audit</a>
+            <a class="cta ghost" href="#limits">see what it does not prove</a>
           </div>
-          <p class="note">free public beta · Node 22.5+ · no account · runs locally</p>
+          <p class="note">free · Node 22.5+ · no account · runs locally · Apache-2.0</p>
         </div>
         <div class="facts" data-reveal>
           <div class="fact"><em>static</em> <b>64 high-signal rules</b> — secret paths, curl-pipe-sh, reverse shells, hidden instructions</div>
@@ -209,6 +117,7 @@
       <div>
         <h2 class="sec-head" data-reveal>A skill vouches for itself. <em>Nothing checks the maths.</em></h2>
         <p class="prose" data-reveal>Today, a skill's trust story is <b>prose</b>: a description, some stars, maybe a README skim. Nothing runs it in a box before your agent loads it. Nothing watches what it does after. Nothing revokes it when a maintainer turns hostile at 2am — so you read <code>SKILL.md</code> twice and install anyway, hoping. The same <b>"summarize notes"</b> skill can ship <code>"curl … | sh"</code> or quietly read <code>~/.ssh</code>: our detection corpus keeps specimens of exactly that, and they fool a human skim.</p>
+        <p class="prose" data-reveal>This is the new shadow IT. Not SaaS apps — <b>instructions</b>. A skill is documentation, code, and authority in one artifact, and the model reads its text as direction.</p>
       </div>
       <div class="margin-notes" data-reveal aria-label="current practice, annotated">
         <div><b>vouching</b> a description in prose</div>
@@ -295,6 +204,14 @@
     </section>
 
     <section class="tail">
+      <h2 class="sec-head" data-reveal>See it run</h2>
+      <figure class="film" data-reveal>
+        <video src="assets/remit-loop.mp4" poster="assets/poster.jpg" muted loop playsinline autoplay preload="none" aria-label="A short loop showing a skill moving through scan, receipt, install, and revocation"></video>
+        <figcaption>six seconds: source → receipt → gate → revoke. no audio.</figcaption>
+      </figure>
+    </section>
+
+    <section class="tail">
       <h2 class="sec-head" data-reveal>How existing skills are handled</h2>
       <div class="ledger" data-reveal>
         <div class="row">
@@ -338,45 +255,57 @@
       </div>
     </section>
 
+    <section class="tail">
+      <h2 class="sec-head" data-reveal>Free on your machine. <em>Paid across your team.</em></h2>
+      <p class="prose" data-reveal>The local audit is free forever: scan, canary, pin, revoke, route. No account, no seat count, no trial timer. Teams pay for coordination — a shared fleet, roles, approvals, scheduled scans, alerts, retained evidence, and a compliance export. Security basics never go behind a paywall.</p>
+      <div class="cta-row" data-reveal style="margin-top:1.4rem">
+        <a class="cta solid" href="/pricing.html">see pricing</a>
+        <a class="cta ghost" href="/compare.html">compare with Socket, Snyk, registries</a>
+      </div>
+    </section>
+
     <section class="tail" id="limits">
       <h2 class="sec-head" data-reveal>What this does not prove</h2>
       <p class="prose" data-reveal>A finding is a rule match, not proof of intent. A canary receipt is one observed run in a container, not a guarantee that a skill is safe. Static coverage can be partial; compiled or encrypted files are blind spots. The canary is observer-first by default — it enforces egress only when you pass an allowlist. Remit is defense in depth, not a clean bill of health.</p>
       <p class="prose" data-reveal>Run <code>npx @remitlabs/cli@latest start</code> and judge the evidence yourself. The output tells you which layers ran and what they could not see.</p>
+      <div class="cta-row" data-reveal style="margin-top:1.4rem">
+        <a class="cta" href="https://www.npmjs.com/package/@remitlabs/cli">install from npm</a>
+        <a class="cta ghost" href="/security.html">read the security model</a>
+      </div>
     </section>
-
-    <footer class="foot">
-      <span>built by <a href="https://www.npmjs.com/org/remitlabs">remitlabs</a>, cli: <b style="color:var(--ink)">skillctl</b></span>
-      <span>don't trust the page — <a href="#install">run the audit</a></span>
-    </footer>
   </main>
+
+  <footer class="foot">
+    <div class="col">
+      <span class="brand">remit <em>— agent-skill trust layer</em></span>
+      <p>built by <a href="https://www.npmjs.com/org/remitlabs" style="display:inline;color:var(--ink)">remitlabs</a> · cli: skillctl · Apache-2.0</p>
+    </div>
+    <div class="col">
+      <h4>Product</h4>
+      <a href="/pricing.html">pricing</a>
+      <a href="/security.html">security</a>
+      <a href="/compare.html">compare</a>
+      <a href="/docs.html">docs</a>
+    </div>
+    <div class="col">
+      <h4>Learn</h4>
+      <a href="/blog/">blog</a>
+      <a href="/blog/audit-claude-code-skills.html">audit your skills</a>
+      <a href="/blog/mcp-security-checklist.html">mcp checklist</a>
+      <a href="/llms.txt">llms.txt</a>
+    </div>
+    <div class="col">
+      <h4>Elsewhere</h4>
+      <a href="https://www.npmjs.com/package/@remitlabs/cli">npm</a>
+      <a href="https://github.com/remitlabs">github</a>
+      <a href="/.well-known/security.txt">security.txt</a>
+    </div>
+    <div class="bottom">
+      <span>don't trust the page — <a href="#install" style="display:inline">run the audit</a></span>
+      <span>© 2026 Remit Labs · public beta</span>
+    </div>
+  </footer>
 </div>
-
-<script>
-  const copyButton = document.querySelector('[data-copy]');
-  if (copyButton) {
-    copyButton.addEventListener('click', async () => {
-      const command = 'npx @remitlabs/cli@latest start';
-      try {
-        await navigator.clipboard.writeText(command);
-        copyButton.textContent = 'copied';
-      } catch {
-        copyButton.textContent = command;
-      }
-      setTimeout(() => { copyButton.textContent = 'copy'; }, 1800);
-    });
-  }
-
-  if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    const io = new IntersectionObserver((entries) => {
-      entries.forEach((e) => {
-        if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
-      });
-    }, { threshold: 0.12 });
-    document.querySelectorAll('[data-reveal]').forEach((el, i) => {
-      el.style.transitionDelay = Math.min(i * 50, 200) + 'ms';
-      io.observe(el);
-    });
-  }
-</script>
+<script src="site.js" defer></script>
 </body>
 </html>
