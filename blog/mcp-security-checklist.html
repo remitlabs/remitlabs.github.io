@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The MCP security checklist for teams running coding agents</title>
+<meta name="description" content="A practical MCP security checklist: inventory servers, scope tokens, gate tool loads, log calls, and keep a revocation path. With the limits of each control.">
+<meta name="theme-color" content="#131110">
+<link rel="canonical" href="https://remitlabs.github.io/blog/mcp-security-checklist.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="The MCP security checklist for teams running coding agents">
+<meta property="og:description" content="Five controls that survive an audit, in the order that matters — and what none of them prove.">
+<meta property="og:url" content="https://remitlabs.github.io/blog/mcp-security-checklist.html">
+<meta property="og:image" content="https://remitlabs.github.io/assets/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect width="32" height="32" rx="7" fill="%23131110"/><text x="16" y="22" font-family="ui-monospace,Menlo,monospace" font-size="17" font-weight="700" fill="%23FFB454" text-anchor="middle">R</text></svg>'>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css">
+<script>document.documentElement.classList.add('js');</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "An MCP security checklist that survives an audit",
+  "description": "Five controls for MCP security, in the order that matters, with the failure mode each one leaves open.",
+  "datePublished": "2026-11-08",
+  "dateModified": "2026-11-08",
+  "author": { "@type": "Person", "name": "Prahalad Singh" },
+  "publisher": { "@type": "Organization", "name": "Remit Labs", "url": "https://remitlabs.github.io/" },
+  "mainEntityOfPage": "https://remitlabs.github.io/blog/mcp-security-checklist.html",
+  "image": "https://remitlabs.github.io/assets/og.png"
+}
+</script>
+</head>
+<body>
+<div class="wrap">
+  <header class="mast">
+    <a class="brand" href="/">remit <em>— agent-skill trust layer</em></a>
+    <nav class="nav" aria-label="primary">
+      <a href="/pricing.html">pricing</a>
+      <a href="/security.html">security</a>
+      <a href="/compare.html">compare</a>
+      <a href="/docs.html">docs</a>
+      <a href="/blog/">blog</a>
+      <a class="pill" href="/#install">run the audit</a>
+    </nav>
+  </header>
+
+  <main>
+    <article class="article">
+      <p class="eyebrow"><a href="/blog/" style="color:var(--amber);text-decoration:none">blog</a> · checklist</p>
+      <h1 style="font-size:clamp(2.2rem,4.8vw,3.3rem);line-height:1.06">An MCP security checklist that survives an audit</h1>
+      <p class="dek">Five controls, in the order that matters, with the failure mode each one leaves open.</p>
+      <div class="byline"><span>Prahalad Singh</span><span>2026-11-08</span><span>10 min read</span></div>
+
+      <p><b>Short answer:</b> you need five controls — an inventory of every MCP server and tool, least-privilege credentials per server, a load-time gate with evidence, a log you can diff week over week, and a revocation path that reaches every machine. Each one is necessary. None of them is sufficient on its own.</p>
+
+      <p>Most MCP security advice is a list of product features. This is a list of failure modes, and the control that addresses each one. Where a control has a hole, the hole is stated.</p>
+
+      <h2>Why MCP is a different surface from a dependency</h2>
+
+      <p>An MCP server exposes tools to an agent. A tool call can read a file, query a database, send a message, or run a command. The model chooses the call from a description written in natural language, and the description is attacker-controlled if the server is third-party.</p>
+
+      <p>That creates three boundaries collapsing into one place:</p>
+
+      <ul>
+        <li><b>Documentation</b> — the tool description the model reads and trusts.</li>
+        <li><b>Code</b> — the server implementation and anything it executes.</li>
+        <li><b>Authority</b> — the credentials and permissions the server holds.</li>
+      </ul>
+
+      <p>A package manager only ships code. MCP ships instructions the model obeys, plus the authority to act on them. That is why "we scan dependencies" does not cover this surface.</p>
+
+      <h2>1. Inventory every server and every tool</h2>
+
+      <p><b>Control:</b> keep a list of every MCP server configured for every agent, the tools each one exposes, who added it, and when. Include project-local config, user-level config, and anything a plugin installed silently.</p>
+
+      <p><b>Why it matters:</b> you cannot govern what you cannot name. In practice, teams find servers they did not know were configured — a database server added for one experiment, a browser automation server a contractor installed, two copies of the same server at different versions.</p>
+
+      <p><b>How to start:</b> parse the MCP config files your agents use, resolve each server to a package and version, and store the result as a digest-bound record. Repeat it on a schedule, because config drifts.</p>
+
+      <p><b>What it leaves open:</b> an inventory is a snapshot. A server can add a tool after you record it. Pair this with control 4.</p>
+
+      <h2>2. Scope credentials per server, not per person</h2>
+
+      <p><b>Control:</b> every MCP server gets its own credential with the minimum scope it needs. No shared personal access token across five servers. No admin token because it was easier. Rotate on a schedule and on offboarding.</p>
+
+      <p><b>Why it matters:</b> the blast radius of a compromised server is the scope of its token. A GitHub token with <code>repo</code> and <code>workflow</code> can do far more than a read-only token, and a database server rarely needs write access to production.</p>
+
+      <p><b>How to start:</b> list each server, the credential it uses, and the scope. Anything with write access to production or the ability to change CI is a review item. Replace shared tokens with per-server service accounts.</p>
+
+      <p><b>What it leaves open:</b> least privilege limits damage; it does not detect misuse. A read-only token can still exfiltrate everything it can read.</p>
+
+      <h2>3. Gate the load, with evidence attached</h2>
+
+      <p><b>Control:</b> a server or skill does not reach the model until a policy decision says it may. The decision has four outcomes — allow, monitor, review, deny — and it carries the evidence that produced it: static findings, observed behavior when available, the digest, and the missing coverage.</p>
+
+      <p><b>Why it matters:</b> a scan that produces a dashboard nobody reads is not a control. A gate is. The difference between "we scanned it" and "it could not load" is the difference between an alert and a boundary.</p>
+
+      <p><b>How to start:</b> deny by default for new servers; allow known-good digests; require a second person for review-level loads; make the reason visible in the agent's error, not buried in a log.</p>
+
+      <p><b>What it leaves open:</b> a gate is only as good as its evidence. If the only input is a static scan, a determined attacker can shape the artifact to pass it. That is why controls 4 and 5 exist.</p>
+
+      <div class="callout"><p><b>The uncomfortable fact:</b> Trail of Bits built four malicious skills in under an hour each and defeated ClawHub, skills.sh, and Cisco's scanners. A static scan is a filter, not a proof. Gate on it, but do not stop there.</p></div>
+
+      <h2>4. Log tool calls and diff them week over week</h2>
+
+      <p><b>Control:</b> record which tools were called, by which agent, with what arguments (or a redacted summary), and what changed since the last review. Alert on new destinations, new tools, and new credential paths.</p>
+
+      <p><b>Why it matters:</b> most incidents are changes, not static facts. A server that behaved for six months and then starts contacting a new domain is the signal. A one-time scan will never see it.</p>
+
+      <p><b>How to start:</b> log at the proxy or the MCP router, not inside each server. Keep a normalized schema so you can compare. Send a weekly digest: new servers, changed tools, blocked attempts, skills that never fired.</p>
+
+      <p><b>What it leaves open:</b> logging observes what reached the logging layer. A compromised host or a call outside the router is invisible. TLS bodies are usually opaque.</p>
+
+      <h2>5. Keep a revocation path that reaches every machine</h2>
+
+      <p><b>Control:</b> a signed list of revoked or drifted artifacts, verified by every client, applied at load time and on the next sync. Removal must be reversible and recorded, and hand-installed copies must be surfaced rather than silently deleted.</p>
+
+      <p><b>Why it matters:</b> security without a kill switch is theater. If a bad server ships to 40 laptops, "please uninstall it" is not a control. A signed feed that blocks the digest at load is.</p>
+
+      <p><b>How to start:</b> define who can publish a revocation, how it is signed, how clients verify it, and what the SLA is. Test it: revoke a benign test artifact and confirm it is blocked on a second machine.</p>
+
+      <p><b>What it leaves open:</b> a machine that never syncs never learns. Air-gapped environments need a mirror. A compromised client can lie about what it applied.</p>
+
+      <h2>The checklist, in one table</h2>
+
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>#</th><th>Control</th><th>Failure mode it addresses</th><th>What it still misses</th></tr></thead>
+          <tbody>
+            <tr><td>1</td><td>Inventory servers and tools</td><td>Unknown shadow MCP servers</td><td>Post-inventory drift</td></tr>
+            <tr><td>2</td><td>Per-server least-privilege credentials</td><td>Blast radius of a compromised server</td><td>Misuse within granted scope</td></tr>
+            <tr><td>3</td><td>Load-time gate with evidence</td><td>Unreviewed artifact reaching the model</td><td>Evidence quality; a shaped artifact</td></tr>
+            <tr><td>4</td><td>Call logging + weekly diff</td><td>Silent behavior change</td><td>Traffic outside the logging layer</td></tr>
+            <tr><td>5</td><td>Signed revocation feed</td><td>A bad artifact spreading fleet-wide</td><td>Hosts that never sync</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2>What none of this proves</h2>
+
+      <p>A checklist is not a guarantee. Be explicit with your team and your auditor about the limits:</p>
+
+      <ul>
+        <li><b>Scanners are bypassable.</b> Public research has defeated every major marketplace scanner. Treat a scan as one input.</li>
+        <li><b>Behavioral observation is a sample.</b> One canary run does not cover conditional triggers, other hosts, or the model's own reasoning.</li>
+        <li><b>Inventory is a snapshot.</b> Drift is the norm, not the exception.</li>
+        <li><b>Revocation needs a sync.</b> A machine that never checks in is outside the control.</li>
+        <li><b>Least privilege limits damage, not intent.</b> A narrow token can still be abused within its scope.</li>
+      </ul>
+
+      <p>The goal is not a clean bill of health. It is a chain of evidence and a reversible decision at each link: what is here, what it can touch, what changed, who approved it, and how to make it inert.</p>
+
+      <h2>Where Remit fits</h2>
+
+      <p>Remit implements the artifact half of this checklist for skills and MCP servers: inventory across agent directories, a 64-rule static scan, a disposable-container canary when one is available, digest pinning, a load-time gate, a weekly diff, and an Ed25519-signed revocation feed. The local tool is free and runs without an account.</p>
+
+      <p>It does not replace your identity provider, your SIEM, or your judgment. It gives them something concrete to act on.</p>
+
+      <div class="cta-row" style="margin-top:1.6rem">
+        <a class="cta solid" href="https://www.npmjs.com/package/@remitlabs/cli">run the free audit</a>
+        <a class="cta ghost" href="/security.html">read the security model</a>
+      </div>
+
+      <hr>
+      <p class="note">Sources for the claims in this article: Trail of Bits, "The sorry state of skill distribution" (2026-06-03); CSA research note on skill scanner bypass (2026-06-10); Unit 42, "Trust No Skill" (2026-06-11); Snyk ToxicSkills (2026-02-05); OWASP Agentic Skills Top 10 (v1.0-2026). Verify current details before quoting.</p>
+    </article>
+  </main>
+
+  <footer class="foot">
+    <div class="col">
+      <span class="brand">remit <em>— agent-skill trust layer</em></span>
+      <p>built by <a href="https://www.npmjs.com/org/remitlabs" style="display:inline;color:var(--ink)">remitlabs</a> · cli: skillctl · Apache-2.0</p>
+    </div>
+    <div class="col">
+      <h4>Product</h4>
+      <a href="/pricing.html">pricing</a>
+      <a href="/security.html">security</a>
+      <a href="/compare.html">compare</a>
+      <a href="/docs.html">docs</a>
+    </div>
+    <div class="col">
+      <h4>Learn</h4>
+      <a href="/blog/">blog</a>
+      <a href="/blog/audit-claude-code-skills.html">audit your skills</a>
+      <a href="/blog/mcp-security-checklist.html">mcp checklist</a>
+      <a href="/llms.txt">llms.txt</a>
+    </div>
+    <div class="col">
+      <h4>Elsewhere</h4>
+      <a href="https://www.npmjs.com/package/@remitlabs/cli">npm</a>
+      <a href="https://github.com/remitlabs">github</a>
+      <a href="/.well-known/security.txt">security.txt</a>
+    </div>
+    <div class="bottom">
+      <span>don't trust the page — <a href="/#install" style="display:inline">run the audit</a></span>
+      <span>© 2026 Remit Labs · public beta</span>
+    </div>
+  </footer>
+</div>
+<script src="../site.js" defer></script>
+</body>
+</html>

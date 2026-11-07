@@ -1,0 +1,237 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pricing — Remit</title>
+<meta name="description" content="Free local audit forever. Team $25/operator/month, Business $50, Enterprise from $25k/year. Pay for coordination, not computation.">
+<meta name="theme-color" content="#131110">
+<link rel="canonical" href="https://remitlabs.github.io/pricing.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Pricing — Remit">
+<meta property="og:description" content="Free local audit forever. Team $25/operator/month, Business $50, Enterprise from $25k/year. Pay for coordination, not computation.">
+<meta property="og:url" content="https://remitlabs.github.io/pricing.html">
+<meta property="og:image" content="https://remitlabs.github.io/assets/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect width="32" height="32" rx="7" fill="%23131110"/><text x="16" y="22" font-family="ui-monospace,Menlo,monospace" font-size="17" font-weight="700" fill="%23FFB454" text-anchor="middle">R</text></svg>'>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<script>document.documentElement.classList.add('js');</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Product",
+  "name": "Remit",
+  "description": "Least-privilege and lifecycle control for AI agent skills. Free local audit; paid team control plane.",
+  "brand": { "@type": "Brand", "name": "Remit Labs" },
+  "url": "https://remitlabs.github.io/pricing.html",
+  "offers": [
+    { "@type": "Offer", "name": "Community", "price": "0", "priceCurrency": "USD", "description": "Local CLI, dashboard, static scan, canary, lockfile, MCP router, revocation feed." },
+    { "@type": "Offer", "name": "Team", "price": "25", "priceCurrency": "USD", "description": "Hosted control plane, shared fleet, SSO, approvals, scheduled scans, alerts." },
+    { "@type": "Offer", "name": "Business", "price": "50", "priceCurrency": "USD", "description": "SAML/SCIM, SIEM, compliance exports, custom rules, 99.9% SLA." },
+    { "@type": "Offer", "name": "Enterprise", "price": "25000", "priceCurrency": "USD", "description": "Self-hosted, air-gapped, custom integrations, 24/7 support." }
+  ]
+}
+</script>
+</head>
+<body>
+<div class="wrap">
+  <header class="mast">
+    <a class="brand" href="/">remit <em>— agent-skill trust layer</em></a>
+    <nav class="nav" aria-label="primary">
+      <a href="/pricing.html">pricing</a>
+      <a href="/security.html">security</a>
+      <a href="/compare.html">compare</a>
+      <a href="/docs.html">docs</a>
+      <a href="/blog/">blog</a>
+      <a class="pill" href="/#install">run the audit</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero" style="grid-template-columns:1fr;padding-bottom:1rem">
+      <div>
+        <h1 data-reveal style="font-size:clamp(2.6rem,6vw,4.4rem);line-height:1.02">Free on your machine.<br><span style="color:var(--dim)">Paid across your team.</span></h1>
+        <p class="lede" data-reveal style="max-width:44ch;margin-top:1.2rem">The local audit is free forever. Teams pay for the layer a CLI cannot give them: a shared fleet, roles, approvals, scheduled scans, alerts, retained evidence, and a compliance export.</p>
+        <p class="note" data-reveal>prices are a public-beta hypothesis · design partners get 50% off for six months · annual billing is 20% off</p>
+      </div>
+    </section>
+
+    <section class="tail" style="border-top:0;padding-top:1rem;margin-top:0">
+      <div class="tiers" data-reveal>
+        <div class="tier">
+          <span class="name">Community</span>
+          <div class="price">$0 <small>/ forever</small></div>
+          <p class="for">for individual developers and evaluators</p>
+          <ul>
+            <li><b>Local</b> CLI + dashboard</li>
+            <li>Static scan, 64 rules</li>
+            <li>Local canary (Docker/Podman)</li>
+            <li>Lockfile, pin, update diff, rollback</li>
+            <li>MCP router + hook-guard</li>
+            <li>Signed revocation feed</li>
+            <li>Apache-2.0</li>
+            <li>Community support</li>
+          </ul>
+          <a class="cta" href="https://www.npmjs.com/package/@remitlabs/cli">run the free audit</a>
+          <p class="fine">no account · no seat count · no trial timer</p>
+        </div>
+
+        <div class="tier feature">
+          <span class="name">Team</span>
+          <div class="price">$25 <small>/ operator / mo</small></div>
+          <p class="for">for 10–50 person engineering teams</p>
+          <ul>
+            <li>Everything in Community, plus:</li>
+            <li><b>Hosted org</b>, members, roles</li>
+            <li>Shared fleet across machines</li>
+            <li>Google/GitHub SSO</li>
+            <li>Org policy + approval workflow</li>
+            <li>Scheduled scans + Slack/email/webhook alerts</li>
+            <li>Hosted canary, 500 runs/mo</li>
+            <li>90-day audit log + evidence history</li>
+            <li>Private team registry, 5 GB</li>
+            <li>Business-hours support</li>
+          </ul>
+          <a class="cta solid" href="mailto:singhgaurprahalad@gmail.com?subject=Remit%20design%20partner">start a design-partner trial</a>
+          <p class="fine">5-seat minimum · $250/mo floor</p>
+        </div>
+
+        <div class="tier">
+          <span class="name">Business</span>
+          <div class="price">$50 <small>/ operator / mo</small></div>
+          <p class="for">for 50–200 person companies with compliance needs</p>
+          <ul>
+            <li>Everything in Team, plus:</li>
+            <li><b>SAML SSO + SCIM</b></li>
+            <li>Advanced RBAC + scoped API keys</li>
+            <li>SIEM: Splunk, Datadog, Sentinel</li>
+            <li>Compliance evidence pack (SOC 2 / ISO 27001)</li>
+            <li>1-year retention + legal hold</li>
+            <li>Custom rules and signature packs</li>
+            <li>99.9% uptime SLA</li>
+            <li>Priority support</li>
+          </ul>
+          <a class="cta" href="mailto:singhgaurprahalad@gmail.com?subject=Remit%20Business">talk to us</a>
+          <p class="fine">20-seat minimum · $1,000/mo floor</p>
+        </div>
+
+        <div class="tier">
+          <span class="name">Enterprise</span>
+          <div class="price">from $25k <small>/ year</small></div>
+          <p class="for">for regulated, air-gapped, or 200+ person orgs</p>
+          <ul>
+            <li>Everything in Business, plus:</li>
+            <li><b>Self-hosted</b> / VPC / air-gapped</li>
+            <li>Dedicated canary workers</li>
+            <li>Custom data residency and retention</li>
+            <li>Custom integrations: GitLab, Azure DevOps, Jira, ServiceNow</li>
+            <li>Security review + pentest report</li>
+            <li>24/7 support + named TAM</li>
+            <li>Professional services</li>
+          </ul>
+          <a class="cta" href="mailto:singhgaurprahalad@gmail.com?subject=Remit%20Enterprise">book a call</a>
+          <p class="fine">custom contract · DPA available</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="tail">
+      <div class="duo">
+        <div>
+          <h2 class="sec-head" data-reveal>What is free, forever</h2>
+          <p class="prose" data-reveal>If it makes your machine safer, it is free. The scanner, the local canary, the revocation feed, and the MCP load gate are not behind a paywall — ever. Paying for a kill switch would make the ecosystem less safe, and we are not doing that.</p>
+          <p class="prose" data-reveal>Paid tiers sell <b>coordination</b>: a second person can see the fleet, approve an install, and prove what happened. That is a different job from scanning one machine.</p>
+        </div>
+        <div class="margin-notes" data-reveal>
+          <div><b>free</b> scan, canary, pin, revoke, route</div>
+          <div><b>paid</b> fleet, roles, approvals, history</div>
+          <div><b>never</b> a paywall on the kill switch</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="tail">
+      <h2 class="sec-head" data-reveal>Pricing questions</h2>
+      <div class="faq" data-reveal>
+        <details>
+          <summary>Is the local audit really free?</summary>
+          <div class="a">Yes. No account, no seat count, no time limit. Run <code>npx @remitlabs/cli@latest start</code> and use it.</div>
+        </details>
+        <details>
+          <summary>What counts as an operator?</summary>
+          <div class="a">Anyone who can change policy, approve an install, run a hosted canary, or administer the org. <b>Read-only viewers are unlimited and free</b>, so a security team can share the fleet without a 50-seat bill.</div>
+        </details>
+        <details>
+          <summary>Why per operator, not per skill?</summary>
+          <div class="a">Value scales with the number of people who can see and act on the fleet, not with the number of files. Per-skill pricing punishes exactly the teams that need this most.</div>
+        </details>
+        <details>
+          <summary>Do you store my code?</summary>
+          <div class="a">The local scan runs on your machine. The self-hosted API is yours. The hosted team tier will document exactly what leaves the machine before it ships — see the <a href="/security.html">security model</a>.</div>
+        </details>
+        <details>
+          <summary>Is this a guarantee that a skill is safe?</summary>
+          <div class="a">No. Remit is defense in depth: static findings, one observed canary run, digest pinning, and revocation. Every receipt states its coverage and limits.</div>
+        </details>
+        <details>
+          <summary>Can I self-host?</summary>
+          <div class="a">Yes, on Enterprise. The API already runs on Postgres/PGlite; packaging, docs, backups, and an operator credential are part of the Enterprise deployment.</div>
+        </details>
+        <details>
+          <summary>What happens to my data if I cancel?</summary>
+          <div class="a">Export everything (JSON/markdown) for 30 days, then delete on request. No lock-in on your own evidence.</div>
+        </details>
+        <details>
+          <summary>Do you offer a discount?</summary>
+          <div class="a">20% off annual. Design partners get 50% off for six months in exchange for feedback. Open-source projects and students: ask.</div>
+        </details>
+      </div>
+    </section>
+
+    <section class="tail">
+      <h2 class="sec-head" data-reveal>Bring us one real fleet.</h2>
+      <p class="prose" data-reveal>We will bring the audit. Design partners get the Team tier at 50% off for six months, a direct line to the founder, and a say in what gets built first. In exchange: a 30-minute kickoff, a check-in every two weeks, and permission to use anonymized learnings.</p>
+      <div class="cta-row" data-reveal style="margin-top:1.4rem">
+        <a class="cta solid" href="mailto:singhgaurprahalad@gmail.com?subject=Remit%20design%20partner">book a 15-minute call</a>
+        <a class="cta ghost" href="/docs.html">read the docs first</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <div class="col">
+      <span class="brand">remit <em>— agent-skill trust layer</em></span>
+      <p>built by <a href="https://www.npmjs.com/org/remitlabs" style="display:inline;color:var(--ink)">remitlabs</a> · cli: skillctl · Apache-2.0</p>
+    </div>
+    <div class="col">
+      <h4>Product</h4>
+      <a href="/pricing.html">pricing</a>
+      <a href="/security.html">security</a>
+      <a href="/compare.html">compare</a>
+      <a href="/docs.html">docs</a>
+    </div>
+    <div class="col">
+      <h4>Learn</h4>
+      <a href="/blog/">blog</a>
+      <a href="/blog/audit-claude-code-skills.html">audit your skills</a>
+      <a href="/blog/mcp-security-checklist.html">mcp checklist</a>
+      <a href="/llms.txt">llms.txt</a>
+    </div>
+    <div class="col">
+      <h4>Elsewhere</h4>
+      <a href="https://www.npmjs.com/package/@remitlabs/cli">npm</a>
+      <a href="https://github.com/remitlabs">github</a>
+      <a href="/.well-known/security.txt">security.txt</a>
+    </div>
+    <div class="bottom">
+      <span>don't trust the page — <a href="/#install" style="display:inline">run the audit</a></span>
+      <span>© 2026 Remit Labs · public beta</span>
+    </div>
+  </footer>
+</div>
+<script src="site.js" defer></script>
+</body>
+</html>

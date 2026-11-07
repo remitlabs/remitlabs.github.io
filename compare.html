@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Remit vs Socket, Snyk, and skill registries</title>
+<meta name="description" content="An honest comparison: what package scanners, registries, platform signing, and Remit each answer — and where each one stops.">
+<meta name="theme-color" content="#131110">
+<link rel="canonical" href="https://remitlabs.github.io/compare.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Remit vs Socket, Snyk, and skill registries">
+<meta property="og:description" content="Different tools answer different questions. Here is exactly where each one stops.">
+<meta property="og:url" content="https://remitlabs.github.io/compare.html">
+<meta property="og:image" content="https://remitlabs.github.io/assets/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect width="32" height="32" rx="7" fill="%23131110"/><text x="16" y="22" font-family="ui-monospace,Menlo,monospace" font-size="17" font-weight="700" fill="%23FFB454" text-anchor="middle">R</text></svg>'>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<script>document.documentElement.classList.add('js');</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Remit vs Socket, Snyk, and skill registries",
+  "description": "An honest comparison of package scanners, registries, platform signing, and Remit.",
+  "datePublished": "2026-11-08",
+  "dateModified": "2026-11-08",
+  "author": { "@type": "Person", "name": "Prahalad Singh" },
+  "publisher": { "@type": "Organization", "name": "Remit Labs" },
+  "mainEntityOfPage": "https://remitlabs.github.io/compare.html"
+}
+</script>
+</head>
+<body>
+<div class="wrap">
+  <header class="mast">
+    <a class="brand" href="/">remit <em>— agent-skill trust layer</em></a>
+    <nav class="nav" aria-label="primary">
+      <a href="/pricing.html">pricing</a>
+      <a href="/security.html">security</a>
+      <a href="/compare.html">compare</a>
+      <a href="/docs.html">docs</a>
+      <a href="/blog/">blog</a>
+      <a class="pill" href="/#install">run the audit</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero" style="grid-template-columns:1fr;padding-bottom:1rem">
+      <div>
+        <h1 data-reveal style="font-size:clamp(2.4rem,5.6vw,4.1rem);line-height:1.04">Different tools answer<br><span style="color:var(--dim)">different questions.</span></h1>
+        <p class="lede" data-reveal style="max-width:52ch;margin-top:1.2rem">Most "vs" pages pretend the other product is bad. They are not. Socket and Snyk are good at packages and code. Registries are good at distribution. Platform signing is good at first-party trust. Remit is the lifecycle and evidence layer across agents.</p>
+      </div>
+    </section>
+
+    <section class="tail" style="border-top:0;padding-top:1rem;margin-top:0">
+      <h2 class="sec-head" data-reveal>Where each one stops</h2>
+      <div class="table-wrap" data-reveal>
+        <table class="compare-table">
+          <thead>
+            <tr><th>Question</th><th>Socket</th><th>Snyk</th><th>Registries</th><th>Platform-native</th><th>Remit</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><b>Is this package malicious?</b></td><td class="yes">Yes</td><td class="yes">Yes</td><td class="part">Partly</td><td class="part">Per vendor</td><td class="part">Static rules</td></tr>
+            <tr><td><b>What can this skill touch?</b></td><td class="no">No</td><td class="part">Partial</td><td class="no">No</td><td class="part">Per vendor</td><td class="yes">Declared + observed</td></tr>
+            <tr><td><b>Did the bytes change since install?</b></td><td class="no">No</td><td class="no">No</td><td class="part">Partial</td><td class="part">Per vendor</td><td class="yes">Digest + diff</td></tr>
+            <tr><td><b>Who approved it?</b></td><td class="no">No</td><td class="no">No</td><td class="no">No</td><td class="part">Per vendor</td><td class="yes">Yes (Team)</td></tr>
+            <tr><td><b>Can I revoke it across agents?</b></td><td class="no">No</td><td class="no">No</td><td class="no">No</td><td class="part">Per vendor</td><td class="yes">Signed feed</td></tr>
+            <tr><td><b>One policy across Claude / Codex / Cursor?</b></td><td class="no">No</td><td class="no">No</td><td class="no">No</td><td class="no">No</td><td class="yes">Yes</td></tr>
+            <tr><td><b>Context cost / on-demand load?</b></td><td class="no">No</td><td class="no">No</td><td class="no">No</td><td class="part">Partial</td><td class="yes">Router</td></tr>
+            <tr><td><b>Works offline, no account?</b></td><td class="no">No</td><td class="no">No</td><td class="no">No</td><td class="no">No</td><td class="yes">Yes</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="table-hint">swipe the table sideways →</p>
+      <p class="table-note">"Yes" means the capability exists in the product as described on 2026-11-08. "Partial" means a related but narrower capability. Verify current competitor features before quoting this table.</p>
+    </section>
+
+    <section class="tail">
+      <h2 class="sec-head" data-reveal>The honest answers</h2>
+      <div class="ledger" data-reveal>
+        <div class="row">
+          <div class="t">you have socket or snyk</div>
+          <p>Keep them. They cover dependencies and code, and Snyk's ToxicSkills research is why teams are paying attention. Run the free Remit audit next to them and compare what each one sees about the <b>skill artifact</b>: declared scope, observed behavior, digest history, and revocation. A scan report is not an install gate or a kill switch.</p>
+        </div>
+        <div class="row">
+          <div class="t">you use skills.sh or clawhub</div>
+          <p>Keep using them for discovery. Install counts are popularity, not evidence — researchers gamed <b>1.7M installs</b> with typosquats, and Unit 42 found <b>80%</b> of skills behave differently than declared. Remit is the trust layer under the registry, not a replacement for it. A registry with a receipt is more valuable to everyone.</p>
+        </div>
+        <div class="row">
+          <div class="t">you rely on platform signing</div>
+          <p>That is necessary and not sufficient. A team running three agents still needs one neutral policy and one audit answer across all three. Vendors will not build a competitor-neutral control plane. That is the job Remit does.</p>
+        </div>
+        <div class="row">
+          <div class="t">you read every skill by hand</div>
+          <p>That is the most thorough control available, and it does not scale past 50 skills or survive a maintainer changing one at 2am. Remit automates the read, records what it saw, and tells you when the bytes change. It does not replace judgment; it gives judgment a memory.</p>
+        </div>
+        <div class="row">
+          <div class="t">you block all skills</div>
+          <p>Then you do not have the productivity problem yet. When you allow them, start with the free audit. No pitch needed.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="tail">
+      <h2 class="sec-head" data-reveal>What Remit does not claim</h2>
+      <div class="grid two" data-reveal>
+        <div class="card"><h3>Not a guarantee</h3><p>A finding is a rule match. A canary is one observed run. A clean receipt is not proof that a skill is benign.</p></div>
+        <div class="card"><h3>Not a firewall</h3><p>Runtime guardrails for prompts and models are a different layer. Remit governs the artifact the agent loads.</p></div>
+        <div class="card"><h3>Not a registry</h3><p>Discovery is solved by better-funded products. Remit adds evidence and lifecycle to whatever registry you already use.</p></div>
+        <div class="card"><h3>Not finished</h3><p>The local tool ships today. The team control plane is in design-partner development, and we label it that way.</p></div>
+      </div>
+    </section>
+
+    <section class="tail">
+      <h2 class="sec-head" data-reveal>Run the free audit and judge the evidence.</h2>
+      <p class="prose" data-reveal>If it finds nothing you did not know, you have lost five minutes.</p>
+      <div class="install" data-reveal style="margin-top:1.2rem">
+        <div class="cmd"><span class="p">$</span><code>npx @remitlabs/cli@latest start</code><button type="button" data-copy>copy</button></div>
+      </div>
+      <div class="cta-row" data-reveal style="margin-top:1rem">
+        <a class="cta" href="/pricing.html">see pricing</a>
+        <a class="cta ghost" href="/security.html">read the security model</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <div class="col">
+      <span class="brand">remit <em>— agent-skill trust layer</em></span>
+      <p>built by <a href="https://www.npmjs.com/org/remitlabs" style="display:inline;color:var(--ink)">remitlabs</a> · cli: skillctl · Apache-2.0</p>
+    </div>
+    <div class="col">
+      <h4>Product</h4>
+      <a href="/pricing.html">pricing</a>
+      <a href="/security.html">security</a>
+      <a href="/compare.html">compare</a>
+      <a href="/docs.html">docs</a>
+    </div>
+    <div class="col">
+      <h4>Learn</h4>
+      <a href="/blog/">blog</a>
+      <a href="/blog/audit-claude-code-skills.html">audit your skills</a>
+      <a href="/blog/mcp-security-checklist.html">mcp checklist</a>
+      <a href="/llms.txt">llms.txt</a>
+    </div>
+    <div class="col">
+      <h4>Elsewhere</h4>
+      <a href="https://www.npmjs.com/package/@remitlabs/cli">npm</a>
+      <a href="https://github.com/remitlabs">github</a>
+      <a href="/.well-known/security.txt">security.txt</a>
+    </div>
+    <div class="bottom">
+      <span>don't trust the page — <a href="/#install" style="display:inline">run the audit</a></span>
+      <span>© 2026 Remit Labs · public beta</span>
+    </div>
+  </footer>
+</div>
+<script src="site.js" defer></script>
+</body>
+</html>

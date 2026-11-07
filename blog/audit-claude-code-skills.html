@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>How to audit your Claude Code skills (and what to do next)</title>
+<meta name="description" content="A five-minute audit of every Claude Code skill: what is installed, what each one can touch, duplicates, and the risky patterns a human skim misses.">
+<meta name="theme-color" content="#131110">
+<link rel="canonical" href="https://remitlabs.github.io/blog/audit-claude-code-skills.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="How to audit your Claude Code skills">
+<meta property="og:description" content="A five-minute audit: what is installed, what each skill can touch, duplicates, and the patterns a human skim misses.">
+<meta property="og:url" content="https://remitlabs.github.io/blog/audit-claude-code-skills.html">
+<meta property="og:image" content="https://remitlabs.github.io/assets/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect width="32" height="32" rx="7" fill="%23131110"/><text x="16" y="22" font-family="ui-monospace,Menlo,monospace" font-size="17" font-weight="700" fill="%23FFB454" text-anchor="middle">R</text></svg>'>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css">
+<script>document.documentElement.classList.add('js');</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "How to audit your Claude Code skills (and what to do about what you find)",
+  "description": "A five-minute audit of every Claude Code skill: what is installed, what each one can touch, duplicates, and the risky patterns a human skim misses.",
+  "datePublished": "2026-11-08",
+  "dateModified": "2026-11-08",
+  "author": { "@type": "Person", "name": "Prahalad Singh" },
+  "publisher": { "@type": "Organization", "name": "Remit Labs", "url": "https://remitlabs.github.io/" },
+  "mainEntityOfPage": "https://remitlabs.github.io/blog/audit-claude-code-skills.html",
+  "image": "https://remitlabs.github.io/assets/og.png"
+}
+</script>
+</head>
+<body>
+<div class="wrap">
+  <header class="mast">
+    <a class="brand" href="/">remit <em>— agent-skill trust layer</em></a>
+    <nav class="nav" aria-label="primary">
+      <a href="/pricing.html">pricing</a>
+      <a href="/security.html">security</a>
+      <a href="/compare.html">compare</a>
+      <a href="/docs.html">docs</a>
+      <a href="/blog/">blog</a>
+      <a class="pill" href="/#install">run the audit</a>
+    </nav>
+  </header>
+
+  <main>
+    <article class="article">
+      <p class="eyebrow"><a href="/blog/" style="color:var(--amber);text-decoration:none">blog</a> · how-to</p>
+      <h1 style="font-size:clamp(2.2rem,4.8vw,3.4rem);line-height:1.06">How to audit your Claude Code skills</h1>
+      <p class="dek">A skill is documentation, code, and authority in one file. Here is how to see what is actually installed — and what to do about it.</p>
+      <div class="byline"><span>Prahalad Singh</span><span>2026-11-08</span><span>8 min read</span></div>
+
+      <p><b>Short answer:</b> run <code>npx @remitlabs/cli@latest start</code>. It inventories every skill in the agent directories Claude Code uses, scans each one with 64 static rules, records a content digest, and opens a local dashboard with the highest-severity findings first. It does not install or modify anything, and it needs no account.</p>
+
+      <p>That is the whole procedure. The rest of this article explains what the output means, which four findings matter, and what to do about each one — including the parts the tool cannot prove.</p>
+
+      <h2>Where Claude Code keeps skills</h2>
+
+      <p>Claude Code can load skills from several places, and that is the first reason audits are hard: there is rarely one folder to check.</p>
+
+      <ul>
+        <li><b>User-level skills</b> — under your home directory, shared across projects.</li>
+        <li><b>Project-level skills</b> — a <code>.claude/skills</code> directory inside a repository, which travels with the code.</li>
+        <li><b>Plugin and marketplace skills</b> — installed through a plugin or copied from a registry such as skills.sh.</li>
+        <li><b>Other agents' directories</b> — Codex, Cursor, and OpenCode each have their own locations, and most developers run more than one agent.</li>
+      </ul>
+
+      <p>If you have been using coding agents for a year, the same skill often exists in two or three of these places. One copy is current; the others are whatever you copied six months ago. Nothing warns you.</p>
+
+      <h2>Run the audit</h2>
+
+      <div class="cmd" style="margin:1rem 0"><span class="p">$</span><code>npx @remitlabs/cli@latest start</code><button type="button" data-copy>copy</button></div>
+
+      <p>The first run discovers the agent directories it knows about, scans each skill, and starts a local app on <code>127.0.0.1:8787</code>. On the machine this was built on, that produced:</p>
+
+      <pre><code>123 skills across 4 agent directories
+114 duplicate registrations
+~15,238 tokens of skill text in eager mode
+3 skills needing review
+0 files modified</code></pre>
+
+      <p>Those numbers are from one developer's machine, not a survey. Your fleet will differ. The shape of the result is what matters: most people find more skills than they expected, more duplicates than they expected, and at least one thing they did not know was there.</p>
+
+      <h2>The four findings that matter</h2>
+
+      <h3>1. Risky patterns in the skill's own files</h3>
+
+      <p>The static scanner looks for 64 high-signal patterns across <code>SKILL.md</code> and any scripts: <code>curl … | sh</code>, reverse shells, reads of <code>~/.ssh</code> or <code>.env</code>, base64 blobs, hidden unicode, encoded instructions, approval-bypass phrasing, and more. A hit is a rule match, not proof of intent — but it is a reason to read that file before you let an agent load it.</p>
+
+      <h3>2. Declared versus observed behavior</h3>
+
+      <p>A skill's description says what it is for. Its scripts say what it can do. Those are different claims, and the gap is where incidents live. When Docker or Podman is available, Remit runs the skill in a disposable container with fake secrets and a logging proxy, then records what it actually touched: files written, network destinations, shell commands, credential paths.</p>
+
+      <p>That is one observed run, not a guarantee. A skill can behave differently on another host or after a conditional trigger. But "it declared no network access and opened a connection to an unknown host" is a concrete finding you can act on.</p>
+
+      <h3>3. Duplicates and stale copies</h3>
+
+      <p>The 114 duplicate registrations above are the least glamorous finding and often the most useful. Duplicates mean:</p>
+
+      <ul>
+        <li>You are maintaining the same skill in three places.</li>
+        <li>At least one copy is stale.</li>
+        <li>A fix or a revocation may not reach every copy.</li>
+        <li>Your context budget is being spent on the same instructions more than once.</li>
+      </ul>
+
+      <h3>4. Context cost</h3>
+
+      <p>Eager loading puts every skill's text in front of the model before it reads your prompt. In a 123-skill fleet, that measured <b>~15,238 tokens</b> per prompt. On-demand routing through the MCP server measured <b>~150 tokens</b> — the router exposes a short index and loads a skill only when it is relevant.</p>
+
+      <p>This is not only a cost problem. A prompt full of irrelevant skill instructions is a prompt full of distractors, and it makes trigger conflicts more likely.</p>
+
+      <h2>What to do about what you find</h2>
+
+      <p>The audit is the easy part. The useful work is the lifecycle that follows.</p>
+
+      <h3>Pin what you keep</h3>
+
+      <p>A digest is a hash of the exact skill bytes. Pinning records it in a lockfile so that a later update can be compared against what you approved. Without a pin, "it was clean when I installed it" is a memory, not a control.</p>
+
+      <pre><code>skillctl status
+skillctl explain summarize-notes
+skillctl pin summarize-notes</code></pre>
+
+      <h3>Review the update, not just the install</h3>
+
+      <p>Most supply-chain attention goes to the first install. The rug pull happens later: a maintainer ships a clean skill, waits, then changes it. When the digest changes, Remit runs a semantic diff and flags changed behavior instead of silently adopting it.</p>
+
+      <h3>Park or remove what you do not use</h3>
+
+      <p>A skill that never fires is not neutral. It is context cost and attack surface. <code>skillctl park</code> keeps the evidence but removes the skill from the active set; <code>skillctl uninstall</code> removes it with a record. Neither silently deletes files you installed by hand.</p>
+
+      <h3>Route instead of loading everything</h3>
+
+      <p>If your fleet is large, the MCP router is the highest-leverage change: it loads skills on demand and applies the same policy and revocation checks at load time. The measured difference on the build machine was roughly two orders of magnitude in startup context.</p>
+
+      <h3>Keep a kill switch</h3>
+
+      <p>The signed feed carries revocations and drift. On the next sync, a revoked digest is blocked by the router and the feed. Remit-managed copies are removed; hand-installed copies are surfaced and parked with a removal note. The point is that a bad update does not require chasing every laptop by hand.</p>
+
+      <h2>What this audit does not prove</h2>
+
+      <p>It is worth being blunt, because security tooling rarely is:</p>
+
+      <ul>
+        <li>A finding is a <b>rule match</b>, not proof of intent. A clean scan is not proof that a skill is benign.</li>
+        <li>A canary receipt is <b>one observed run</b> in a container. It is not a guarantee that the skill cannot escape, exfiltrate, or behave differently on another host.</li>
+        <li>The canary is <b>observer-first</b> by default. It enforces egress only when you pass an allowlist, and it sees proxy traffic, not TLS bodies.</li>
+        <li>Static coverage can be <b>partial</b> when files are oversized, opaque, or symlinked. The scan reports that state instead of calling it clean.</li>
+      </ul>
+
+      <div class="callout"><p><b>The honest framing:</b> this audit tells you what is installed, what it appears able to do, and what changed. It does not certify safety. Use it to decide what to read, pin, or remove — then keep the lifecycle going.</p></div>
+
+      <h2>Do it once, then put it on a schedule</h2>
+
+      <p>A one-time audit is a snapshot. The risks that matter recur: a skill updates, a teammate installs something new, a maintainer changes a repo, a revocation lands. The useful version of this practice is a weekly scan, a digest of what changed, and a clear path to revoke.</p>
+
+      <p>Start with the free local audit. If it finds nothing you did not know, you have lost five minutes. If it finds one thing, you have a concrete reason to keep going.</p>
+
+      <div class="cta-row" style="margin-top:1.6rem">
+        <a class="cta solid" href="https://www.npmjs.com/package/@remitlabs/cli">run the free audit</a>
+        <a class="cta ghost" href="/blog/mcp-security-checklist.html">next: the MCP security checklist</a>
+      </div>
+
+      <hr>
+      <p class="note">Method: numbers in this article are measurements from the founder's machine (123 skills, 4 agent directories, 114 duplicate registrations, ~15,238 eager tokens vs ~150 routed). They are illustrative, not a survey. The 64-rule scanner and 73-specimen corpus are public in the repository. No customer data was used.</p>
+    </article>
+  </main>
+
+  <footer class="foot">
+    <div class="col">
+      <span class="brand">remit <em>— agent-skill trust layer</em></span>
+      <p>built by <a href="https://www.npmjs.com/org/remitlabs" style="display:inline;color:var(--ink)">remitlabs</a> · cli: skillctl · Apache-2.0</p>
+    </div>
+    <div class="col">
+      <h4>Product</h4>
+      <a href="/pricing.html">pricing</a>
+      <a href="/security.html">security</a>
+      <a href="/compare.html">compare</a>
+      <a href="/docs.html">docs</a>
+    </div>
+    <div class="col">
+      <h4>Learn</h4>
+      <a href="/blog/">blog</a>
+      <a href="/blog/audit-claude-code-skills.html">audit your skills</a>
+      <a href="/blog/mcp-security-checklist.html">mcp checklist</a>
+      <a href="/llms.txt">llms.txt</a>
+    </div>
+    <div class="col">
+      <h4>Elsewhere</h4>
+      <a href="https://www.npmjs.com/package/@remitlabs/cli">npm</a>
+      <a href="https://github.com/remitlabs">github</a>
+      <a href="/.well-known/security.txt">security.txt</a>
+    </div>
+    <div class="bottom">
+      <span>don't trust the page — <a href="/#install" style="display:inline">run the audit</a></span>
+      <span>© 2026 Remit Labs · public beta</span>
+    </div>
+  </footer>
+</div>
+<script src="../site.js" defer></script>
+</body>
+</html>
