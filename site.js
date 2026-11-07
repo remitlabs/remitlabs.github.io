@@ -31,6 +31,32 @@
     });
   }
 
+  // films: respect reduced motion; otherwise start when in view and pause off-screen
+  var reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  document.querySelectorAll('.film video').forEach(function (v) {
+    if (reduceMotion) {
+      v.autoplay = false;
+      v.removeAttribute('autoplay');
+      v.controls = true;
+      try { v.pause(); } catch (e) {}
+      return;
+    }
+    try { v.pause(); } catch (e) {}
+    var started = false;
+    var seen = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          if (!started) { started = true; try { v.currentTime = 0; } catch (e) {} }
+          var p = v.play();
+          if (p && p.catch) p.catch(function () {});
+        } else {
+          v.pause();
+        }
+      });
+    }, { threshold: 0.35 });
+    seen.observe(v);
+  });
+
   // mark the current nav item
   var path = location.pathname.replace(/\/index\.html$/, '/').replace(/\.html$/, '');
   document.querySelectorAll('.nav a[href]').forEach(function (a) {

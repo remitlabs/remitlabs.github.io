@@ -252,6 +252,24 @@ tr:last-child td{border-bottom:0}
   font:.7rem var(--mono);color:var(--dim);
   background:linear-gradient(180deg,transparent,rgba(19,17,16,.85))}
 
+/* ---------- transcript ---------- */
+.transcript{margin-top:1rem;border:1px solid var(--hair);border-radius:12px;background:var(--surface)}
+.transcript summary{cursor:pointer;list-style:none;padding:.85rem 1rem;
+  font:.72rem var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--dim)}
+.transcript summary::-webkit-details-marker{display:none}
+.transcript summary::after{content:" +";color:var(--amber)}
+.transcript[open] summary::after{content:" –"}
+.transcript pre{margin:0;padding:0 1rem 1rem;overflow-x:auto;
+  font:.78rem/1.75 var(--mono);color:var(--ink)}
+.transcript .fine{margin:0;padding:0 1rem 1rem;font:.72rem/1.7 var(--mono);color:var(--dim)}
+.transcript .fine a{color:var(--amber)}
+
+/* demo figure: caption sits below the frame so it never fights the video's own footer */
+.demo-figure{margin:0}
+.demo-figure figcaption{padding:.7rem .1rem 0;font:.72rem/1.7 var(--mono);color:var(--dim)}
+.demo-figure figcaption a{color:var(--amber);text-decoration:none}
+.demo-figure figcaption a:hover{text-decoration:underline}
+
 /* ---------- footer ---------- */
 .foot{border-top:1px solid var(--hair);margin-top:clamp(2.6rem,5vw,4rem);padding:2.2rem 0 3rem;
   display:grid;grid-template-columns:1.4fr repeat(3,1fr);gap:2rem;

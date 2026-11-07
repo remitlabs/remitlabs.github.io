@@ -203,12 +203,43 @@
       <p class="status" data-reveal><b>shipped</b> <i>static scan, canary receipts, signed feed + daily sync, MCP router, hook-guard (observe), lockfile rug-pull alerts, fleet dashboard</i> — <b>open boundaries</b> <i>canary containment is observer-first (egress enforcement only with an allowlist), and team identity is not built. A receipt is one observed run, not a safety guarantee.</i></p>
     </section>
 
-    <section class="tail">
+    <section class="tail" id="demo">
       <h2 class="sec-head" data-reveal>See it run</h2>
-      <figure class="film" data-reveal>
-        <video src="assets/remit-loop.mp4" poster="assets/poster.jpg" muted loop playsinline autoplay preload="none" aria-label="A short loop showing a skill moving through scan, receipt, install, and revocation"></video>
-        <figcaption>six seconds: source → receipt → gate → revoke. no audio.</figcaption>
+      <figure class="demo-figure" data-reveal>
+        <div class="film">
+          <video data-demo src="assets/cli-demo.mp4" poster="assets/cli-demo-poster.jpg" muted loop playsinline autoplay preload="metadata" aria-label="CLI demo: audit scans 123 skills, explain reports unknown with missing coverage, pin records a digest, sync kills a revoked skill"></video>
+        </div>
+        <figcaption>26 seconds, no audio: audit → explain → pin → revoke. Real commands, one documented run. <a href="assets/cli-demo.mp4">Open full size ↗</a></figcaption>
       </figure>
+      <details class="transcript" data-reveal>
+        <summary>Read the transcript</summary>
+        <pre><code>$ npx @remitlabs/cli@latest start
+audit: 4 dir(s), 123 skill(s)
+114 duplicate registrations
+startup cost: 123 skills ≈ 15,238 tokens on every prompt
+              router mode ≈ 150  (99% reduction)
+
+flagged skill            risk  decision  why
+ad-creative              40    unknown   HIGH dns-exfil · hook-abuse
+browser-secret-store     40    unknown   HIGH cookie store · secret path
+credential-plus-egress   25    unknown   HIGH split-payload shape
+webhook-exfil            25    unknown   HIGH outbound channel
+4 of 27 flagged · canary not run, so decisions stay unknown
+
+$ skillctl explain ad-creative
+  state:     unknown
+  decision:  unknown  score 40/100  confidence 15/100
+  why:       not proven: missing or degraded evidence
+  coverage:  static complete · canary not-run · prompt not-run
+
+$ skillctl pin ad-creative
+pinned ad-creative @ 75a35c0bd604
+
+$ skillctl sync
+feed applied: 1 revoked — 1 skill(s) killed, 122 unaffected
+  KILLED browser-secret-store (6ecff83bd6ff) — home copy removed</code></pre>
+        <p class="fine">Recorded from the CLI in a demo session. The counts match the documented run in <a href="https://github.com/remitlabs/lean-skills/blob/main/docs/DEMO.md">docs/DEMO.md</a>; your fleet will differ. “Unknown” is a real decision state, not a placeholder.</p>
+      </details>
     </section>
 
     <section class="tail">

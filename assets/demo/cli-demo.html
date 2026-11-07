@@ -1,0 +1,265 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Remit — CLI demo source</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --casing:#131110; --surface:#1B1815; --surface-2:#211D19;
+    --ink:#EAE2D3; --dim:#9B9285; --hair:#2A2520;
+    --amber:#FFB454; --ok:#86C08A; --deny:#D96F5C;
+    --serif:'Newsreader',Georgia,serif;
+    --mono:'JetBrains Mono',Menlo,monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{width:1440px;height:810px;overflow:hidden}
+  body{background:var(--casing);color:var(--ink);font-family:var(--mono);position:relative}
+
+  .grid{position:absolute;inset:0;opacity:.45;
+    background-image:linear-gradient(var(--hair) 1px,transparent 1px),
+                     linear-gradient(90deg,var(--hair) 1px,transparent 1px);
+    background-size:90px 90px}
+  .glow{position:absolute;width:820px;height:560px;right:-180px;top:-220px;
+    background:radial-gradient(circle,rgba(255,180,84,.13),transparent 66%)}
+  .glow2{position:absolute;width:600px;height:420px;left:-220px;bottom:-240px;
+    background:radial-gradient(circle,rgba(255,180,84,.05),transparent 70%)}
+
+  .stage{position:relative;height:100%;padding:40px 64px 0;display:flex;flex-direction:column}
+
+  header{display:flex;justify-content:space-between;align-items:baseline;
+    padding-bottom:18px;border-bottom:1px solid var(--hair)}
+  .brand{font-size:19px;font-weight:600;letter-spacing:-.01em}
+  .brand em{font-family:var(--serif);font-style:italic;font-weight:400;color:var(--dim);font-size:18px}
+  .meta{font-size:14px;color:var(--dim);letter-spacing:.06em;text-transform:uppercase}
+  .meta b{color:var(--amber);font-weight:500}
+
+  .term{position:relative;flex:1;margin-top:26px;background:var(--surface);
+    border:1px solid var(--hair);border-radius:12px;overflow:hidden;display:flex;flex-direction:column}
+  .bar{display:flex;justify-content:space-between;align-items:center;
+    padding:12px 22px;border-bottom:1px solid var(--hair);background:var(--surface-2);
+    font-size:13px;color:var(--dim);letter-spacing:.04em}
+  .bar .left{display:flex;gap:10px;align-items:center}
+  .dot{width:7px;height:7px;border-radius:50%;background:var(--amber);opacity:.85}
+  .bar b{color:var(--ink);font-weight:500}
+  .bar .right{color:var(--dim)}
+
+  .screen{position:relative;flex:1;overflow:hidden;padding:20px 26px;
+    -webkit-mask-image:linear-gradient(180deg,transparent 0,#000 30px,#000 100%);
+    mask-image:linear-gradient(180deg,transparent 0,#000 30px,#000 100%)}
+  .scroll{position:absolute;left:26px;right:26px;top:20px;will-change:transform}
+  .ln{font-size:16px;line-height:1.62;white-space:pre;color:var(--ink);opacity:0}
+  .ln.on{opacity:1}
+  .ln.dim{color:var(--dim)}
+  .ln.dimmer{color:#6f685e}
+  .ln.amber{color:var(--amber)}
+  .ln.ok{color:var(--ok)}
+  .ln.deny{color:var(--deny)}
+  .ln .p{color:var(--amber)}
+  .ln .u{color:var(--ink)}
+  .cursor{display:inline-block;width:9px;height:17px;background:var(--amber);
+    vertical-align:-2px;margin-left:2px}
+
+  /* findings table */
+  .tbl{opacity:0}
+  .tbl.on{opacity:1}
+  .tbl{display:grid;grid-template-columns:290px 64px 108px 1fr;column-gap:10px}
+  .tbl .h{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--dim)}
+  .tbl .r{font-size:16px;line-height:1.62;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .tbl .r.skill{color:var(--ink)}
+  .tbl .r.risk{color:var(--amber);font-weight:500}
+  .tbl .r.dec{color:var(--dim)}
+  .tbl .r.why{color:var(--dim)}
+  .tbl .r .hi{color:var(--deny);font-size:12px;letter-spacing:.1em;margin-right:6px}
+  .tbl .r .md{color:var(--deny);font-size:12px;letter-spacing:.1em;margin-right:6px}
+
+  .tstatus{display:flex;justify-content:space-between;gap:1rem;align-items:center;
+    border-top:1px solid var(--hair);background:var(--surface-2);padding:9px 22px;
+    font-size:12px;letter-spacing:.05em;color:var(--dim);opacity:0}
+  .tstatus.on{opacity:1}
+  .tstatus b{color:var(--ink);font-weight:500}
+  .tstatus .a{color:var(--amber)}
+
+  footer{display:flex;justify-content:space-between;align-items:center;
+    padding:14px 0 18px;font-size:14px;color:var(--dim)}
+  #cap{color:var(--ink)}
+  #cap b{color:var(--amber);font-weight:500;margin-right:10px}
+  .prog{position:absolute;left:0;right:0;bottom:0;height:2px;background:var(--hair)}
+  .prog i{display:block;height:100%;width:0;background:var(--amber)}
+
+  /* end card */
+  .end{position:absolute;inset:0;background:var(--casing);display:flex;flex-direction:column;
+    justify-content:center;padding:0 96px;opacity:0}
+  .end .ebrand{position:absolute;top:40px;left:96px;font-size:19px;font-weight:600}
+  .end .ebrand i{font-family:var(--serif);font-style:italic;font-weight:400;color:var(--dim);font-size:18px}
+  .end .kick{font-size:15px;letter-spacing:.18em;text-transform:uppercase;color:var(--amber);margin-bottom:22px}
+  .end h1{font-family:var(--serif);font-weight:500;font-size:104px;line-height:.95;letter-spacing:-.035em}
+  .end h1 i{font-style:italic;color:var(--dim)}
+  .end .tag{font-family:var(--serif);font-size:26px;color:var(--dim);margin-top:18px;max-width:34ch;line-height:1.4}
+  .end .cmd{margin-top:44px;font-size:24px;color:var(--ink)}
+  .end .cmd span{color:var(--amber)}
+  .end .fine{margin-top:22px;font-size:15px;color:var(--dim);letter-spacing:.02em}
+  .end .rule{width:110px;height:2px;background:var(--amber);margin-top:34px}
+</style>
+</head>
+<body>
+<div class="grid"></div><div class="glow"></div><div class="glow2"></div>
+
+<div class="stage">
+  <header>
+    <span class="brand">remit <em>— agent-skill trust layer</em></span>
+    <span class="meta">demo session · <b>no audio</b></span>
+  </header>
+
+  <div class="term">
+    <div class="bar">
+      <span class="left"><i class="dot"></i><b>skillctl</b> — ~/demo</span>
+      <span class="right">local · no account · nothing uploaded</span>
+    </div>
+    <div class="screen"><div class="scroll" id="scroll">
+
+      <div class="ln" id="c1" data-at="0"><span class="p">$ </span><span class="u" id="t1"></span><span class="cursor" id="cur1"></span></div>
+
+      <div class="ln dim" data-at="1.6">remit 0.1.1 · local-first · no account</div>
+      <div class="ln dim" data-at="1.95">scanning 4 agent directories…</div>
+
+      <div class="ln" data-at="2.7">audit: 4 dir(s), 123 skill(s)</div>
+      <div class="ln" data-at="3.05"><span class="amber">114</span> duplicate registrations</div>
+      <div class="ln" data-at="3.45">startup cost: 123 skills ≈ <span class="amber">15,238</span> tokens on every prompt</div>
+      <div class="ln dim" data-at="3.75">              router mode ≈ 150  (99% reduction)</div>
+
+      <div class="ln" data-at="4.35" style="height:14px"></div>
+      <div class="tbl" data-at="4.45">
+        <div class="h">flagged skill</div><div class="h">risk</div><div class="h">decision</div><div class="h">why</div>
+      </div>
+      <div class="tbl" data-at="4.75">
+        <div class="r skill">ad-creative</div><div class="r risk">40</div><div class="r dec">unknown</div>
+        <div class="r why"><span class="hi">HIGH</span>dns-exfil · hook-abuse</div>
+      </div>
+      <div class="tbl" data-at="5.15">
+        <div class="r skill">browser-secret-store</div><div class="r risk">40</div><div class="r dec">unknown</div>
+        <div class="r why"><span class="hi">HIGH</span>cookie store · secret path</div>
+      </div>
+      <div class="tbl" data-at="5.55">
+        <div class="r skill">credential-plus-egress</div><div class="r risk">25</div><div class="r dec">unknown</div>
+        <div class="r why"><span class="md">HIGH</span>split-payload shape</div>
+      </div>
+      <div class="tbl" data-at="5.95">
+        <div class="r skill">webhook-exfil</div><div class="r risk">25</div><div class="r dec">unknown</div>
+        <div class="r why"><span class="md">HIGH</span>outbound channel</div>
+      </div>
+
+      <div class="ln dimmer" data-at="6.55" style="margin-top:14px">4 of 27 flagged · canary not run, so decisions stay unknown</div>
+
+      <div class="ln" id="c2" data-at="8.2" style="margin-top:22px"><span class="p">$ </span><span class="u" id="t2"></span><span class="cursor" id="cur2"></span></div>
+      <div class="ln" data-at="9.35">explain: ad-creative</div>
+      <div class="ln" data-at="9.6">  state:     unknown</div>
+      <div class="ln" data-at="9.85">  decision:  unknown  score <span class="amber">40/100</span>  confidence 15/100</div>
+      <div class="ln" data-at="10.15">  why:       not proven: missing or degraded evidence</div>
+      <div class="ln dim" data-at="10.45">  coverage:  static complete · canary not-run · prompt not-run</div>
+      <div class="ln dim" data-at="10.8">    +22 static/dns-exfil: host text in the skill body</div>
+      <div class="ln dim" data-at="11.05">    +22 static/hook-abuse: hook instructions in the body</div>
+      <div class="ln dim" data-at="11.3">    +3  static/escape-sequence: escaped markup in text</div>
+
+      <div class="ln" id="c3" data-at="15.5" style="margin-top:22px"><span class="p">$ </span><span class="u" id="t3"></span><span class="cursor" id="cur3"></span></div>
+      <div class="ln ok" data-at="16.7">pinned ad-creative @ 75a35c0bd604</div>
+
+      <div class="ln" id="c4" data-at="17.3" style="margin-top:22px"><span class="p">$ </span><span class="u" id="t4"></span><span class="cursor" id="cur4"></span></div>
+      <div class="ln" data-at="18.4">feed applied: 1 revoked — <span class="deny">1 skill(s) killed</span>, 122 unaffected</div>
+      <div class="ln deny" data-at="18.8">  KILLED browser-secret-store (6ecff83bd6ff) — home copy removed</div>
+
+    </div></div>
+    <div class="tstatus" data-at="2.7">
+      <span><b>4</b> agent dirs · <b>123</b> skills · <span class="a">27 flagged</span></span>
+      <span>static-only · canary not run · nothing uploaded</span>
+    </div>
+  </div>
+
+  <footer>
+    <span id="cap"><b>1</b>audit every skill the agent can load</span>
+    <span>remitlabs.github.io</span>
+  </footer>
+</div>
+
+<div class="prog"><i id="prog"></i></div>
+
+<div class="end" id="end">
+  <div class="ebrand">remit <i>— agent-skill trust layer</i></div>
+  <div class="kick">audit · observe · pin · revoke</div>
+  <h1>Least privilege<br><i>for agent skills.</i></h1>
+  <p class="tag">Every skill declares its scope, is observed when a container is available, and can be blocked at load if it drifts.</p>
+  <div class="rule"></div>
+  <div class="cmd"><span>$</span> npx @remitlabs/cli@latest start</div>
+  <p class="fine">free · local-first · no account · Apache-2.0</p>
+</div>
+
+<script>
+const DURATION = 26.0;
+
+const TYPING = [
+  { el: 't1', cur: 'cur1', from: 0.45, to: 1.55, text: 'npx @remitlabs/cli@latest start' },
+  { el: 't2', cur: 'cur2', from: 8.35, to: 9.25, text: 'skillctl explain ad-creative' },
+  { el: 't3', cur: 'cur3', from: 15.65, to: 16.5, text: 'skillctl pin ad-creative' },
+  { el: 't4', cur: 'cur4', from: 17.45, to: 18.25, text: 'skillctl sync' },
+];
+
+const LINES = [...document.querySelectorAll('[data-at]')].map(el => ({ el, at: parseFloat(el.dataset.at) }));
+const SCROLL = [[0,0],[8.15,0],[8.95,-140],[15.5,-140],[16.15,-330],[26,-330]];
+const CAPS = [
+  [0,    '1', 'audit every skill the agent can load'],
+  [4.35, '2', 'see what each one can touch'],
+  [8.2,  '3', 'read the evidence, including the gaps'],
+  [15.5, '4', 'pin the digest, then revoke at load'],
+  [21.4, '5', 'free · local-first · Apache-2.0'],
+];
+
+const ease = x => x < 0.5 ? 2*x*x : 1 - Math.pow(-2*x + 2, 2) / 2;
+const clamp = (v,a,b) => Math.min(b, Math.max(a, v));
+
+function scrollAt(t){
+  for (let i=0;i<SCROLL.length-1;i++){
+    const [t0,y0]=SCROLL[i], [t1,y1]=SCROLL[i+1];
+    if (t>=t0 && t<=t1) return y0 + (y1-y0)*ease((t-t0)/(t1-t0 || 1));
+  }
+  return SCROLL[SCROLL.length-1][1];
+}
+
+window.render = function(t){
+  // typed commands
+  for (const c of TYPING){
+    const el = document.getElementById(c.el);
+    const cur = document.getElementById(c.cur);
+    const p = clamp((t - c.from) / (c.to - c.from), 0, 1);
+    el.textContent = c.text.slice(0, Math.round(c.text.length * p));
+    const typing = t >= c.from && t <= c.to + 0.35;
+    const active = t >= c.from && t < c.to + 0.9;
+    cur.style.display = (typing || (active && (t*2 % 1 < 0.5))) ? 'inline-block' : 'none';
+  }
+
+  // output lines
+  for (const l of LINES) l.el.classList.toggle('on', t >= l.at);
+
+  // terminal scroll
+  document.getElementById('scroll').style.transform = `translateY(${scrollAt(t)}px)`;
+
+  // caption
+  let cap = CAPS[0];
+  for (const c of CAPS) if (t >= c[0]) cap = c;
+  document.getElementById('cap').innerHTML = `<b>${cap[1]}</b>${cap[2]}`;
+
+  // progress
+  document.getElementById('prog').style.width = (clamp(t / DURATION, 0, 1) * 100) + '%';
+
+  // end card
+  const e = clamp((t - 21.4) / 0.9, 0, 1);
+  const end = document.getElementById('end');
+  end.style.opacity = e;
+  end.style.transform = `scale(${0.985 + 0.015 * ease(e)})`;
+};
+
+window.render(0);
+</script>
+</body>
+</html>
