@@ -94,22 +94,43 @@
         </div>
       </div>
 
-      <aside class="receipt" data-reveal aria-label="illustrative evidence receipt">
-        <div class="rc-head"><span>evidence receipt nº 0001</span><span class="st">sample</span></div>
-<pre class="man"><span class="c">// what one skill declares — illustrative</span>
-{
-  <span class="k">"name"</span>: <span class="s">"summarize-notes"</span>,
-  <span class="k">"remit"</span>: {
-    <span class="k">"read"</span>:    [<span class="s">"~/Documents/notes/**"</span>],
-    <span class="k">"write"</span>:   [],
-    <span class="k">"network"</span>: [],
-    <span class="k">"exec"</span>:    []
-  },
-  <span class="k">"evidence"</span>: <span class="s">"static clean · canary 0 outbound"</span>,
-  <span class="k">"sha256"</span>: <span class="s">"9f8e…"</span>,
-  <span class="k">"limits"</span>: <span class="s">"one observed run · not a guarantee"</span>
-}</pre>
-        <p class="rc-note">every verdict ships with its evidence: findings, canary diff when it ran, digest, feed status. re-runnable.</p>
+      <aside class="hero-demo" id="demo" data-reveal aria-label="See it run: a 26-second CLI demo">
+        <div class="hd-head"><span>see it run</span><span>26s · no audio</span></div>
+        <figure class="demo-figure">
+          <div class="film">
+            <video data-demo src="assets/cli-demo.mp4" poster="assets/cli-demo-poster.jpg" muted loop playsinline autoplay preload="metadata" aria-label="CLI demo: audit scans 123 skills, explain reports unknown with missing coverage, pin records a digest, sync kills a revoked skill"></video>
+          </div>
+          <figcaption>audit → explain → pin → revoke. One documented run. <a href="assets/cli-demo.mp4" data-demo-open>full size ↗</a></figcaption>
+        </figure>
+        <details class="transcript">
+          <summary>Read the transcript</summary>
+          <pre><code>$ npx @remitlabs/cli@latest start
+audit: 4 dir(s), 123 skill(s)
+114 duplicate registrations
+startup cost: 123 skills ≈ 15,238 tokens on every prompt
+              router mode ≈ 150  (99% reduction)
+
+flagged skill            risk  decision  why
+ad-creative              40    unknown   HIGH dns-exfil · hook-abuse
+browser-secret-store     40    unknown   HIGH cookie store · secret path
+credential-plus-egress   25    unknown   HIGH split-payload shape
+webhook-exfil            25    unknown   HIGH outbound channel
+4 of 27 flagged · canary not run, so decisions stay unknown
+
+$ skillctl explain ad-creative
+  state:     unknown
+  decision:  unknown  score 40/100  confidence 15/100
+  why:       not proven: missing or degraded evidence
+  coverage:  static complete · canary not-run · prompt not-run
+
+$ skillctl pin ad-creative
+pinned ad-creative @ 75a35c0bd604
+
+$ skillctl sync
+feed applied: 1 revoked — 1 skill(s) killed, 122 unaffected
+  KILLED browser-secret-store (6ecff83bd6ff) — home copy removed</code></pre>
+          <p class="fine">Recorded from the CLI in a demo session. The counts match the documented run in <a href="https://github.com/remitlabs/lean-skills/blob/main/docs/DEMO.md">docs/DEMO.md</a>; your fleet will differ. “Unknown” is a real decision state, not a placeholder.</p>
+        </details>
       </aside>
     </section>
 
@@ -201,45 +222,6 @@
         </div>
       </div>
       <p class="status" data-reveal><b>shipped</b> <i>static scan, canary receipts, signed feed + daily sync, MCP router, hook-guard (observe), lockfile rug-pull alerts, fleet dashboard</i> — <b>open boundaries</b> <i>canary containment is observer-first (egress enforcement only with an allowlist), and team identity is not built. A receipt is one observed run, not a safety guarantee.</i></p>
-    </section>
-
-    <section class="tail" id="demo">
-      <h2 class="sec-head" data-reveal>See it run</h2>
-      <figure class="demo-figure" data-reveal>
-        <div class="film">
-          <video data-demo src="assets/cli-demo.mp4" poster="assets/cli-demo-poster.jpg" muted loop playsinline autoplay preload="metadata" aria-label="CLI demo: audit scans 123 skills, explain reports unknown with missing coverage, pin records a digest, sync kills a revoked skill"></video>
-        </div>
-        <figcaption>26 seconds, no audio: audit → explain → pin → revoke. Real commands, one documented run. <a href="assets/cli-demo.mp4">Open full size ↗</a></figcaption>
-      </figure>
-      <details class="transcript" data-reveal>
-        <summary>Read the transcript</summary>
-        <pre><code>$ npx @remitlabs/cli@latest start
-audit: 4 dir(s), 123 skill(s)
-114 duplicate registrations
-startup cost: 123 skills ≈ 15,238 tokens on every prompt
-              router mode ≈ 150  (99% reduction)
-
-flagged skill            risk  decision  why
-ad-creative              40    unknown   HIGH dns-exfil · hook-abuse
-browser-secret-store     40    unknown   HIGH cookie store · secret path
-credential-plus-egress   25    unknown   HIGH split-payload shape
-webhook-exfil            25    unknown   HIGH outbound channel
-4 of 27 flagged · canary not run, so decisions stay unknown
-
-$ skillctl explain ad-creative
-  state:     unknown
-  decision:  unknown  score 40/100  confidence 15/100
-  why:       not proven: missing or degraded evidence
-  coverage:  static complete · canary not-run · prompt not-run
-
-$ skillctl pin ad-creative
-pinned ad-creative @ 75a35c0bd604
-
-$ skillctl sync
-feed applied: 1 revoked — 1 skill(s) killed, 122 unaffected
-  KILLED browser-secret-store (6ecff83bd6ff) — home copy removed</code></pre>
-        <p class="fine">Recorded from the CLI in a demo session. The counts match the documented run in <a href="https://github.com/remitlabs/lean-skills/blob/main/docs/DEMO.md">docs/DEMO.md</a>; your fleet will differ. “Unknown” is a real decision state, not a placeholder.</p>
-      </details>
     </section>
 
     <section class="tail">
@@ -337,6 +319,11 @@ feed applied: 1 revoked — 1 skill(s) killed, 122 unaffected
     </div>
   </footer>
 </div>
+<dialog class="demo-dialog" id="demo-dialog" aria-label="Remit CLI demo, full size">
+  <div class="dd-head"><span>see it run · 26s · no audio</span><button type="button" data-demo-close aria-label="Close demo">close ✕</button></div>
+  <video controls playsinline preload="none" src="assets/cli-demo.mp4" poster="assets/cli-demo-poster.jpg" aria-label="Full-size CLI demo: audit, explain, pin, revoke"></video>
+  <p>audit → explain → pin → revoke. Recorded from the CLI in a demo session; your fleet will differ.</p>
+</dialog>
 <script src="site.js" defer></script>
 </body>
 </html>

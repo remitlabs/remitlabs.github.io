@@ -57,6 +57,30 @@
     seen.observe(v);
   });
 
+  // full-size demo dialog
+  var demoDialog = document.getElementById('demo-dialog');
+  if (demoDialog && typeof demoDialog.showModal === 'function') {
+    var demoVideo = demoDialog.querySelector('video');
+    var heroVideo = document.querySelector('#demo video');
+    document.querySelectorAll('[data-demo-open]').forEach(function (a) {
+      a.addEventListener('click', function (e) {
+        e.preventDefault();
+        if (heroVideo) heroVideo.pause();
+        demoDialog.showModal();
+        try { demoVideo.currentTime = 0; } catch (e2) {}
+        var p = demoVideo.play();
+        if (p && p.catch) p.catch(function () {});
+      });
+    });
+    demoDialog.querySelector('[data-demo-close]').addEventListener('click', function () {
+      demoDialog.close();
+    });
+    demoDialog.addEventListener('close', function () { demoVideo.pause(); });
+    demoDialog.addEventListener('click', function (e) {
+      if (e.target === demoDialog) demoDialog.close();
+    });
+  }
+
   // mark the current nav item
   var path = location.pathname.replace(/\/index\.html$/, '/').replace(/\.html$/, '');
   document.querySelectorAll('.nav a[href]').forEach(function (a) {
