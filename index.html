@@ -71,7 +71,8 @@
   </header>
 
   <main id="main" class="home">
-    <section class="hero home-hero">
+    <section class="opening" aria-label="Start your first scan">
+    <div class="hero home-hero">
       <h1>Check what your AI skills can access.</h1>
       <p class="lede">Scan the skills used by Claude Code, Codex, Cursor and OpenCode. Review the findings on your computer.</p>
       <div class="cta-row">
@@ -79,46 +80,54 @@
         <a class="cta ghost" href="/docs.html">Setup guide</a>
       </div>
       <p class="note">Free to use. No account required.</p>
+    </div>
+      <div class="install" id="install">
+        <div class="cmd"><span class="p">$</span><code>npx @remitlabs/cli@latest start</code><button type="button" data-copy>Copy</button></div>
+        <p class="note">Run in your terminal with Node 22.5+. npm downloads Remit when needed. Your existing skill files stay unchanged.</p>
+      </div>
+<section class="traction" aria-label="Early traction">
+      <p><strong>600+ npm downloads</strong> without promotion.<br><strong>2 brand partnership offers</strong> received so far.</p>
+      <small>Founder-reported, November 2026. Downloads include repeat downloads.</small>
+    </section>
     </section>
 
     <section class="tutorial visual-wide" id="demo" aria-label="Recorded tutorial">
       <figure class="film-figure">
         <div class="film">
-          <video src="assets/cli-demo.mp4" poster="assets/cli-demo-poster.jpg" muted loop playsinline autoplay preload="auto" controls aria-label="26-second recorded CLI demo showing a scan, findings and version controls"></video>
+          <video src="assets/cli-demo.mp4" poster="assets/cli-demo-poster.jpg" muted loop playsinline data-scroll-video preload="metadata" controls aria-label="26-second recorded CLI demo showing a scan, findings and version controls"></video>
         </div>
         <figcaption><span>Recorded CLI tutorial · 26 seconds</span><button class="text-link" type="button" data-demo-open>Enlarge video</button></figcaption>
       </figure>
-      <div class="install" id="install">
-        <div class="cmd"><span class="p">$</span><code>npx @remitlabs/cli@latest start</code><button type="button" data-copy>Copy</button></div>
-        <p class="note">Run in your terminal with Node 22.5+. npm downloads Remit when needed. Your existing skill files stay unchanged.</p>
-      </div>
-    </section>
-
-    <section class="traction" aria-label="Early traction">
-      <p><strong>600+ npm downloads</strong> without promotion.<br><strong>2 brand partnership offers</strong> received so far.</p>
-      <small>Founder-reported, November 2026. Downloads include repeat downloads.</small>
     </section>
 
     <section class="scan-story" id="receipt" aria-labelledby="mesh-title">
       <div class="section-intro">
-        <h2 id="mesh-title">See the skills behind your agents.</h2>
-        <p>One documented scan found 123 skill entries across four agent directories, including 114 repeated registrations.</p>
+        <h2 id="mesh-title">14,307 skill entries scanned.</h2>
+        <p>Measured file checks from the public skills.sh catalog, representing 13,921 distinct scanned contents. Incomplete and skipped entries are disclosed below.</p>
       </div>
       <figure class="mesh-figure visual-wide">
-        <div class="mesh" data-mesh role="group" aria-label="Illustrative network of 123 skill entries with 101 clean, 1 low, 15 elevated and 6 high static risk scores">
+        <div class="mesh" data-mesh role="group" aria-label="Illustrative network of 14,307 statically scanned catalog entries">
           <canvas aria-hidden="true"></canvas>
-          <div class="mesh-fallback" data-mesh-fallback>123 skill entries across four agent directories</div>
-          <div class="mesh-controls"><span data-mesh-status aria-live="polite">All 123 entries</span><button type="button" data-mesh-motion aria-pressed="false">Pause motion</button></div>
+          <div class="mesh-fallback" data-mesh-fallback>14,307 catalog entries scanned</div>
+          <div class="mesh-controls"><span data-mesh-status aria-live="polite">All 14,307 entries</span><button type="button" data-mesh-motion aria-pressed="false">Pause motion</button></div>
         </div>
-        <figcaption>One node per entry. Positions illustrate the network and do not represent measured relationships.</figcaption>
+        <figcaption>Each node represents up to 6 scanned entries. Positions and connections illustrate the distribution.</figcaption>
       </figure>
+      <script id="mesh-data" type="application/json">{"counts":{"clean":9387,"low":701,"elevated":1493,"high":2726}}</script>
       <div class="risk-chart" aria-label="Filter the example mesh by static risk score">
-        <button type="button" class="risk-row" data-risk="clean" aria-pressed="false"><span class="risk-name">Clean score</span><span class="risk-track"><span style="--bar:82.1%;--risk-color:#7D9C90"></span></span><strong>101</strong></button>
-        <button type="button" class="risk-row" data-risk="low" aria-pressed="false"><span class="risk-name">Low risk</span><span class="risk-track"><span style="--bar:.8%;--risk-color:#BBC6A9"></span></span><strong>1</strong></button>
-        <button type="button" class="risk-row" data-risk="elevated" aria-pressed="false"><span class="risk-name">Elevated</span><span class="risk-track"><span style="--bar:12.2%;--risk-color:#C7954E"></span></span><strong>15</strong></button>
-        <button type="button" class="risk-row" data-risk="high" aria-pressed="false"><span class="risk-name">High risk</span><span class="risk-track"><span style="--bar:4.9%;--risk-color:#FFB454"></span></span><strong>6</strong></button>
+        <button type="button" class="risk-row" data-risk="clean" aria-pressed="false" style="--risk-color:#65C7B0"><span class="risk-name">Clean score</span><span class="risk-track"><span style="--bar:65.611%;--risk-color:#65C7B0"></span></span><strong>9,387</strong></button>
+        <button type="button" class="risk-row" data-risk="low" aria-pressed="false" style="--risk-color:#79ADFF"><span class="risk-name">Low risk</span><span class="risk-track"><span style="--bar:4.900%;--risk-color:#79ADFF"></span></span><strong>701</strong></button>
+        <button type="button" class="risk-row" data-risk="elevated" aria-pressed="false" style="--risk-color:#F3BC5C"><span class="risk-name">Elevated</span><span class="risk-track"><span style="--bar:10.435%;--risk-color:#F3BC5C"></span></span><strong>1,493</strong></button>
+        <button type="button" class="risk-row" data-risk="high" aria-pressed="false" style="--risk-color:#FF788C"><span class="risk-name">High risk</span><span class="risk-track"><span style="--bar:19.054%;--risk-color:#FF788C"></span></span><strong>2,726</strong></button>
       </div>
-      <p class="chart-note">Select a score to highlight its nodes. Example from the founder's computer, October 2026. Your results will differ.</p>
+      <p class="chart-note">Select a score to highlight its nodes. Static file checks, 2026-11-13. High scores flag patterns to review. All behavioral decisions remain unknown.</p>
+      <details class="evidence-detail catalog-method">
+        <summary>Scan coverage and method</summary>
+        <p>We enumerated 20,000 unique URLs from the two public skills.sh skill sitemaps. This is a public-catalog snapshot, not a claim to cover every skill held by the platform.</p>
+        <p>13,730 entries had complete file coverage, 577 were scanned with gaps, and 5,270 could not be resolved or scanned. Another 423 entries were skipped when the remaining work was stopped. The graph includes completed and partial scans from 19,577 attempted entries. Unscanned entries are excluded from the risk totals.</p>
+        <p>Remit 0.1.1 checked 64 static rules against repository snapshots. Downloaded code was never executed. The evidence records source URLs, archive and file hashes, exclusions and every outcome.</p>
+        <p><a href="/data/REMIT-01-RS-001_R1_PublicSkillScan_2026-11-13.json.gz" download>Download the full scan evidence</a> · <a href="/data/catalog-scan-summary.json">Read the summary</a></p>
+      </details>
       <details class="evidence-detail">
         <summary>What does a score tell me?</summary>
         <p>Read the findings and missing checks with the score. A clean score can still miss harmful behavior.</p>

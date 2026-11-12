@@ -68,6 +68,8 @@ qualification. Solo founder: "I," not "we." No invented customers, logos, or met
 - Historical package, corpus and machine measurements above were recorded in
   the 2026-11-08 product record and need live verification before updating.
 
+- Measured catalog snapshot, 2026-11-13: 14,307 entries scanned from 19,577 attempted URLs in a 20,000-URL public skills.sh sitemap snapshot. Of the scans, 13,730 reported complete file coverage and 577 were partial. There were 5,270 failed resolutions/scans and 423 unattempted entries when the user stopped remaining work. Raw static-score counts were 9,387 clean, 701 low, 1,493 elevated and 2,726 high. All behavioral decisions remain unknown. Evidence is in `data/catalog-scan-summary.json` and its linked revisioned report.
+
 ## Capabilities and Constraints
 
 - No fake social proof. No customer logos until a signed pilot.

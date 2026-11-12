@@ -232,7 +232,7 @@
       "risk-clean": {
         "role": "semantic",
         "displayName": "Clean score",
-        "canonical": "#7D9C90",
+        "canonical": "#65C7B0",
         "tonalRamp": [
           "oklch(15% 0.015 155)",
           "oklch(26% 0.03 155)",
@@ -247,7 +247,7 @@
       "risk-low": {
         "role": "semantic",
         "displayName": "Low risk",
-        "canonical": "#BBC6A9",
+        "canonical": "#79ADFF",
         "tonalRamp": [
           "oklch(15% 0.01 115)",
           "oklch(26% 0.025 115)",
@@ -262,7 +262,7 @@
       "risk-elevated": {
         "role": "semantic",
         "displayName": "Elevated risk",
-        "canonical": "#C7954E",
+        "canonical": "#F3BC5C",
         "tonalRamp": [
           "oklch(15% 0.025 72)",
           "oklch(26% 0.05 72)",
@@ -273,6 +273,11 @@
           "oklch(85% 0.09 72)",
           "oklch(95% 0.025 72)"
         ]
+      },
+      "risk-high": {
+        "role": "semantic",
+        "displayName": "High static score",
+        "canonical": "#FF788C"
       }
     },
     "typographyMeta": {
@@ -391,7 +396,7 @@
       "kind": "button",
       "description": "Static-score count and selectable mesh highlight.",
       "html": "<button class=\"ds-risk\" type=\"button\" aria-pressed=\"false\"><span>Elevated</span><span class=\"ds-track\"><span></span></span><strong>15</strong></button>",
-      "css": ".ds-risk{display:grid;grid-template-columns:110px minmax(0,1fr) 40px;align-items:center;gap:1rem;width:100%;min-height:56px;padding:.75rem;background:transparent;border:1px solid transparent;border-radius:5px;color:var(--dim,#9AA498);cursor:pointer;text-align:left;font:.95rem/1.4 var(--sans,Archivo,Arial,sans-serif);}.ds-risk:hover,.ds-risk[aria-pressed=\"true\"]{background:var(--surface,#111514);border-color:var(--hair-lit,#2F3833);color:var(--ink,#EDF1E9);}.ds-risk strong{text-align:right;font:500 .95rem/1.4 var(--mono,monospace);color:var(--ink,#EDF1E9);}.ds-track{height:12px;background:var(--raise,#161C19);border-radius:2px;}.ds-track span{display:block;height:100%;width:12.2%;min-width:3px;border-radius:2px;background:#C7954E;}.ds-risk:focus-visible{outline:2px solid var(--amber,#FFB454);outline-offset:3px;}"
+      "css": ".ds-risk{display:grid;grid-template-columns:110px minmax(0,1fr) 40px;align-items:center;gap:1rem;width:100%;min-height:56px;padding:.75rem;background:transparent;border:1px solid transparent;border-radius:5px;color:var(--dim,#9AA498);cursor:pointer;text-align:left;font:.95rem/1.4 var(--sans,Archivo,Arial,sans-serif);}.ds-risk:hover,.ds-risk[aria-pressed=\"true\"]{background:var(--surface,#111514);border-color:var(--hair-lit,#2F3833);color:var(--ink,#EDF1E9);}.ds-risk strong{text-align:right;font:500 .95rem/1.4 var(--mono,monospace);color:var(--ink,#EDF1E9);}.ds-track{height:12px;background:var(--raise,#161C19);border-radius:2px;}.ds-track span{display:block;height:100%;width:12.2%;min-width:3px;border-radius:2px;background:#F3BC5C;}.ds-risk:focus-visible{outline:2px solid var(--amber,#FFB454);outline-offset:3px;}"
     },
     {
       "name": "Reading card",
@@ -432,6 +437,11 @@
       {
         "name": "R-01",
         "body": "The latest user-approved tutorial-first, single-column direction supersedes the older split hero and numbered section rails. Merge that layout decision into the established Archivo, charcoal and amber identity.",
+        "section": "layout"
+      },
+      {
+        "name": "R-02",
+        "body": "Headline, command and traction share the opening viewport. The tutorial starts on scrolling into view.",
         "section": "layout"
       }
     ],
