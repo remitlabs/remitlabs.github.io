@@ -118,14 +118,15 @@
           </section>
           <div class="mesh-controls"><div class="mesh-zoom"><button type="button" data-mesh-zoom="out" aria-label="Zoom out">−</button><output data-mesh-zoom-level>100%</output><button type="button" data-mesh-zoom="in" aria-label="Zoom in">+</button><button type="button" data-mesh-reset>Reset view</button></div><span data-mesh-status aria-live="polite">All 14,307 entries</span><button type="button" data-mesh-motion aria-pressed="false">Pause motion</button></div>
         </div>
-        <figcaption>Zoom in to reveal individual skills. Drag to pan, select a node for its audit, or search by name. Positions and connections are illustrative.</figcaption>
+        <figcaption>Zoom in to gradually reveal individual skills. Drag to pan, select a node for its audit, or search by name. For clarity, overlapping nodes are hidden; search includes all entries. Positions are illustrative.</figcaption>
       </figure>
       <script id="mesh-data" type="application/json">{"counts":{"clean":9387,"low":701,"elevated":1493,"high":2726}}</script>
-      <div class="risk-chart" aria-label="Filter the example mesh by static risk score">
-        <button type="button" class="risk-row" data-risk="clean" aria-pressed="false" style="--risk-color:#65C7B0"><span class="risk-name">Clean score</span><span class="risk-track"><span style="--bar:65.611%;--risk-color:#65C7B0"></span></span><strong>9,387</strong></button>
-        <button type="button" class="risk-row" data-risk="low" aria-pressed="false" style="--risk-color:#79ADFF"><span class="risk-name">Low risk</span><span class="risk-track"><span style="--bar:4.900%;--risk-color:#79ADFF"></span></span><strong>701</strong></button>
-        <button type="button" class="risk-row" data-risk="elevated" aria-pressed="false" style="--risk-color:#F3BC5C"><span class="risk-name">Elevated</span><span class="risk-track"><span style="--bar:10.435%;--risk-color:#F3BC5C"></span></span><strong>1,493</strong></button>
-        <button type="button" class="risk-row" data-risk="high" aria-pressed="false" style="--risk-color:#FF788C"><span class="risk-name">High risk</span><span class="risk-track"><span style="--bar:19.054%;--risk-color:#FF788C"></span></span><strong>2,726</strong></button>
+      <div class="risk-chart" role="group" aria-label="Filter the example mesh by static risk score">
+        <div class="risk-chart-heading"><span>Static scan results</span><span>Select a category to filter the graph</span></div>
+        <button type="button" class="risk-row" data-risk="clean" aria-pressed="false" style="--risk-color:#83B8A9"><span class="risk-name">Clean score</span><span class="risk-track"><span style="--bar:65.611%;--risk-color:#83B8A9"></span></span><strong>9,387</strong></button>
+        <button type="button" class="risk-row" data-risk="low" aria-pressed="false" style="--risk-color:#91AAC8"><span class="risk-name">Low risk</span><span class="risk-track"><span style="--bar:4.900%;--risk-color:#91AAC8"></span></span><strong>701</strong></button>
+        <button type="button" class="risk-row" data-risk="elevated" aria-pressed="false" style="--risk-color:#D0AD70"><span class="risk-name">Elevated</span><span class="risk-track"><span style="--bar:10.435%;--risk-color:#D0AD70"></span></span><strong>1,493</strong></button>
+        <button type="button" class="risk-row" data-risk="high" aria-pressed="false" style="--risk-color:#D48C84"><span class="risk-name">High risk</span><span class="risk-track"><span style="--bar:19.054%;--risk-color:#D48C84"></span></span><strong>2,726</strong></button>
       </div>
       <p class="chart-note">Select a score to highlight its nodes. Static file checks, 2026-11-13. High scores flag patterns to review. All behavioral decisions remain unknown.</p>
       <details class="evidence-detail catalog-method">

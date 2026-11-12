@@ -1201,3 +1201,21 @@ th {
   .mesh-workspace [data-mesh-status] { display: none; }
   .mesh-report { max-height: none; border-left: 0; border-top: 1px solid var(--hair-lit); }
 }
+
+/* Risk counts double as graph filters. */
+.risk-chart { padding: 1.25rem 1.5rem; border: 1px solid var(--hair-lit); border-radius: 8px; background: var(--surface); }
+.risk-chart-heading { display: flex; justify-content: space-between; gap: 1rem; padding: 0 .75rem .8rem; border-bottom: 1px solid var(--hair); color: var(--ink); font-weight: 600; }
+.risk-chart-heading span + span { color: var(--dim); font-size: .8rem; font-weight: 400; text-align: right; }
+.risk-row { min-height: 50px; }
+.risk-row:hover, .risk-row[aria-pressed="true"] { background: var(--raise); }
+.risk-row[aria-pressed="true"] { border-color: var(--risk-color); }
+.risk-track { height: 7px; background: var(--hair-lit); border-radius: 99px; }
+.risk-track span { border-radius: inherit; }
+.mesh canvas { cursor: grab; touch-action: pan-y; }
+.mesh canvas:active { cursor: grabbing; }
+@media (max-width: 700px) {
+  .risk-chart { padding: 1rem; }
+  .risk-chart-heading { display: block; padding-inline: 0; }
+  .risk-chart-heading span { display: block; }
+  .risk-chart-heading span + span { text-align: left; margin-top: .2rem; }
+}

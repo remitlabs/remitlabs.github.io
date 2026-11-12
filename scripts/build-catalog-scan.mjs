@@ -84,7 +84,7 @@ html = html.replace(/(data-mesh role="group" aria-label=")[^"]+/, `$1Illustrativ
 html = html.replace(/(data-mesh-fallback>).*?(<\/div>)/, `$1${number(counts.scanned)} catalog entries scanned$2`);
 html = html.replace(/(data-mesh-status aria-live="polite">).*?(<\/span>)/, `$1All ${number(counts.scanned)} entries$2`);
 html = html.replace(/(<figure class="mesh-figure[\s\S]*?<figcaption>).*?(<\/figcaption>)/,
-  '$1Zoom in to reveal individual skills. Drag to pan, select a node for its audit, or search by name. Positions and connections are illustrative.$2');
+  '$1Zoom in to gradually reveal individual skills. Drag to pan, select a node for its audit, or search by name. For clarity, overlapping nodes are hidden; search includes all entries. Positions are illustrative.$2');
 for (const risk of Object.keys(risks)) {
   const row = new RegExp(`(data-risk="${risk}"[\\s\\S]*?--bar:)[^;]+(;[\\s\\S]*?<strong>)[^<]+(<\\/strong>)`);
   html = html.replace(row, `$1${(risks[risk] / counts.scanned * 100).toFixed(3)}%$2${number(risks[risk])}$3`);
