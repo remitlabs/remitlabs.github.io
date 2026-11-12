@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Remit vs Socket, Snyk, and skill registries</title>
 <meta name="description" content="An honest comparison: what package scanners, registries, platform signing, and Remit each answer — and where each one stops.">
-<meta name="theme-color" content="#131110">
+<meta name="theme-color" content="#0A0C0B">
 <link rel="canonical" href="https://remitlabs.github.io/compare.html">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Remit vs Socket, Snyk, and skill registries">
@@ -13,10 +13,10 @@
 <meta property="og:url" content="https://remitlabs.github.io/compare.html">
 <meta property="og:image" content="https://remitlabs.github.io/assets/og.png">
 <meta name="twitter:card" content="summary_large_image">
-<link rel="icon" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect width="32" height="32" rx="7" fill="%23131110"/><text x="16" y="22" font-family="ui-monospace,Menlo,monospace" font-size="17" font-weight="700" fill="%23FFB454" text-anchor="middle">R</text></svg>'>
+<link rel="icon" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect width="32" height="32" rx="6" fill="%230A0C0B"/><rect x="7" y="7" width="4" height="18" fill="%23FFB454"/><path d="M14 7h7a5 5 0 010 10h-7z" fill="none" stroke="%23EDF1E9" stroke-width="2.4"/><path d="M20 17l5 8" stroke="%23EDF1E9" stroke-width="2.4"/></svg>'>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&amp;family=IBM+Plex+Mono:wght@400;500;600&amp;family=Newsreader:ital,opsz,wght@1,6..72,400&amp;display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
 <script>document.documentElement.classList.add('js');</script>
 <script type="application/ld+json">
@@ -87,7 +87,7 @@
         </div>
         <div class="row">
           <div class="t">you use skills.sh or clawhub</div>
-          <p>Keep using them for discovery. Install counts are popularity, not evidence — researchers gamed <b>1.7M installs</b> with typosquats, and Unit 42 found <b>80%</b> of skills behave differently than declared. Remit is the trust layer under the registry, not a replacement for it. A registry with a receipt is more valuable to everyone.</p>
+          <p>Keep using them for discovery. Install counts are popularity, not evidence. In August 2026 a typosquatting campaign on skills.sh reached <b>1.7 million installs</b> before it was pulled (<a href="https://www.csoonline.com/article/4206851/trojanized-ai-skills-gain-1-7m-installs-in-agent-targeted-attack.html">Zenity</a>). Unit 42 crawled all 49,943 OpenClaw skills and found <b>80.0%</b> did something their own description did not mention (<a href="https://unit42.paloaltonetworks.com/ai-agent-supply-chain-risks/">Unit 42, June 2026</a>). Remit is the trust layer under the registry, not a replacement for it. A registry with a receipt is more valuable to everyone.</p>
         </div>
         <div class="row">
           <div class="t">you rely on platform signing</div>
@@ -110,7 +110,7 @@
         <div class="card"><h3>Not a guarantee</h3><p>A finding is a rule match. A canary is one observed run. A clean receipt is not proof that a skill is benign.</p></div>
         <div class="card"><h3>Not a firewall</h3><p>Runtime guardrails for prompts and models are a different layer. Remit governs the artifact the agent loads.</p></div>
         <div class="card"><h3>Not a registry</h3><p>Discovery is solved by better-funded products. Remit adds evidence and lifecycle to whatever registry you already use.</p></div>
-        <div class="card"><h3>Not finished</h3><p>The local tool ships today. The team control plane is in design-partner development, and we label it that way.</p></div>
+        <div class="card"><h3>Not finished</h3><p>The local tool ships today. The team control plane is in design-partner development, and I label it that way.</p></div>
       </div>
     </section>
 

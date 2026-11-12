@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Notes on agent-skill trust — Remit blog</title>
 <meta name="description" content="Original research, teardowns, and how-tos on AI agent skill security, MCP, and lifecycle. Every claim has a method and a limit.">
-<meta name="theme-color" content="#131110">
+<meta name="theme-color" content="#0A0C0B">
 <link rel="canonical" href="https://remitlabs.github.io/blog/">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Notes on agent-skill trust — Remit blog">
@@ -13,10 +13,10 @@
 <meta property="og:url" content="https://remitlabs.github.io/blog/">
 <meta property="og:image" content="https://remitlabs.github.io/assets/og.png">
 <meta name="twitter:card" content="summary_large_image">
-<link rel="icon" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect width="32" height="32" rx="7" fill="%23131110"/><text x="16" y="22" font-family="ui-monospace,Menlo,monospace" font-size="17" font-weight="700" fill="%23FFB454" text-anchor="middle">R</text></svg>'>
+<link rel="icon" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect width="32" height="32" rx="6" fill="%230A0C0B"/><rect x="7" y="7" width="4" height="18" fill="%23FFB454"/><path d="M14 7h7a5 5 0 010 10h-7z" fill="none" stroke="%23EDF1E9" stroke-width="2.4"/><path d="M20 17l5 8" stroke="%23EDF1E9" stroke-width="2.4"/></svg>'>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&amp;family=IBM+Plex+Mono:wght@400;500;600&amp;family=Newsreader:ital,opsz,wght@1,6..72,400&amp;display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../styles.css">
 <script>document.documentElement.classList.add('js');</script>
 </head>
@@ -45,13 +45,13 @@
     <section class="tail" style="border-top:0;padding-top:0;margin-top:0">
       <div class="grid two" data-reveal>
         <a class="post-card" href="/blog/audit-claude-code-skills.html">
-          <span class="meta">how-to · 8 min</span>
+          <span class="meta">how-to · nov 2026 · 8 min</span>
           <h2>How to audit your Claude Code skills</h2>
           <p>A five-minute audit: what is installed, what each skill can touch, duplicates, and the patterns a human skim misses.</p>
           <span class="more">read →</span>
         </a>
         <a class="post-card" href="/blog/mcp-security-checklist.html">
-          <span class="meta">checklist · 10 min</span>
+          <span class="meta">checklist · nov 2026 · 10 min</span>
           <h2>The MCP security checklist</h2>
           <p>Five controls that survive an audit, in the order that matters — and what none of them prove.</p>
           <span class="more">read →</span>
@@ -62,9 +62,9 @@
     <section class="tail">
       <h2 class="sec-head" data-reveal>Coming next</h2>
       <div class="ledger" data-reveal>
-        <div class="row"><div class="t">research</div><p>We audited 100 popular skills. Here is what we found — method, numbers, and limits. <span class="n">in progress</span></p></div>
+        <div class="row"><div class="t">research</div><p>I am auditing 100 popular skills. Method, numbers, and the limits of the sample, when it lands. <span class="n">in progress</span></p></div>
         <div class="row"><div class="t">explainer</div><p>What a skill rug pull is, and how digest pinning turns it into a blocked update.</p></div>
-        <div class="row"><div class="t">measurement</div><p>Your agent loads 15,000 tokens of skills before it reads your prompt. The router, measured.</p></div>
+        <div class="row"><div class="t">teardown</div><p>One popular skill, read line by line: what it declares, what it reaches for, and the single line that decides it.</p></div>
       </div>
     </section>
 
