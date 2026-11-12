@@ -796,3 +796,15 @@ tr:last-child td{border-bottom:0}
   .docs-nav a{flex:0 0 auto;white-space:nowrap;display:inline-flex;align-items:center;
     min-height:44px;padding:.35rem .6rem}
 }
+
+/* Homepage: keep the product loop alongside the first action. */
+body:has(.hero-visual) .wrap{max-width:1600px;padding-inline:clamp(1.15rem,3vw,3rem)}
+.hero-visual{align-self:center;min-width:0}
+.hero-visual .film{border-color:var(--hair-lit)}
+.hero-visual figcaption{color:var(--dim)}
+@media (prefers-reduced-motion: reduce){.hero-visual video{visibility:visible}}
+
+@media (min-width:941px){
+  .hero:has(.hero-visual){grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);align-items:center;gap:clamp(2rem,4vw,5rem)}
+  .hero-visual .film{box-shadow:0 18px 55px rgba(0,0,0,.3)}
+}

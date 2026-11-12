@@ -8,6 +8,7 @@
 
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var hover = window.matchMedia('(hover:hover) and (pointer:fine)').matches;
+  if (reduce) document.querySelectorAll('.hero-visual video').forEach(function (video) { video.autoplay = false; video.pause(); });
 
   /* ---------- 1. copy ---------- */
   function wireCopy(root) {
@@ -73,7 +74,7 @@
       });
     });
     dialog.querySelector('[data-demo-close]').addEventListener('click', function () { dialog.close(); });
-    dialog.addEventListener('close', function () { try { dVideo.pause(); } catch (e) {} });
+    dialog.addEventListener('close', function () { try { dVideo.pause(); if (!reduce) pageVideos.forEach(function (v) { var p = v.play(); if (p && p.catch) p.catch(function () {}); }); } catch (e) {} });
     dialog.addEventListener('click', function (e) { if (e.target === dialog) dialog.close(); });
   }
 
