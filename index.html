@@ -74,21 +74,16 @@
     <section class="opening" aria-label="Start your first scan">
     <div class="hero home-hero">
       <h1>Check what your AI skills can access.</h1>
-      <p class="lede">Scan the skills used by Claude Code, Codex, Cursor and OpenCode. Review the findings on your computer.</p>
-      <div class="cta-row">
-        <button class="cta solid" type="button" data-copy="npx @remitlabs/cli@latest start">Copy scan command</button>
-        <a class="cta ghost" href="/docs.html">Setup guide</a>
-      </div>
-      <p class="note">Free to use. No account required.</p>
+      <p class="lede">Scan your Claude Code, Codex, Cursor and OpenCode skills for risky patterns. Review the findings on your computer.</p>
     </div>
       <div class="install" id="install">
-        <div class="cmd"><span class="p">$</span><code>npx @remitlabs/cli@latest start</code><button type="button" data-copy>Copy</button></div>
-        <p class="note">Run in your terminal with Node 22.5+. npm downloads Remit when needed. Your existing skill files stay unchanged.</p>
+        <button class="cmd command-copy" type="button" data-copy="npx @remitlabs/cli@latest start" aria-label="Copy command: npx @remitlabs/cli@latest start"><span class="p" aria-hidden="true">$</span><code>npx @remitlabs/cli@latest start</code><span class="command-copy-status" data-copy-status aria-live="polite">Click to copy</span></button>
+        <div class="cta-row">
+          <button class="cta solid" type="button" data-copy="npx @remitlabs/cli@latest start">Paste in terminal</button>
+          <a class="cta ghost" href="/docs.html">Setup guide</a>
+        </div>
+        <p class="note">Free to use. No account required. Requires Node.js 22.5 or later.</p>
       </div>
-<section class="traction" aria-label="Early traction">
-      <p><strong>600+ npm downloads</strong> without promotion.<br><strong>2 brand partnership offers</strong> received so far.</p>
-      <small>Founder-reported, November 2026. Downloads include repeat downloads.</small>
-    </section>
     </section>
 
     <section class="tutorial visual-wide" id="demo" aria-label="Recorded tutorial">
@@ -107,12 +102,19 @@
       </div>
       <figure class="mesh-figure visual-wide">
         <div class="mesh" data-mesh role="group" aria-label="Illustrative network of 14,307 statically scanned catalog entries">
-          <canvas aria-hidden="true"></canvas>
+          <canvas tabindex="0" aria-label="Interactive skill graph. Drag to pan. Use plus and minus to zoom, arrow keys to pan, and Escape to clear selection." role="img"></canvas>
           <div class="mesh-fallback" data-mesh-fallback>14,307 catalog entries scanned</div>
-          <div class="mesh-controls"><span data-mesh-status aria-live="polite">All 14,307 entries</span><button type="button" data-mesh-motion aria-pressed="false">Pause motion</button></div>
+          <div class="mesh-controls"><div class="mesh-zoom"><button type="button" data-mesh-zoom="out" aria-label="Zoom out">−</button><output data-mesh-zoom-level>100%</output><button type="button" data-mesh-zoom="in" aria-label="Zoom in">+</button><button type="button" data-mesh-reset>Reset view</button></div><span data-mesh-status aria-live="polite">All 14,307 entries</span><button type="button" data-mesh-motion aria-pressed="false">Pause motion</button></div>
         </div>
-        <figcaption>Each node represents up to 6 scanned entries. Positions and connections illustrate the distribution.</figcaption>
+        <figcaption>Zoom in to reveal individual skills. Drag to pan, select a node for its audit, or search below. Positions and connections are illustrative.</figcaption>
       </figure>
+      <section class="mesh-inspector" aria-label="Explore audited skills">
+        <label for="skill-search">Find an audited skill</label>
+        <input type="search" id="skill-search" placeholder="Skill name or repository" autocomplete="off" disabled>
+        <p class="note" data-mesh-help>Loading happens when the graph comes into view.</p>
+        <div data-mesh-results></div>
+        <article class="skill-detail" data-skill-detail hidden aria-live="polite"></article>
+      </section>
       <script id="mesh-data" type="application/json">{"counts":{"clean":9387,"low":701,"elevated":1493,"high":2726}}</script>
       <div class="risk-chart" aria-label="Filter the example mesh by static risk score">
         <button type="button" class="risk-row" data-risk="clean" aria-pressed="false" style="--risk-color:#65C7B0"><span class="risk-name">Clean score</span><span class="risk-track"><span style="--bar:65.611%;--risk-color:#65C7B0"></span></span><strong>9,387</strong></button>
@@ -194,5 +196,6 @@
 </dialog>
 
 <script src="site.js" defer></script>
+<script src="mesh.js" defer></script>
 </body>
 </html>
