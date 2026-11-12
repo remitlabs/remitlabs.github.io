@@ -46,14 +46,15 @@
         var code = scope.querySelector('code');
         var text = (btn.getAttribute('data-copy') || (code && code.textContent) || '').trim();
         if (!text) return;
-        var original = btn.textContent;
+        var feedback = btn.querySelector('[data-copy-status]') || btn;
+        var original = feedback.textContent;
         try {
           await navigator.clipboard.writeText(text);
-          btn.textContent = 'Copied';
+          feedback.textContent = 'Copied';
         } catch (e) {
-          btn.textContent = 'Copy manually';
+          feedback.textContent = 'Copy manually';
         }
-        setTimeout(function () { btn.textContent = original; }, 1700);
+        setTimeout(function () { feedback.textContent = original; }, 1700);
       });
     });
   }
