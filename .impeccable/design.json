@@ -1,0 +1,446 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-11-12T14:06:36.931564+00:00",
+  "title": "Design System: Remit",
+  "extensions": {
+    "colorMeta": {
+      "casing": {
+        "role": "neutral",
+        "displayName": "Casing",
+        "canonical": "#0A0C0B",
+        "tonalRamp": [
+          "oklch(15% 0.008 155)",
+          "oklch(26% 0.008 155)",
+          "oklch(37% 0.008 155)",
+          "oklch(49% 0.008 155)",
+          "oklch(61% 0.008 155)",
+          "oklch(73% 0.008 155)",
+          "oklch(85% 0.008 155)",
+          "oklch(95% 0.008 155)"
+        ]
+      },
+      "surface": {
+        "role": "neutral",
+        "displayName": "Surface",
+        "canonical": "#111514",
+        "tonalRamp": [
+          "oklch(15% 0.008 155)",
+          "oklch(26% 0.008 155)",
+          "oklch(37% 0.008 155)",
+          "oklch(49% 0.008 155)",
+          "oklch(61% 0.008 155)",
+          "oklch(73% 0.008 155)",
+          "oklch(85% 0.008 155)",
+          "oklch(95% 0.008 155)"
+        ]
+      },
+      "raise": {
+        "role": "neutral",
+        "displayName": "Raised surface",
+        "canonical": "#161C19",
+        "tonalRamp": [
+          "oklch(15% 0.008 155)",
+          "oklch(26% 0.008 155)",
+          "oklch(37% 0.008 155)",
+          "oklch(49% 0.008 155)",
+          "oklch(61% 0.008 155)",
+          "oklch(73% 0.008 155)",
+          "oklch(85% 0.008 155)",
+          "oklch(95% 0.008 155)"
+        ]
+      },
+      "sunk": {
+        "role": "neutral",
+        "displayName": "Command field",
+        "canonical": "#080A09",
+        "tonalRamp": [
+          "oklch(15% 0.008 155)",
+          "oklch(26% 0.008 155)",
+          "oklch(37% 0.008 155)",
+          "oklch(49% 0.008 155)",
+          "oklch(61% 0.008 155)",
+          "oklch(73% 0.008 155)",
+          "oklch(85% 0.008 155)",
+          "oklch(95% 0.008 155)"
+        ]
+      },
+      "hair": {
+        "role": "neutral",
+        "displayName": "Hairline",
+        "canonical": "#232A26",
+        "tonalRamp": [
+          "oklch(15% 0.008 155)",
+          "oklch(26% 0.008 155)",
+          "oklch(37% 0.008 155)",
+          "oklch(49% 0.008 155)",
+          "oklch(61% 0.008 155)",
+          "oklch(73% 0.008 155)",
+          "oklch(85% 0.008 155)",
+          "oklch(95% 0.008 155)"
+        ]
+      },
+      "hair-lit": {
+        "role": "neutral",
+        "displayName": "Interactive border",
+        "canonical": "#2F3833",
+        "tonalRamp": [
+          "oklch(15% 0.008 155)",
+          "oklch(26% 0.008 155)",
+          "oklch(37% 0.008 155)",
+          "oklch(49% 0.008 155)",
+          "oklch(61% 0.008 155)",
+          "oklch(73% 0.008 155)",
+          "oklch(85% 0.008 155)",
+          "oklch(95% 0.008 155)"
+        ]
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "Primary text",
+        "canonical": "#EDF1E9",
+        "tonalRamp": [
+          "oklch(15% 0.008 155)",
+          "oklch(26% 0.008 155)",
+          "oklch(37% 0.008 155)",
+          "oklch(49% 0.008 155)",
+          "oklch(61% 0.008 155)",
+          "oklch(73% 0.008 155)",
+          "oklch(85% 0.008 155)",
+          "oklch(95% 0.008 155)"
+        ]
+      },
+      "dim": {
+        "role": "neutral",
+        "displayName": "Secondary text",
+        "canonical": "#9AA498",
+        "tonalRamp": [
+          "oklch(15% 0.008 155)",
+          "oklch(26% 0.008 155)",
+          "oklch(37% 0.008 155)",
+          "oklch(49% 0.008 155)",
+          "oklch(61% 0.008 155)",
+          "oklch(73% 0.008 155)",
+          "oklch(85% 0.008 155)",
+          "oklch(95% 0.008 155)"
+        ]
+      },
+      "faint": {
+        "role": "neutral",
+        "displayName": "Metadata text",
+        "canonical": "#9AA498",
+        "tonalRamp": [
+          "oklch(15% 0.008 155)",
+          "oklch(26% 0.008 155)",
+          "oklch(37% 0.008 155)",
+          "oklch(49% 0.008 155)",
+          "oklch(61% 0.008 155)",
+          "oklch(73% 0.008 155)",
+          "oklch(85% 0.008 155)",
+          "oklch(95% 0.008 155)"
+        ]
+      },
+      "amber": {
+        "role": "primary",
+        "displayName": "Action amber",
+        "canonical": "#FFB454",
+        "tonalRamp": [
+          "oklch(15% 0.025 72)",
+          "oklch(26% 0.05 72)",
+          "oklch(37% 0.075 72)",
+          "oklch(49% 0.1 72)",
+          "oklch(61% 0.12 72)",
+          "oklch(73% 0.13 72)",
+          "oklch(85% 0.09 72)",
+          "oklch(95% 0.025 72)"
+        ]
+      },
+      "amber-hover": {
+        "role": "primary",
+        "displayName": "Action hover",
+        "canonical": "#FFC677",
+        "tonalRamp": [
+          "oklch(15% 0.025 72)",
+          "oklch(26% 0.05 72)",
+          "oklch(37% 0.075 72)",
+          "oklch(49% 0.1 72)",
+          "oklch(61% 0.12 72)",
+          "oklch(73% 0.13 72)",
+          "oklch(85% 0.09 72)",
+          "oklch(95% 0.025 72)"
+        ]
+      },
+      "amber-wash": {
+        "role": "primary",
+        "displayName": "Amber wash",
+        "canonical": "rgba(255,180,84,.12)",
+        "tonalRamp": [
+          "oklch(15% 0.025 72)",
+          "oklch(26% 0.05 72)",
+          "oklch(37% 0.075 72)",
+          "oklch(49% 0.1 72)",
+          "oklch(61% 0.12 72)",
+          "oklch(73% 0.13 72)",
+          "oklch(85% 0.09 72)",
+          "oklch(95% 0.025 72)"
+        ]
+      },
+      "action-ink": {
+        "role": "neutral",
+        "displayName": "Action text",
+        "canonical": "#17120A",
+        "tonalRamp": [
+          "oklch(15% 0.025 72)",
+          "oklch(26% 0.05 72)",
+          "oklch(37% 0.075 72)",
+          "oklch(49% 0.1 72)",
+          "oklch(61% 0.12 72)",
+          "oklch(73% 0.13 72)",
+          "oklch(85% 0.09 72)",
+          "oklch(95% 0.025 72)"
+        ]
+      },
+      "ok": {
+        "role": "semantic",
+        "displayName": "Allowed",
+        "canonical": "#8FD694",
+        "tonalRamp": [
+          "oklch(15% 0.015 155)",
+          "oklch(26% 0.03 155)",
+          "oklch(37% 0.045 155)",
+          "oklch(49% 0.06 155)",
+          "oklch(61% 0.075 155)",
+          "oklch(73% 0.08 155)",
+          "oklch(85% 0.055 155)",
+          "oklch(95% 0.015 155)"
+        ]
+      },
+      "deny": {
+        "role": "semantic",
+        "displayName": "Denied",
+        "canonical": "#EA7767",
+        "tonalRamp": [
+          "oklch(15% 0.025 30)",
+          "oklch(26% 0.05 30)",
+          "oklch(37% 0.075 30)",
+          "oklch(49% 0.1 30)",
+          "oklch(61% 0.12 30)",
+          "oklch(73% 0.13 30)",
+          "oklch(85% 0.09 30)",
+          "oklch(95% 0.025 30)"
+        ]
+      },
+      "risk-clean": {
+        "role": "semantic",
+        "displayName": "Clean score",
+        "canonical": "#7D9C90",
+        "tonalRamp": [
+          "oklch(15% 0.015 155)",
+          "oklch(26% 0.03 155)",
+          "oklch(37% 0.045 155)",
+          "oklch(49% 0.06 155)",
+          "oklch(61% 0.075 155)",
+          "oklch(73% 0.08 155)",
+          "oklch(85% 0.055 155)",
+          "oklch(95% 0.015 155)"
+        ]
+      },
+      "risk-low": {
+        "role": "semantic",
+        "displayName": "Low risk",
+        "canonical": "#BBC6A9",
+        "tonalRamp": [
+          "oklch(15% 0.01 115)",
+          "oklch(26% 0.025 115)",
+          "oklch(37% 0.04 115)",
+          "oklch(49% 0.05 115)",
+          "oklch(61% 0.06 115)",
+          "oklch(73% 0.065 115)",
+          "oklch(85% 0.04 115)",
+          "oklch(95% 0.015 115)"
+        ]
+      },
+      "risk-elevated": {
+        "role": "semantic",
+        "displayName": "Elevated risk",
+        "canonical": "#C7954E",
+        "tonalRamp": [
+          "oklch(15% 0.025 72)",
+          "oklch(26% 0.05 72)",
+          "oklch(37% 0.075 72)",
+          "oklch(49% 0.1 72)",
+          "oklch(61% 0.12 72)",
+          "oklch(73% 0.13 72)",
+          "oklch(85% 0.09 72)",
+          "oklch(95% 0.025 72)"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "Centered hero headings."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Section headings."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Interface prose."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Navigation, controls and supporting labels."
+      },
+      "command": {
+        "displayName": "Command",
+        "purpose": "Terminal commands."
+      },
+      "article": {
+        "displayName": "Article",
+        "purpose": "Long-form article reading."
+      }
+    },
+    "shadows": [
+      {
+        "name": "article-callout",
+        "value": "inset 2px 0 0 var(--amber)",
+        "purpose": "Amber rule on article callouts."
+      }
+    ],
+    "motion": [
+      {
+        "name": "control-transition",
+        "value": "0.16s ease",
+        "purpose": "Action background, border and text state transitions."
+      },
+      {
+        "name": "mesh-rotation",
+        "value": "0.000035 radians/ms",
+        "purpose": "Local canvas rotation while motion is enabled, visible and the document is active."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "footer-three-columns",
+        "value": "1080px"
+      },
+      {
+        "name": "footer-two-columns",
+        "value": "940px"
+      },
+      {
+        "name": "touch-targets",
+        "value": "760px"
+      },
+      {
+        "name": "compact-visuals",
+        "value": "700px"
+      },
+      {
+        "name": "mobile-navigation",
+        "value": "640px"
+      },
+      {
+        "name": "compact-heading",
+        "value": "400px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary action",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Amber scan and plan actions.",
+      "html": "<button class=\"ds-primary\" type=\"button\">Copy scan command</button>",
+      "css": ".ds-primary{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:.75rem 1.1rem;border:1px solid var(--hair-lit,#2F3833);border-radius:5px;font:600 .875rem/1.3 var(--sans,Archivo,Arial,sans-serif);cursor:pointer;text-decoration:none;transition:background .16s ease,border-color .16s ease,color .16s ease;background:var(--amber,#FFB454);border-color:var(--amber,#FFB454);color:#17120A;}.ds-primary:hover{background:#FFC677;border-color:#FFC677;}.ds-primary:focus-visible{outline:2px solid var(--amber,#FFB454);outline-offset:3px;}"
+    },
+    {
+      "name": "Secondary action",
+      "kind": "button",
+      "refersTo": "button-secondary",
+      "description": "Supporting setup and reference links.",
+      "html": "<a class=\"ds-secondary\" href=\"#guide\">Setup guide</a>",
+      "css": ".ds-secondary{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:.75rem 1.1rem;border:1px solid var(--hair-lit,#2F3833);border-radius:5px;font:600 .875rem/1.3 var(--sans,Archivo,Arial,sans-serif);cursor:pointer;text-decoration:none;transition:background .16s ease,border-color .16s ease,color .16s ease;background:transparent;color:var(--dim,#9AA498);border-color:var(--hair,#232A26);}.ds-secondary:hover{color:var(--ink,#EDF1E9);border-color:var(--hair-lit,#2F3833);}.ds-secondary:focus-visible{outline:2px solid var(--amber,#FFB454);outline-offset:3px;}"
+    },
+    {
+      "name": "Command field",
+      "kind": "custom",
+      "refersTo": "command",
+      "description": "Selectable command with a copy control.",
+      "html": "<div class=\"ds-command\"><span>$</span><code>npx @remitlabs/cli@latest start</code><button type=\"button\">Copy</button></div>",
+      "css": ".ds-command{display:flex;align-items:center;gap:.65rem;background:var(--sunk,#080A09);border:1px solid var(--hair-lit,#2F3833);border-radius:2px;padding:.8rem 1rem;font:.95rem/1.4 var(--mono,monospace);color:var(--ink,#EDF1E9);overflow-x:auto;}.ds-command span{color:var(--amber,#FFB454);}.ds-command code{font:inherit;white-space:nowrap;}.ds-command button{margin-left:auto;min-height:40px;padding:.42rem .55rem;background:transparent;border:1px solid var(--hair-lit,#2F3833);border-radius:2px;color:var(--dim,#9AA498);font:600 .8rem var(--mono,monospace);cursor:pointer;}.ds-command button:hover{background:var(--amber,#FFB454);color:var(--casing,#0A0C0B);border-color:var(--amber,#FFB454);}.ds-command button:focus-visible{outline:2px solid var(--amber,#FFB454);outline-offset:3px;}@media(max-width:700px){.ds-command{font-size:.76rem;}.ds-command code{white-space:normal;overflow-wrap:anywhere;}}"
+    },
+    {
+      "name": "Navigation",
+      "kind": "nav",
+      "description": "Archivo navigation with active-page underline.",
+      "html": "<nav class=\"ds-nav\" aria-label=\"Primary\"><a href=\"#pricing\" aria-current=\"page\">Pricing</a><a href=\"#security\">Security</a><a href=\"#guide\">Setup guide</a></nav>",
+      "css": ".ds-nav{display:flex;flex-wrap:wrap;gap:.1rem;}.ds-nav a{display:inline-flex;flex-direction:column;justify-content:center;min-height:44px;padding:.55rem .62rem;border-radius:2px;font:500 .875rem/1.3 var(--sans,Archivo,Arial,sans-serif);color:var(--dim,#9AA498);text-decoration:none;}.ds-nav a:hover{color:var(--ink,#EDF1E9);background:var(--surface,#111514);}.ds-nav a[aria-current]{color:var(--ink,#EDF1E9);}.ds-nav a[aria-current]::after{content:\"\";height:1px;background:var(--amber,#FFB454);margin-top:.3rem;align-self:stretch;}.ds-nav a:focus-visible{outline:2px solid var(--amber,#FFB454);outline-offset:3px;}"
+    },
+    {
+      "name": "Evidence disclosure",
+      "kind": "custom",
+      "description": "Native expandable detail separated by hairlines.",
+      "html": "<details class=\"ds-detail\"><summary>What does a score tell me?</summary><p>Read the findings and missing checks with the score.</p></details>",
+      "css": ".ds-detail{border-block:1px solid var(--hair,#232A26);color:var(--ink,#EDF1E9);font-family:var(--sans,Archivo,Arial,sans-serif);}.ds-detail summary{padding:1.25rem 0;cursor:pointer;font:500 1rem/1.5 var(--sans,Archivo,Arial,sans-serif);}.ds-detail p{margin:0 0 1rem;font-size:.95rem;line-height:1.7;max-width:72ch;color:var(--dim,#9AA498);}.ds-detail summary:hover{color:var(--amber,#FFB454);}.ds-detail summary:focus-visible{outline:2px solid var(--amber,#FFB454);outline-offset:3px;}"
+    },
+    {
+      "name": "Risk graph row",
+      "kind": "button",
+      "description": "Static-score count and selectable mesh highlight.",
+      "html": "<button class=\"ds-risk\" type=\"button\" aria-pressed=\"false\"><span>Elevated</span><span class=\"ds-track\"><span></span></span><strong>15</strong></button>",
+      "css": ".ds-risk{display:grid;grid-template-columns:110px minmax(0,1fr) 40px;align-items:center;gap:1rem;width:100%;min-height:56px;padding:.75rem;background:transparent;border:1px solid transparent;border-radius:5px;color:var(--dim,#9AA498);cursor:pointer;text-align:left;font:.95rem/1.4 var(--sans,Archivo,Arial,sans-serif);}.ds-risk:hover,.ds-risk[aria-pressed=\"true\"]{background:var(--surface,#111514);border-color:var(--hair-lit,#2F3833);color:var(--ink,#EDF1E9);}.ds-risk strong{text-align:right;font:500 .95rem/1.4 var(--mono,monospace);color:var(--ink,#EDF1E9);}.ds-track{height:12px;background:var(--raise,#161C19);border-radius:2px;}.ds-track span{display:block;height:100%;width:12.2%;min-width:3px;border-radius:2px;background:#C7954E;}.ds-risk:focus-visible{outline:2px solid var(--amber,#FFB454);outline-offset:3px;}"
+    },
+    {
+      "name": "Reading card",
+      "kind": "card",
+      "refersTo": "card",
+      "description": "Charcoal containers for grouped reading content.",
+      "html": "<article class=\"ds-card\"><h3>Review the findings</h3><p>Read the report and its coverage.</p></article>",
+      "css": ".ds-card{background:var(--surface,#111514);padding:1.3rem 1.35rem;color:var(--ink,#EDF1E9);font-family:var(--sans,Archivo,Arial,sans-serif);}.ds-card h3{font-size:1.05rem;letter-spacing:-.015em;margin:0 0 .45rem;}.ds-card p{font-size:.92rem;line-height:1.7;color:var(--dim,#9AA498);margin:0;}"
+    },
+    {
+      "name": "Report chip",
+      "kind": "chip",
+      "refersTo": "chip",
+      "description": "Compact semantic status in report content.",
+      "html": "<span class=\"ds-chip\">Unknown</span>",
+      "css": ".ds-chip{display:inline-flex;align-items:center;gap:.4rem;font:.64rem/1 var(--mono,monospace);letter-spacing:.1em;text-transform:uppercase;padding:.32rem .45rem;border-radius:2px;border:1px solid var(--hair-lit,#2F3833);color:var(--dim,#9AA498);}"
+    }
+  ],
+  "narrative": {
+    "northStar": "Remit instrument",
+    "overview": "Remit uses charcoal surfaces, Archivo interface type and amber actions. Short introductions lead to visual evidence, with supporting detail available in disclosures. IBM Plex Mono identifies commands and measured values. Newsreader remains the article reading face.",
+    "keyCharacteristics": [
+      "One continuous reading path.",
+      "Wide tutorial and mesh, bounded prose.",
+      "Shared navigation, controls and disclosure styles."
+    ],
+    "rules": [
+      {
+        "name": "The accent rule",
+        "body": "Use amber for actions and selected states. Use green and red for reported data states.",
+        "section": "colors"
+      },
+      {
+        "name": "The reading order rule",
+        "body": "Give each section one heading and one reading path. Place supporting explanations in native disclosures when the reader can choose to expand them.",
+        "section": "layout"
+      },
+      {
+        "name": "R-01",
+        "body": "The latest user-approved tutorial-first, single-column direction supersedes the older split hero and numbered section rails. Merge that layout decision into the established Archivo, charcoal and amber identity.",
+        "section": "layout"
+      }
+    ],
+    "dos": [
+      "Do place the homepage tutorial before the mesh and risk graph.",
+      "Do keep the mesh caption, textual counts and report limits beside the visual evidence.",
+      "Do reuse the shared Archivo controls, amber focus treatment and hairline dividers.",
+      "Do keep command text and tables usable at narrow widths."
+    ],
+    "donts": []
+  }
+}

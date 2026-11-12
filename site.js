@@ -1,6 +1,6 @@
 /* Remit — progressive enhancement, no framework, no tracking.
    1. clipboard   2. scroll progress   3. nav state   4. demo dialog
-   5. sticky command bar   6. anime.js motion   7. three.js fleet field
+   5. sticky command bar   6. anime.js motion   7. local canvas skill mesh
    Every enhancement is optional: with no JS, or a blocked CDN, the page
    stays readable and interactive. */
 (function () {
@@ -8,7 +8,7 @@
 
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var hover = window.matchMedia('(hover:hover) and (pointer:fine)').matches;
-  if (reduce) document.querySelectorAll('.hero-visual video').forEach(function (video) { video.autoplay = false; video.pause(); });
+  if (reduce) document.querySelectorAll('video[autoplay]').forEach(function (video) { video.autoplay = false; video.pause(); });
 
   /* ---------- 1. copy ---------- */
   function wireCopy(root) {
@@ -226,234 +226,157 @@
     }
   }
 
-  /* ---------- 7. three.js fleet field ---------- */
-  var host = document.querySelector('[data-field]');
-  var hint = document.querySelector('[data-field-hint]');
-  if (host && !host.dataset.done) {
-    host.dataset.done = '1';
+  /* The example mesh is rendered locally. Its layout is illustrative. */
+  var mesh = document.querySelector('[data-mesh]');
+  if (mesh) {
+    var canvas = mesh.querySelector('canvas');
+    var context = canvas.getContext('2d');
+    if (!context) return;
 
-    var started = false;
-    var stalled = function () {
-      host.classList.add('stalled');
-      var base = host.querySelector('.field-base');
-      if (base) base.textContent = 'field needs a network connection';
-      if (hint) hint.textContent = '';
+    var motionButton = mesh.querySelector('[data-mesh-motion]');
+    var status = mesh.querySelector('[data-mesh-status]');
+    var paused = reduce;
+    var visible = false;
+    var frame = null;
+    var angle = 0.18;
+    var lastTime = 0;
+    var selectedRisk = null;
+    var pointer = { x: 0, y: 0 };
+    var width = 0;
+    var height = 0;
+    var riskColors = {
+      clean: '#7D9C90', low: '#BBC6A9', elevated: '#C7954E', high: '#FFB454'
     };
-    var load = function () {
-      if (started) return;
-      started = true;
-      var guard = setTimeout(function () {
-        if (!host.classList.contains('loaded')) stalled();
-      }, 7000);
-      import('https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js')
-        .then(function (THREE) { clearTimeout(guard); build(THREE); })
-        .catch(function () { clearTimeout(guard); stalled(); });
-    };
-
-    var build = function (THREE) {
-      var canvas = host.querySelector('canvas');
-      var renderer;
-      try {
-        renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true, alpha: true });
-      } catch (e) {
-        var base = host.querySelector('.field-base');
-        if (base) base.textContent = 'no webgl';
-        return;
-      }
-      renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.75));
-
-      var scene = new THREE.Scene();
-      var camera = new THREE.PerspectiveCamera(38, 1, 0.1, 100);
-      camera.position.set(0, 0, 5.8);
-
-      var group = new THREE.Group();
-      scene.add(group);
-
-      // deterministic layout: the same machine should draw the same field twice
-      var seed = 20261026;
-      function rnd() {
-        seed |= 0; seed = (seed + 0x6D2B79F5) | 0;
-        var t = Math.imul(seed ^ (seed >>> 15), 1 | seed);
-        t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
-        return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
-      }
-
-      var TOTAL = 123;
-      var CLUSTERS = [
-        { x: -1.06, y: 0.54, z: 0.30 },   // claude code
-        { x: 1.04, y: 0.62, z: -0.40 },   // codex
-        { x: 0.10, y: -0.64, z: 0.48 },   // cursor
-        { x: -0.74, y: -0.42, z: -0.58 }  // opencode
-      ];
-
-      var COUNT = TOTAL + 4; // four directory hubs join the field
-      var pos = new Float32Array(COUNT * 3);
-      var col = new Float32Array(COUNT * 3);
-      var siz = new Float32Array(COUNT);
-
-      var C = {
-        clean: new THREE.Color('#A9B7AE'),
-        warn: new THREE.Color('#FFB454'),
-        deny: new THREE.Color('#EA7767')
-      };
-      // three flagged, one revoked — the four from the documented run
-      var flagged = { 7: 'warn', 34: 'warn', 76: 'warn', 101: 'deny' };
-
-      for (var i = 0; i < TOTAL; i++) {
-        var c = CLUSTERS[i % 4];
-        // an even field with a light bias toward each agent directory:
-        // every skill visible, the four groups still legible as density
-        pos[i * 3] = (rnd() * 2 - 1) * 2.15 + c.x * 0.72;
-        pos[i * 3 + 1] = (rnd() * 2 - 1) * 1.2 + c.y * 0.72;
-        pos[i * 3 + 2] = (rnd() * 2 - 1) * 1.05;
-        var kind = flagged[i] || 'clean';
-        var colour = C[kind];
-        col[i * 3] = colour.r; col[i * 3 + 1] = colour.g; col[i * 3 + 2] = colour.b;
-        siz[i] = kind === 'deny' ? 3.2 : kind === 'warn' ? 2.5 : 1.15 + rnd() * 0.5;
-      }
-
-      // directory hubs: the grouping is the information, so draw it
-      var hubColour = new THREE.Color('#6E7A70');
-      for (var h = 0; h < 4; h++) {
-        var hi = TOTAL + h;
-        pos[hi * 3] = CLUSTERS[h].x * 0.72;
-        pos[hi * 3 + 1] = CLUSTERS[h].y * 0.72;
-        pos[hi * 3 + 2] = CLUSTERS[h].z * 0.72;
-        col[hi * 3] = hubColour.r; col[hi * 3 + 1] = hubColour.g; col[hi * 3 + 2] = hubColour.b;
-        siz[hi] = 3.4;
-      }
-
-      // one hairline from each skill to the directory it was loaded from
-      var edges = [];
-      for (var e = 0; e < TOTAL; e++) {
-        var hub = CLUSTERS[e % 4];
-        edges.push(hub.x * 0.72, hub.y * 0.72, hub.z * 0.72, pos[e * 3], pos[e * 3 + 1], pos[e * 3 + 2]);
-      }
-
-      var hubGeo = new THREE.BufferGeometry();
-      hubGeo.setAttribute('position', new THREE.Float32BufferAttribute(edges, 3));
-      var hubLines = new THREE.LineSegments(hubGeo, new THREE.LineBasicMaterial({
-        color: 0x3A4740, transparent: true, opacity: 0.26
-      }));
-      group.add(hubLines);
-
-      var geo = new THREE.BufferGeometry();
-      geo.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3));
-      geo.setAttribute('aColor', new THREE.Float32BufferAttribute(col, 3));
-      geo.setAttribute('aSize', new THREE.Float32BufferAttribute(siz, 1));
-
-      var mat = new THREE.ShaderMaterial({
-        transparent: true,
-        depthWrite: false,
-        uniforms: { uDpr: { value: Math.min(window.devicePixelRatio || 1, 1.75) } },
-        vertexShader: [
-          'attribute vec3 aColor;',
-          'attribute float aSize;',
-          'varying vec3 vColor;',
-          'uniform float uDpr;',
-          'void main(){',
-          '  vColor = aColor;',
-          '  vec4 mv = modelViewMatrix * vec4(position, 1.0);',
-          '  gl_Position = projectionMatrix * mv;',
-          '  gl_PointSize = aSize * uDpr * (24.0 / -mv.z);',
-          '}'
-        ].join('\n'),
-        fragmentShader: [
-          'varying vec3 vColor;',
-          'void main(){',
-          '  vec2 d = gl_PointCoord - 0.5;',
-          '  float r = length(d);',
-          '  if (r > 0.5) discard;',
-          '  float a = smoothstep(0.5, 0.44, r);',
-          '  gl_FragColor = vec4(vColor, a);',
-          '}'
-        ].join('\n')
-      });
-
-      var points = new THREE.Points(geo, mat);
-      group.add(points);
-      group.rotation.x = -0.18;
-      group.rotation.y = 0.35;
-
-      var dpr = renderer.getPixelRatio();
-      var size = { w: 0, h: 0 };
-      var resize = function () {
-        var r = host.getBoundingClientRect();
-        var w = Math.max(1, Math.floor(r.width));
-        var h = Math.max(1, Math.floor(r.height));
-        if (w === size.w && h === size.h) return;
-        size.w = w; size.h = h;
-        renderer.setSize(w, h, false);
-        camera.aspect = w / h;
-        camera.updateProjectionMatrix();
-        if (reduce) renderer.render(scene, camera);
-      };
-      resize();
-      if ('ResizeObserver' in window) new ResizeObserver(resize).observe(host);
-      else window.addEventListener('resize', resize);
-
-      // pointer parallax — a flat image would not move
-      var px = 0, py = 0, tx = 0, ty = 0;
-      if (hover && hint) {
-        host.addEventListener('pointermove', function (e) {
-          var r = host.getBoundingClientRect();
-          tx = ((e.clientX - r.left) / r.width - 0.5) * 0.5;
-          ty = ((e.clientY - r.top) / r.height - 0.5) * 0.35;
-        });
-        host.addEventListener('pointerleave', function () { tx = 0; ty = 0; });
-      }
-
-      var visible = true;
-      if ('IntersectionObserver' in window) {
-        new IntersectionObserver(function (entries) {
-          visible = entries[0].isIntersecting;
-        }, { threshold: 0.05 }).observe(host);
-      }
-      document.addEventListener('visibilitychange', function () {
-        if (!document.hidden && visible && !reduce) loop();
-      });
-
-      var running = false;
-      var loop = function () {
-        if (running) return;
-        running = true;
-        var step = function () {
-          if (!visible || document.hidden) { running = false; return; }
-          px += (tx - px) * 0.055;
-          py += (ty - py) * 0.055;
-          group.rotation.y += 0.0011;
-          group.rotation.x = -0.18 + py;
-          group.rotation.z = px * 0.12;
-          camera.position.x = px * 0.35;
-          camera.position.y = -py * 0.3;
-          camera.lookAt(0, 0, 0);
-          renderer.render(scene, camera);
-          requestAnimationFrame(step);
-        };
-        requestAnimationFrame(step);
-      };
-
-      host.classList.add('loaded');
-      if (reduce) {
-        renderer.render(scene, camera);
-        if (hint) hint.textContent = 'static render';
-      } else {
-        resize();
-        loop();
-      }
-    };
-
-    // three trigger paths: the field scrolled into reach, the first scroll,
-    // or the first interaction. Whichever happens first wins.
-    if ('IntersectionObserver' in window) {
-      var once = new IntersectionObserver(function (entries) {
-        if (entries[0].isIntersecting) { once.disconnect(); load(); }
-      }, { rootMargin: '320px' });
-      once.observe(host);
+    var riskCounts = { clean: 101, low: 1, elevated: 15, high: 6 };
+    var riskLabels = { clean: 'clean score', low: 'low risk', elevated: 'elevated', high: 'high risk' };
+    var hubs = [
+      { x: -1.2, y: -.5, z: .3 }, { x: .9, y: -.6, z: -.4 },
+      { x: -1, y: .65, z: -.3 }, { x: 1.1, y: .6, z: .5 }
+    ];
+    var nodes = [];
+    var seed = 1234;
+    function random() {
+      seed = (seed * 16807) % 2147483647;
+      return (seed - 1) / 2147483646;
     }
-    window.addEventListener('scroll', load, { once: true, passive: true });
-    window.addEventListener('pointerdown', load, { once: true, passive: true });
-    document.addEventListener('visibilitychange', function () { if (!document.hidden) load(); });
-    if (!('IntersectionObserver' in window)) load();
+    for (var index = 0; index < 123; index++) {
+      var hub = hubs[index % hubs.length];
+      var risk = index < 101 ? 'clean' : index === 101 ? 'low' : index < 117 ? 'elevated' : 'high';
+      nodes.push({
+        x: hub.x + (random() - .5) * 1.75,
+        y: hub.y + (random() - .5) * 1.2,
+        z: hub.z + (random() - .5) * 1.8,
+        risk: risk,
+        hub: index % hubs.length
+      });
+    }
+
+    function project(node) {
+      var rotation = angle + pointer.x;
+      var x = node.x * Math.cos(rotation) + node.z * Math.sin(rotation);
+      var z = -node.x * Math.sin(rotation) + node.z * Math.cos(rotation);
+      var y = node.y + z * pointer.y;
+      var perspective = 4.8 / (5 - z);
+      var scale = Math.min(width / 5.5, height / 3.6);
+      return { x: width / 2 + x * scale * perspective, y: height / 2 + y * scale * perspective, depth: perspective };
+    }
+
+    function draw() {
+      context.clearRect(0, 0, width, height);
+      var projectedHubs = hubs.map(project);
+      var projected = nodes.map(project);
+      nodes.forEach(function (node, i) {
+        var point = projected[i];
+        var hub = projectedHubs[node.hub];
+        var highlighted = !selectedRisk || selectedRisk === node.risk;
+        context.strokeStyle = highlighted ? 'rgba(125,156,144,.26)' : 'rgba(125,156,144,.045)';
+        context.lineWidth = .7;
+        context.beginPath();
+        context.moveTo(hub.x, hub.y);
+        context.lineTo(point.x, point.y);
+        var neighbor = projected[(i + 4) % nodes.length];
+        context.lineTo(neighbor.x, neighbor.y);
+        context.stroke();
+      });
+      projectedHubs.forEach(function (hub) {
+        context.strokeStyle = '#7D9C90';
+        context.lineWidth = 1;
+        context.beginPath();
+        context.arc(hub.x, hub.y, 6, 0, Math.PI * 2);
+        context.stroke();
+      });
+      nodes.forEach(function (node, i) {
+        var point = projected[i];
+        context.globalAlpha = !selectedRisk || selectedRisk === node.risk ? 1 : .12;
+        context.fillStyle = riskColors[node.risk];
+        var radius = (node.risk === 'high' ? 4 : node.risk === 'elevated' ? 3.1 : 2.3) * point.depth;
+        context.beginPath();
+        context.arc(point.x, point.y, radius, 0, Math.PI * 2);
+        context.fill();
+      });
+      context.globalAlpha = 1;
+    }
+
+    function resize() {
+      width = mesh.clientWidth;
+      height = mesh.clientHeight;
+      var pixelRatio = Math.min(window.devicePixelRatio || 1, 2);
+      canvas.width = width * pixelRatio;
+      canvas.height = height * pixelRatio;
+      context.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
+      draw();
+    }
+
+    function animate(time) {
+      frame = null;
+      if (paused || !visible || document.hidden) return;
+      if (lastTime) angle += Math.min(time - lastTime, 50) * .000035;
+      lastTime = time;
+      draw();
+      frame = requestAnimationFrame(animate);
+    }
+    function updateMotion() {
+      if (frame !== null) cancelAnimationFrame(frame);
+      frame = null;
+      lastTime = 0;
+      motionButton.textContent = paused ? 'Resume motion' : 'Pause motion';
+      motionButton.setAttribute('aria-pressed', paused ? 'true' : 'false');
+      draw();
+      if (!paused && visible && !document.hidden) frame = requestAnimationFrame(animate);
+    }
+
+    motionButton.addEventListener('click', function () {
+      paused = !paused;
+      updateMotion();
+    });
+    document.querySelectorAll('[data-risk]').forEach(function (button) {
+      button.addEventListener('click', function () {
+        selectedRisk = selectedRisk === button.dataset.risk ? null : button.dataset.risk;
+        document.querySelectorAll('[data-risk]').forEach(function (item) {
+          item.setAttribute('aria-pressed', item.dataset.risk === selectedRisk ? 'true' : 'false');
+        });
+        var count = selectedRisk ? riskCounts[selectedRisk] : 123;
+        status.textContent = selectedRisk ? count + ' ' + riskLabels[selectedRisk] + (count === 1 ? ' entry' : ' entries') : 'All 123 entries';
+        draw();
+      });
+    });
+    if (hover) mesh.addEventListener('pointermove', function (event) {
+      if (paused) return;
+      var bounds = mesh.getBoundingClientRect();
+      pointer.x = (event.clientX / width - bounds.left / width - .5) * .12;
+      pointer.y = ((event.clientY - bounds.top) / height - .5) * .12;
+    });
+    if ('ResizeObserver' in window) new ResizeObserver(resize).observe(mesh);
+    else window.addEventListener('resize', resize);
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(function (entries) {
+        visible = entries[0].isIntersecting;
+        updateMotion();
+      }).observe(mesh);
+    } else visible = true;
+    document.addEventListener('visibilitychange', updateMotion);
+    resize();
+    mesh.classList.add('mesh-ready');
+    updateMotion();
   }
 })();
