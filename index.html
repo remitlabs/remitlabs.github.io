@@ -74,34 +74,29 @@
 
   <main>
     <section class="hero">
-      <div>
-        <h1 data-reveal>Remit</h1>
-        <p class="dict" data-reveal><b>remit</b> · rɪˈmɪt · n. the scope of someone's authority.</p>
-        <p class="tag" data-reveal>least privilege for agent skills</p>
-        <p class="lede" data-reveal>Every skill <strong>declares its scope</strong>, <strong>is observed in a container when one is available</strong>, and <strong>can be blocked at load</strong> if it drifts.</p>
+      <div class="hero-copy">
+        <p class="eyebrow" data-reveal>agent-skill trust layer · public beta</p>
+        <h1 data-reveal>Know what your <em>AI agent skills</em> can touch.</h1>
+        <p class="lede" data-reveal>Remit scans the skills Claude Code, Codex, Cursor, and OpenCode already load — shows what each one can read, write, and reach — then pins it by digest and blocks revoked versions at load.</p>
         <div class="install" id="install" data-reveal>
-          <div class="cmd"><span class="p">$</span><code>npx @remitlabs/cli@latest start</code><button type="button" data-copy>copy</button></div>
-          <div class="cta-row" style="margin-top:.9rem">
-            <a class="cta solid" href="https://www.npmjs.com/package/@remitlabs/cli">run the free audit</a>
-            <a class="cta ghost" href="#limits">see what it does not prove</a>
+          <div class="cmd cmd-hero"><span class="p">$</span><code>npx @remitlabs/cli@latest start</code><button type="button" data-copy>copy</button></div>
+          <div class="cta-row">
+            <a class="cta solid" href="https://www.npmjs.com/package/@remitlabs/cli">run the free audit <span aria-hidden="true">→</span></a>
+            <button class="cta ghost" type="button" data-demo-open>watch the 26s demo</button>
           </div>
-          <p class="note">free · Node 22.5+ · no account · runs locally · Apache-2.0</p>
+          <p class="note">free forever · Node 22.5+ · no account · nothing uploaded · Apache-2.0</p>
         </div>
-        <div class="facts" data-reveal>
-          <div class="fact"><em>static</em> <b>64 high-signal rules</b> — secret paths, curl-pipe-sh, reverse shells, hidden instructions</div>
-          <div class="fact"><em>canary</em> <b>boxed when Docker or Podman is present</b> — disposable container, fake secrets, strace + network proxy</div>
-          <div class="fact"><em>revoke</em> <b>signed feed, daily sync</b> — revoked digests are blocked at load; hand-installed copies are surfaced</div>
-        </div>
+        <p class="works" data-reveal>works with <b>Claude Code</b>, <b>Codex</b>, <b>Cursor</b>, and <b>OpenCode</b></p>
+        <p class="team-line" data-reveal>for teams: shared fleet, approvals, revocation evidence — <a href="/pricing.html">see pricing</a></p>
       </div>
 
       <aside class="hero-demo" id="demo" data-reveal aria-label="See it run: a 26-second CLI demo">
         <div class="hd-head"><span>see it run</span><span>26s · no audio</span></div>
-        <figure class="demo-figure">
-          <div class="film">
-            <video data-demo src="assets/cli-demo.mp4" poster="assets/cli-demo-poster.jpg" muted loop playsinline autoplay preload="metadata" aria-label="CLI demo: audit scans 123 skills, explain reports unknown with missing coverage, pin records a digest, sync kills a revoked skill"></video>
-          </div>
-          <figcaption>audit → explain → pin → revoke. One documented run. <a href="assets/cli-demo.mp4" data-demo-open>full size ↗</a></figcaption>
-        </figure>
+        <button class="demo-poster" type="button" data-demo-open aria-label="Play the 26-second Remit CLI demo at full size">
+          <img src="assets/cli-demo-poster.jpg" alt="Remit CLI audit showing 123 skills, four flagged findings, and an unknown decision with missing coverage" width="1440" height="810" fetchpriority="high">
+          <span class="demo-play"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg> play · 26s</span>
+        </button>
+        <div class="demo-foot"><span>audit → explain → pin → revoke</span><a href="assets/cli-demo.mp4" data-demo-open>full size ↗</a></div>
         <details class="transcript">
           <summary>Read the transcript</summary>
           <pre><code>$ npx @remitlabs/cli@latest start
@@ -132,6 +127,16 @@ feed applied: 1 revoked — 1 skill(s) killed, 122 unaffected
           <p class="fine">Recorded from the CLI in a demo session. The counts match the documented run in <a href="https://github.com/remitlabs/lean-skills/blob/main/docs/DEMO.md">docs/DEMO.md</a>; your fleet will differ. “Unknown” is a real decision state, not a placeholder.</p>
         </details>
       </aside>
+    </section>
+
+    <section class="proof" aria-label="What one documented audit found">
+      <div class="proof-grid" data-reveal>
+        <div><b>123</b><span>skills audited across 4 agent dirs</span></div>
+        <div><b>114</b><span>duplicate registrations found</span></div>
+        <div><b>~150</b><span>tokens per prompt in router mode, vs 15,238 eager</span></div>
+        <div><b>64</b><span>static rules, plus a canary when a container is available</span></div>
+      </div>
+      <p class="proof-note" data-reveal>one documented run on the founder’s machine · your fleet will differ · <a href="/docs.html#receipt">how the receipt works</a></p>
     </section>
 
     <section class="tail duo">
