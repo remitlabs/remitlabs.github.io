@@ -67,25 +67,35 @@
     for (const group of groups) {
       if (filter && group.risk !== filter) continue;
       const center = project(group.x, group.y, group.z);
-      const margin = zoom * 24;
+      const margin = zoom * 100;
       if (center.x < -margin || center.x > width + margin || center.y < -margin || center.y > height + margin) continue;
       const radius = 2.5;
+      let connected = false;
       const members = expansion > 0 ? group.members : [group.members[0]];
       members.forEach((index, member) => {
-        const point = project(group.x + Math.cos(member * 2.4) * .055 * member * expansion,
-          group.y + Math.sin(member * 2.4) * .055 * member * expansion, group.z);
+        const point = project(group.x + Math.cos(member * 2.4) * .11 * member * expansion,
+          group.y + Math.sin(member * 2.4) * .11 * member * expansion, group.z);
         if (point.x < 0 || point.x > width || point.y < 0 || point.y > height) return;
         const cell = `${Math.floor(point.x / spacing)},${Math.floor(point.y / spacing)}`;
         if (occupied.has(cell)) return;
         occupied.add(cell);
+        if (!connected && expansion < 1) {
+          const hub = project(group.hub[0], group.hub[1], group.hub[2]);
+          context.globalAlpha = (1 - expansion) * .38;
+          context.strokeStyle = colors[group.risk];
+          context.lineWidth = .5;
+          context.beginPath(); context.moveTo(point.x, point.y); context.lineTo(hub.x, hub.y); context.stroke();
+          context.globalAlpha = 1;
+          connected = true;
+        }
         context.fillStyle = colors[group.risk];
         shape(point.x, point.y, radius, group.risk);
         hits.push({ ...point, index: individual ? index : null, group });
       });
       if (selected !== null && group.members.includes(selected)) {
         const member = group.members.indexOf(selected);
-        const point = project(group.x + Math.cos(member * 2.4) * .055 * member * expansion,
-          group.y + Math.sin(member * 2.4) * .055 * member * expansion, group.z);
+        const point = project(group.x + Math.cos(member * 2.4) * .11 * member * expansion,
+          group.y + Math.sin(member * 2.4) * .11 * member * expansion, group.z);
         context.strokeStyle = '#ffffff'; context.beginPath();
         context.arc(point.x, point.y, radius + 5, 0, Math.PI * 2); context.stroke();
         context.fillStyle = '#edf0e8'; context.font = '12px sans-serif';
@@ -156,8 +166,8 @@
       panY = 0;
       const group = groups.find(item => item.members.includes(index));
       const member = group.members.indexOf(index);
-      const point = project(group.x + Math.cos(member * 2.4) * .055 * member,
-        group.y + Math.sin(member * 2.4) * .055 * member, group.z);
+      const point = project(group.x + Math.cos(member * 2.4) * .11 * member,
+        group.y + Math.sin(member * 2.4) * .11 * member, group.z);
       panX = width / 2 - point.x; panY = height / 2 - point.y;
     }
     help.textContent = `${skill.name} selected. Close details or resume motion to keep exploring.`;
