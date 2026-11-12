@@ -14,7 +14,7 @@
   const status = workspace.querySelector('[data-mesh-status]');
   const level = workspace.querySelector('[data-mesh-zoom-level]');
   const reduced = matchMedia('(prefers-reduced-motion: reduce)');
-  const colors = { clean: '#65C7B0', low: '#79ADFF', elevated: '#F3BC5C', high: '#FF788C' };
+  const colors = { clean: '#83B8A9', low: '#91AAC8', elevated: '#D0AD70', high: '#D48C84' };
   const labels = { clean: 'Clean score', low: 'Low risk', elevated: 'Elevated', high: 'High risk' };
   let skills = [], groups = [], hits = [];
   let width = 0, height = 0, zoom = 1, panX = 0, panY = 0, angle = .18;
@@ -60,33 +60,37 @@
   function draw() {
     context.clearRect(0, 0, width, height);
     hits = [];
-    const individual = zoom >= 2;
+    const expansion = Math.max(0, Math.min(1, (zoom - 1.25) / 1.25));
+    const individual = expansion >= 1;
+    const occupied = new Set();
+    const spacing = 24;
     for (const group of groups) {
       if (filter && group.risk !== filter) continue;
       const center = project(group.x, group.y, group.z);
       const margin = zoom * 24;
       if (center.x < -margin || center.x > width + margin || center.y < -margin || center.y > height + margin) continue;
-      context.strokeStyle = colors[group.risk] + '19';
-      if (!individual) {
-        const hub = project(group.hub[0], group.hub[1], group.hub[2]);
-        context.beginPath(); context.moveTo(center.x, center.y); context.lineTo(hub.x, hub.y); context.stroke();
-      }
-      const members = individual ? group.members : [group.members[0]];
+      const radius = 2.5;
+      const members = expansion > 0 ? group.members : [group.members[0]];
       members.forEach((index, member) => {
-        const point = individual ? project(group.x + Math.cos(member * 2.4) * .055 * member,
-          group.y + Math.sin(member * 2.4) * .055 * member, group.z) : center;
+        const point = project(group.x + Math.cos(member * 2.4) * .055 * member * expansion,
+          group.y + Math.sin(member * 2.4) * .055 * member * expansion, group.z);
         if (point.x < 0 || point.x > width || point.y < 0 || point.y > height) return;
-        const radius = Math.min(individual ? 4 : 3.2, 1.4 + zoom * .7);
+        const cell = `${Math.floor(point.x / spacing)},${Math.floor(point.y / spacing)}`;
+        if (occupied.has(cell)) return;
+        occupied.add(cell);
         context.fillStyle = colors[group.risk];
         shape(point.x, point.y, radius, group.risk);
         hits.push({ ...point, index: individual ? index : null, group });
-        if (selected !== null && (individual ? index === selected : group.members.includes(selected))) {
-          context.strokeStyle = '#ffffff'; context.beginPath();
-          context.arc(point.x, point.y, radius + 5, 0, Math.PI * 2); context.stroke();
-          context.fillStyle = '#edf0e8'; context.font = '12px sans-serif';
-          context.fillText(skills[selected].name.slice(0, 35), Math.min(point.x + 10, width - 200), Math.max(16, point.y - 10));
-        }
       });
+      if (selected !== null && group.members.includes(selected)) {
+        const member = group.members.indexOf(selected);
+        const point = project(group.x + Math.cos(member * 2.4) * .055 * member * expansion,
+          group.y + Math.sin(member * 2.4) * .055 * member * expansion, group.z);
+        context.strokeStyle = '#ffffff'; context.beginPath();
+        context.arc(point.x, point.y, radius + 5, 0, Math.PI * 2); context.stroke();
+        context.fillStyle = '#edf0e8'; context.font = '12px sans-serif';
+        context.fillText(skills[selected].name.slice(0, 35), Math.min(point.x + 10, width - 200), Math.max(16, point.y - 10));
+      }
     }
     level.textContent = `${Math.round(zoom * 100)}%`;
     mesh.dataset.view = individual ? 'individual' : 'grouped';
@@ -109,6 +113,7 @@
   }
   function setZoom(value, x = width / 2, y = height / 2) {
     const next = Math.max(.6, Math.min(12, value));
+    if (!paused) { paused = true; updateMotion(); }
     const ratio = next / zoom;
     panX = x - width / 2 - (x - width / 2 - panX) * ratio;
     panY = y - height / 2 - (y - height / 2 - panY) * ratio;
@@ -146,7 +151,7 @@
       filter = null;
       syncFilters();
     }
-    if (focusNode && zoom >= 2) {
+    if (focusNode && zoom >= 2.5) {
       panX = 0;
       panY = 0;
       const group = groups.find(item => item.members.includes(index));
@@ -200,6 +205,11 @@
             members: indices.slice(i, i + size) });
         }
       });
+      // Mix risk categories before spatial thinning, so no category takes priority.
+      for (let i = groups.length - 1; i > 0; i--) {
+        const j = Math.floor(random() * (i + 1));
+        [groups[i], groups[j]] = [groups[j], groups[i]];
+      }
       loaded = true; mesh.classList.add('mesh-ready'); search.disabled = false;
       help.textContent = `Search ${format(skills.length)} scanned entries, or zoom in and select a node. At overview, each node groups up to ${size} entries.`;
       syncFilters(); draw(); updateMotion();
