@@ -64,6 +64,17 @@ const publicSummary = {
 };
 writeFileSync(join(root, 'data', 'catalog-scan-summary.json'), JSON.stringify(publicSummary, null, 2) + '\n');
 
+// This compact index is fetched only near the graph. Full evidence stays a separate download.
+const sources = [...new Set(scanned.map(entry => entry.source))];
+const ruleNames = [...new Set(scanned.flatMap(entry => Object.keys(entry.ruleCounts)))];
+const sourceIds = new Map(sources.map((source, index) => [source, index]));
+const ruleIds = new Map(ruleNames.map((rule, index) => [rule, index]));
+// Row fields: name, source index, score, file count, finding count, partial flag, rule/count pairs.
+const rows = scanned.map(entry => [entry.skillId, sourceIds.get(entry.source), entry.score,
+  entry.filesScanned, entry.findingCount, entry.coverage === 'partial' ? 1 : 0,
+  Object.entries(entry.ruleCounts).map(([rule, count]) => [ruleIds.get(rule), count])]);
+writeFileSync(join(root, 'data', 'mesh-skills.json'), JSON.stringify({ version: 1, scannedAt: date, sources, ruleNames, rows }));
+
 const indexPath = join(root, 'index.html');
 let html = readFileSync(indexPath, 'utf8');
 html = html.replace(/(<h2 id="mesh-title">).*?(<\/h2>)/, `$1${number(counts.scanned)} skill entries scanned.$2`);
@@ -72,10 +83,8 @@ html = html.replace(/(<div class="section-intro">\s*<h2 id="mesh-title">[\s\S]*?
 html = html.replace(/(data-mesh role="group" aria-label=")[^"]+/, `$1Illustrative network of ${number(counts.scanned)} statically scanned catalog entries`);
 html = html.replace(/(data-mesh-fallback>).*?(<\/div>)/, `$1${number(counts.scanned)} catalog entries scanned$2`);
 html = html.replace(/(data-mesh-status aria-live="polite">).*?(<\/span>)/, `$1All ${number(counts.scanned)} entries$2`);
-const entriesPerNode = Math.ceil(counts.scanned / 2400);
-const nodeDescription = entriesPerNode === 1 ? 'One node per scanned entry.' : `Each node represents up to ${entriesPerNode} scanned entries.`;
 html = html.replace(/(<figure class="mesh-figure[\s\S]*?<figcaption>).*?(<\/figcaption>)/,
-  `$1${nodeDescription} Positions and connections illustrate the distribution.$2`);
+  '$1Zoom in to reveal individual skills. Drag to pan, select a node for its audit, or search below. Positions and connections are illustrative.$2');
 for (const risk of Object.keys(risks)) {
   const row = new RegExp(`(data-risk="${risk}"[\\s\\S]*?--bar:)[^;]+(;[\\s\\S]*?<strong>)[^<]+(<\\/strong>)`);
   html = html.replace(row, `$1${(risks[risk] / counts.scanned * 100).toFixed(3)}%$2${number(risks[risk])}$3`);
