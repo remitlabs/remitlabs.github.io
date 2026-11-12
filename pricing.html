@@ -57,19 +57,17 @@
   <main>
     <section class="hero" style="grid-template-columns:1fr;padding-bottom:1rem">
       <div>
-        <h1 data-reveal style="font-size:clamp(2.6rem,6vw,4.4rem);line-height:1.02">Start with the free local scan.</h1>
-        <p class="lede" data-reveal style="max-width:44ch;margin-top:1.2rem">The local CLI and dashboard are free to use. Paid team plans are in development for shared reports, approvals, alerts and evidence history.</p>
-        <p class="note" data-reveal>Paid features and prices below are proposed during public beta. Design partners receive 50% off for six months. Annual billing is 20% off.</p>
+        <h1>Start with the free local scan.</h1>
+        <p class="lede" style="max-width:44ch;margin-top:1.2rem">The local CLI and dashboard are free to use. Paid team plans are in development for shared reports, approvals, alerts and evidence history.</p>
+        <p class="note">Paid features and prices below are proposed during public beta. Design partners receive 50% off for six months. Annual billing is 20% off.</p>
       </div>
     </section>
 
     <section class="tail" style="border-top:0;padding-top:1rem;margin-top:0">
-      <div class="tiers" data-reveal>
-        <div class="tier">
-          <span class="name">Community</span>
-          <div class="price">$0 <small>/ forever</small></div>
-          <p class="for">for individual developers and evaluators</p>
-          <ul>
+      <div class="plans">
+        <details class="plan" open>
+          <summary><span class="plan-name">Community</span><span class="plan-price">$0 <small>/ forever</small></span></summary>
+          <div class="plan-body"><p>for individual developers and evaluators</p><ul>
             <li><b>Local</b> command-line tool and dashboard</li>
             <li>File checks against 64 rules</li>
             <li>Local test runs with Docker or Podman</li>
@@ -78,16 +76,11 @@
             <li>Signed revocation feed</li>
             <li>Apache-2.0</li>
             <li>Community support</li>
-          </ul>
-          <a class="cta" href="https://www.npmjs.com/package/@remitlabs/cli">View package on npm</a>
-          <p class="fine">Free without an account or time limit.</p>
-        </div>
-
-        <div class="tier feature">
-          <span class="name">Team · planned</span>
-          <div class="price">$25 <small>/ operator / mo</small></div>
-          <p class="for">for 10–50 person engineering teams</p>
-          <ul>
+          </ul><a class="cta" href="https://www.npmjs.com/package/@remitlabs/cli">View package on npm</a><p class="fine">Free without an account or time limit.</p></div>
+        </details>
+        <details class="plan">
+          <summary><span class="plan-name">Team · planned</span><span class="plan-price">$25 <small>/ operator / mo</small></span></summary>
+          <div class="plan-body"><p>for 10–50 person engineering teams</p><ul>
             <li>Everything in Community, plus:</li>
             <li><b>Hosted workspace</b> with members and roles</li>
             <li>Shared reports across computers</li>
@@ -98,16 +91,11 @@
             <li>90-day audit log + evidence history</li>
             <li>Private team registry, 5 GB</li>
             <li>Business-hours support</li>
-          </ul>
-          <a class="cta solid" href="mailto:singhgaurprahalad@gmail.com?subject=Remit%20design%20partner">Email about the Team plan</a>
-          <p class="fine">5-operator minimum. Minimum bill of $250/month.</p>
-        </div>
-
-        <div class="tier">
-          <span class="name">Business · planned</span>
-          <div class="price">$50 <small>/ operator / mo</small></div>
-          <p class="for">for 50–200 person companies with compliance needs</p>
-          <ul>
+          </ul><a class="cta solid" href="mailto:singhgaurprahalad@gmail.com?subject=Remit%20design%20partner">Email about the Team plan</a><p class="fine">5-operator minimum. Minimum bill of $250/month.</p></div>
+        </details>
+        <details class="plan">
+          <summary><span class="plan-name">Business · planned</span><span class="plan-price">$50 <small>/ operator / mo</small></span></summary>
+          <div class="plan-body"><p>for 50–200 person companies with compliance needs</p><ul>
             <li>Everything in Team, plus:</li>
             <li><b>SAML sign-in and SCIM user management</b></li>
             <li>Role-based permissions and limited-access API keys</li>
@@ -117,16 +105,11 @@
             <li>Custom rules and signature packs</li>
             <li>99.9% uptime service agreement</li>
             <li>Priority support</li>
-          </ul>
-          <a class="cta" href="mailto:singhgaurprahalad@gmail.com?subject=Remit%20Business">Email about Business</a>
-          <p class="fine">20-operator minimum. Minimum bill of $1,000/month.</p>
-        </div>
-
-        <div class="tier">
-          <span class="name">Enterprise · planned</span>
-          <div class="price">from $25k <small>/ year</small></div>
-          <p class="for">for regulated or 200+ person organizations, including offline environments</p>
-          <ul>
+          </ul><a class="cta" href="mailto:singhgaurprahalad@gmail.com?subject=Remit%20Business">Email about Business</a><p class="fine">20-operator minimum. Minimum bill of $1,000/month.</p></div>
+        </details>
+        <details class="plan">
+          <summary><span class="plan-name">Enterprise · planned</span><span class="plan-price">from $25k <small>/ year</small></span></summary>
+          <div class="plan-body"><p>for regulated or 200+ person organizations, including offline environments</p><ul>
             <li>Everything in Business, plus:</li>
             <li><b>Self-hosted</b>, private-cloud or isolated deployment</li>
             <li>Dedicated container test workers</li>
@@ -135,31 +118,14 @@
             <li>Security review and penetration-test report</li>
             <li>24/7 support and a named technical account manager</li>
             <li>Professional services</li>
-          </ul>
-          <a class="cta" href="mailto:singhgaurprahalad@gmail.com?subject=Remit%20Enterprise">Email about Enterprise</a>
-          <p class="fine">Planned custom contract and data processing agreement.</p>
-        </div>
+          </ul><a class="cta" href="mailto:singhgaurprahalad@gmail.com?subject=Remit%20Enterprise">Email about Enterprise</a><p class="fine">Planned custom contract and data processing agreement.</p></div>
+        </details>
       </div>
     </section>
 
     <section class="tail">
-      <div class="duo">
-        <div>
-          <h2 class="sec-head" data-reveal>What the free plan includes</h2>
-          <p class="prose" data-reveal>The free plan includes file checks, local container tests, version pinning and the signed revocation list. The local scan and controls for blocking revoked skills remain free.</p>
-          <p class="prose" data-reveal>The planned paid service lets teammates share reports across computers, review approvals and retain a history of decisions.</p>
-        </div>
-        <div class="margin-notes" data-reveal>
-          <div><b>Available now</b> Local scans, container tests and version controls.</div>
-          <div><b>Planned paid service</b> Shared reports, roles, approvals and history.</div>
-          <div><b>Free revocation checks</b> Block listed versions through the local router.</div>
-        </div>
-      </div>
-    </section>
-
-    <section class="tail">
-      <h2 class="sec-head" data-reveal>Pricing questions</h2>
-      <div class="faq" data-reveal>
+      <h2 class="sec-head">Pricing questions</h2>
+      <div class="faq">
         <details>
           <summary>Is the local audit really free?</summary>
           <div class="a">Yes. Run <code>npx @remitlabs/cli@latest start</code> to scan your installed skills and open a local report. The local plan has no account requirement or time limit.</div>
@@ -196,9 +162,9 @@
     </section>
 
     <section class="tail">
-      <h2 class="sec-head" data-reveal>Help shape the team service.</h2>
-      <p class="prose" data-reveal>As a design partner, you can discuss your needs directly with the founder and help prioritize the planned service. The proposed Team discount is 50% for six months. Participation includes a 30-minute kickoff, check-ins every two weeks and permission to use anonymized feedback.</p>
-      <div class="cta-row" data-reveal style="margin-top:1.4rem">
+      <h2 class="sec-head">Help shape the team service.</h2>
+      <p class="prose">As a design partner, you can discuss your needs directly with the founder and help prioritize the planned service. The proposed Team discount is 50% for six months. Participation includes a 30-minute kickoff, check-ins every two weeks and permission to use anonymized feedback.</p>
+      <div class="cta-row" style="margin-top:1.4rem">
         <a class="cta solid" href="mailto:singhgaurprahalad@gmail.com?subject=Remit%20design%20partner">Email about a 15-minute call</a>
         <a class="cta ghost" href="/docs.html">Read the setup guide</a>
       </div>

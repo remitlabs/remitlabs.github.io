@@ -58,7 +58,6 @@
 </script>
 </head>
 <body class="homepage">
-<div class="progress" data-progress aria-hidden="true"></div>
 <div class="wrap">
 
   <header class="mast">
@@ -72,96 +71,78 @@
   </header>
 
   <main id="main" class="home">
-    <section class="hero">
-      <div class="hero-copy">
-        <h1>Check what your AI skills can access.</h1>
-        <p class="lede">Remit checks the instruction files and scripts used by Claude Code, Codex, Cursor and OpenCode. See risky patterns in the skills you use before letting your agent run them.</p>
-        <div class="install" id="install">
-          <div class="cmd cmd-hero"><span class="p">$</span><code>npx @remitlabs/cli@latest start</code><button type="button" data-copy>Copy</button></div>
-          <div class="cta-row">
-            <button class="cta solid" type="button" data-copy="npx @remitlabs/cli@latest start">Copy scan command</button>
-            <a class="cta ghost" href="https://www.npmjs.com/package/@remitlabs/cli">View package on npm</a>
-          </div>
-          <p class="note">Free to use. No account required.<br>Requires Node 22.5+ on macOS, Linux or Windows.</p>
+    <section class="hero home-hero">
+      <h1>Check what your AI skills can access.</h1>
+      <p class="lede">Scan the skills used by Claude Code, Codex, Cursor and OpenCode. Review the findings on your computer.</p>
+      <div class="cta-row">
+        <button class="cta solid" type="button" data-copy="npx @remitlabs/cli@latest start">Copy scan command</button>
+        <a class="cta ghost" href="/docs.html">Setup guide</a>
+      </div>
+      <p class="note">Free to use. No account required.</p>
+    </section>
+
+    <section class="tutorial visual-wide" id="demo" aria-label="Recorded tutorial">
+      <figure class="film-figure">
+        <div class="film">
+          <video src="assets/cli-demo.mp4" poster="assets/cli-demo-poster.jpg" muted loop playsinline autoplay preload="auto" controls aria-label="26-second recorded CLI demo showing a scan, findings and version controls"></video>
         </div>
-        <p class="hero-reassurance">Run this command in your terminal. npm downloads Remit when needed. The scan leaves your skill files unchanged and opens a report on your computer.</p>
-      </div>
-      <div class="hero-visual" id="demo">
-        <figure class="film-figure">
-          <div class="film">
-            <video src="assets/cli-demo.mp4" poster="assets/cli-demo-poster.jpg" muted loop playsinline autoplay preload="auto" controls aria-label="26-second recorded CLI demo showing audit, explain, pin and revoke"></video>
-          </div>
-          <figcaption><span>Watch a 26-second demo of the scan and version controls.</span><button class="text-link" type="button" data-demo-open>Enlarge video</button></figcaption>
-        </figure>
+        <figcaption><span>Recorded CLI tutorial · 26 seconds</span><button class="text-link" type="button" data-demo-open>Enlarge video</button></figcaption>
+      </figure>
+      <div class="install" id="install">
+        <div class="cmd"><span class="p">$</span><code>npx @remitlabs/cli@latest start</code><button type="button" data-copy>Copy</button></div>
+        <p class="note">Run in your terminal with Node 22.5+. npm downloads Remit when needed. Your existing skill files stay unchanged.</p>
       </div>
     </section>
 
-    <section class="home-traction" aria-label="Early traction">
-      <p><strong>600+ npm downloads</strong> without promoting Remit anywhere.</p>
-      <p><strong>2 brand partnership offers</strong> received so far.</p>
-      <small>Founder-reported, November 2026. The npm count includes repeat downloads.</small>
+    <section class="traction" aria-label="Early traction">
+      <p><strong>600+ npm downloads</strong> without promotion.<br><strong>2 brand partnership offers</strong> received so far.</p>
+      <small>Founder-reported, November 2026. Downloads include repeat downloads.</small>
     </section>
 
-    <section class="home-section home-workflow" aria-labelledby="workflow-title">
-      <div class="home-section-intro">
-        <h2 id="workflow-title">Check a skill before trusting it.</h2>
-        <p>A skill gives your AI agent instructions and may include code to run. It can ask the agent to read private files, send data online or change your settings.</p>
-        <p>Remit shows you the files and patterns worth reviewing. You choose which skills to keep.</p>
-        <a class="text-link" href="/docs.html">Read the setup guide</a>
+    <section class="scan-story" id="receipt" aria-labelledby="mesh-title">
+      <div class="section-intro">
+        <h2 id="mesh-title">See the skills behind your agents.</h2>
+        <p>One documented scan found 123 skill entries across four agent directories, including 114 repeated registrations.</p>
       </div>
-      <div class="home-steps">
-        <div><h3>Scan your installed skills</h3><p>The scan reads <code>SKILL.md</code> and its scripts. It checks 64 known risk patterns and lists the findings in a local report.</p></div>
-        <div><h3>Test how a skill behaves</h3><p>With Docker or Podman, you can also test a skill in a temporary container. The report shows the activity observed and which checks were missed. The test runs without your agent or model.</p></div>
-        <div><h3>Review later changes</h3><p>Record the version you reviewed and compare later updates. Remit's router loads skills for your agent. After syncing the signed blocklist, it blocks listed versions.</p></div>
-      </div>
-    </section>
-
-    <section class="home-section home-evidence" id="receipt" aria-labelledby="evidence-title">
-      <div class="home-section-intro">
-        <h2 id="evidence-title">See what the scan found.</h2>
-        <p>On the founder's computer, one scan found 123 skill entries across four agent directories. Of those entries, 114 repeated the same content.</p>
-        <p>Each skill gets a report, called a receipt. It identifies the version checked, the findings and the checks that ran. If a test run is missing, the decision stays unknown.</p>
-        <p class="home-disclosure">This October 2026 example is from one computer. Your results will differ. Read the findings and missing checks alongside the score.</p>
-        <a class="text-link" href="/docs.html#receipt">Read an example report</a>
-      </div>
-      <aside class="panel" aria-label="Static risk scores from one documented audit">
-        <div class="panel-head"><span>Example file scan</span><span>123 entries</span></div>
-        <div class="panel-body">
-          <div class="split" role="img" aria-label="Static risk scores of 101 clean, 1 low, 15 elevated and 6 high risk">
-            <i class="ok" style="width:82.1%"></i><i class="low" style="width:.8%"></i><i class="elev" style="width:12.2%"></i><i class="high" style="width:4.9%"></i>
-          </div>
-          <ul class="dist">
-            <li><i class="ok"></i><b>101</b><span>clean</span></li>
-            <li><i class="low"></i><b>1</b><span>low</span></li>
-            <li><i class="elev"></i><b>15</b><span>elevated</span></li>
-            <li><i class="high"></i><b>6</b><span>high risk</span></li>
-          </ul>
+      <figure class="mesh-figure visual-wide">
+        <div class="mesh" data-mesh role="group" aria-label="Illustrative network of 123 skill entries with 101 clean, 1 low, 15 elevated and 6 high static risk scores">
+          <canvas aria-hidden="true"></canvas>
+          <div class="mesh-fallback" data-mesh-fallback>123 skill entries across four agent directories</div>
+          <div class="mesh-controls"><span data-mesh-status aria-live="polite">All 123 entries</span><button type="button" data-mesh-motion aria-pressed="false">Pause motion</button></div>
         </div>
-        <dl class="home-receipt">
+        <figcaption>One node per entry. Positions illustrate the network and do not represent measured relationships.</figcaption>
+      </figure>
+      <div class="risk-chart" aria-label="Filter the example mesh by static risk score">
+        <button type="button" class="risk-row" data-risk="clean" aria-pressed="false"><span class="risk-name">Clean score</span><span class="risk-track"><span style="--bar:82.1%;--risk-color:#7D9C90"></span></span><strong>101</strong></button>
+        <button type="button" class="risk-row" data-risk="low" aria-pressed="false"><span class="risk-name">Low risk</span><span class="risk-track"><span style="--bar:.8%;--risk-color:#BBC6A9"></span></span><strong>1</strong></button>
+        <button type="button" class="risk-row" data-risk="elevated" aria-pressed="false"><span class="risk-name">Elevated</span><span class="risk-track"><span style="--bar:12.2%;--risk-color:#C7954E"></span></span><strong>15</strong></button>
+        <button type="button" class="risk-row" data-risk="high" aria-pressed="false"><span class="risk-name">High risk</span><span class="risk-track"><span style="--bar:4.9%;--risk-color:#FFB454"></span></span><strong>6</strong></button>
+      </div>
+      <p class="chart-note">Select a score to highlight its nodes. Example from the founder's computer, October 2026. Your results will differ.</p>
+      <details class="evidence-detail">
+        <summary>What does a score tell me?</summary>
+        <p>Read the findings and missing checks with the score. A clean score can still miss harmful behavior.</p>
+        <dl class="example-receipt">
           <div><dt>Example skill</dt><dd>ad-creative</dd></div>
           <div><dt>Decision</dt><dd>Unknown</dd></div>
           <div><dt>File checks</dt><dd>Complete</dd></div>
-          <div><dt>Test run</dt><dd>Not run</dd></div>
+          <div><dt>Container test</dt><dd>Not run</dd></div>
         </dl>
-        <p class="home-panel-note">The report says when a test has not run.</p>
-      </aside>
+        <p>A missing test stays visible in the report. <a href="/docs.html#receipt">Read the report guide</a>.</p>
+      </details>
     </section>
 
-    <section class="home-section home-start" aria-labelledby="start-title">
-      <div class="home-section-intro">
-        <h2 id="start-title">Understand the limits before you start.</h2>
-        <p>The scan runs on your computer. Its file checks work offline once Remit is installed. The source code is available under the Apache-2.0 license.</p>
-        <p>A scan can miss harmful code, including compiled or encrypted files. A test shows what happened during one run. Network blocking during a test requires an explicit list of allowed destinations.</p>
-        <p>Use the report to decide what to inspect, keep or remove.</p>
-        <div class="home-resource-links"><a href="/security.html">Security model and limits</a><a href="/pricing.html">Free and planned team plans</a></div>
-      </div>
-      <div class="home-start-action">
-        <h3>Run your first scan</h3>
-        <p>Copy this command, paste it into your terminal and run it. Remit checks the skill directories your agents use and opens your report.</p>
-        <div class="cmd"><span class="p">$</span><code>npx @remitlabs/cli@latest start</code><button type="button" data-copy>Copy</button></div>
-        <div class="cta-row"><button class="cta solid" type="button" data-copy="npx @remitlabs/cli@latest start">Copy scan command</button><a class="cta ghost" href="/docs.html">Installation guide</a></div>
-        <p class="note">The local scan is free. Shared team features are in development.</p>
-      </div>
+    <section class="home-close section-intro">
+      <h2>Start with your own scan.</h2>
+      <p>Review installed skills, duplicate entries and risky patterns in one local report.</p>
+      <div class="cta-row"><button class="cta solid" type="button" data-copy="npx @remitlabs/cli@latest start">Copy scan command</button><a class="cta ghost" href="https://www.npmjs.com/package/@remitlabs/cli">View on npm</a></div>
+      <details class="evidence-detail">
+        <summary>What should I know before running it?</summary>
+        <p>The file scan runs locally and leaves your skill files unchanged. It works offline once Remit is installed, on macOS, Linux and Windows.</p>
+        <p>Optional container tests need Docker or Podman and run without your AI agent or model. Network blocking requires an explicit allowlist. File scans can miss compiled or encrypted code, and a test records only one run.</p>
+        <p>Remit's router blocks listed versions after syncing the signed revocation list. Shared team features are in development.</p>
+        <a href="/security.html">Read the security limits</a>
+      </details>
     </section>
   </main>
 
@@ -195,16 +176,6 @@
       <span>© 2026 Remit Labs · public beta</span>
     </div>
   </footer>
-</div>
-
-<div class="cmdbar" data-cmdbar aria-hidden="true">
-  <div class="cmdbar-in">
-    <span class="lbl">start here</span>
-    <code>npx @remitlabs/cli@latest start</code>
-    <button type="button" data-copy>copy</button>
-    <a class="docs" href="/docs.html">Setup guide</a>
-    <button class="close" type="button" data-cmdbar-close aria-label="Hide this bar">✕</button>
-  </div>
 </div>
 
 <dialog class="demo-dialog" id="demo-dialog" aria-label="Remit CLI demo, full size">
