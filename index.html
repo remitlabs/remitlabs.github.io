@@ -101,20 +101,25 @@
         <p>Measured file checks from the public skills.sh catalog, representing 13,921 distinct scanned contents. Incomplete and skipped entries are disclosed below.</p>
       </div>
       <figure class="mesh-figure visual-wide">
-        <div class="mesh" data-mesh role="group" aria-label="Illustrative network of 14,307 statically scanned catalog entries">
-          <canvas tabindex="0" aria-label="Interactive skill graph. Drag to pan. Use plus and minus to zoom, arrow keys to pan, and Escape to clear selection." role="img"></canvas>
-          <div class="mesh-fallback" data-mesh-fallback>14,307 catalog entries scanned</div>
-          <div class="mesh-controls"><div class="mesh-zoom"><button type="button" data-mesh-zoom="out" aria-label="Zoom out">−</button><output data-mesh-zoom-level>100%</output><button type="button" data-mesh-zoom="in" aria-label="Zoom in">+</button><button type="button" data-mesh-reset>Reset view</button></div><span data-mesh-status aria-live="polite">All 14,307 entries</span><button type="button" data-mesh-motion aria-pressed="false">Pause motion</button></div>
+        <div class="mesh-workspace">
+          <section class="mesh-inspector" aria-label="Explore audited skills">
+            <label for="skill-search">Find an audited skill</label>
+            <input type="search" id="skill-search" placeholder="Skill name or repository" autocomplete="off" disabled>
+            <p class="note" data-mesh-help>Loading happens when the graph comes into view.</p>
+            <div data-mesh-results></div>
+          </section>
+          <div class="mesh" data-mesh role="group" aria-label="Illustrative network of 14,307 statically scanned catalog entries">
+            <canvas tabindex="0" aria-label="Interactive skill graph. Drag to pan. Use plus and minus to zoom, arrow keys to pan, and Escape to clear selection." role="img"></canvas>
+            <div class="mesh-fallback" data-mesh-fallback>14,307 catalog entries scanned</div>
+            <div class="mesh-controls"><div class="mesh-zoom"><button type="button" data-mesh-zoom="out" aria-label="Zoom out">−</button><output data-mesh-zoom-level>100%</output><button type="button" data-mesh-zoom="in" aria-label="Zoom in">+</button><button type="button" data-mesh-reset>Reset view</button></div><span data-mesh-status aria-live="polite">All 14,307 entries</span><button type="button" data-mesh-motion aria-pressed="false">Pause motion</button></div>
+          </div>
+          <section class="mesh-report" aria-label="Selected skill audit">
+            <div class="mesh-report-empty"><h3>Skill report</h3><p>Select a node or search for a skill to see its audit here.</p></div>
+            <article class="skill-detail" data-skill-detail hidden aria-live="polite"></article>
+          </section>
         </div>
-        <figcaption>Zoom in to reveal individual skills. Drag to pan, select a node for its audit, or search below. Positions and connections are illustrative.</figcaption>
+        <figcaption>Zoom in to reveal individual skills. Drag to pan, select a node for its audit, or search by name. Positions and connections are illustrative.</figcaption>
       </figure>
-      <section class="mesh-inspector" aria-label="Explore audited skills">
-        <label for="skill-search">Find an audited skill</label>
-        <input type="search" id="skill-search" placeholder="Skill name or repository" autocomplete="off" disabled>
-        <p class="note" data-mesh-help>Loading happens when the graph comes into view.</p>
-        <div data-mesh-results></div>
-        <article class="skill-detail" data-skill-detail hidden aria-live="polite"></article>
-      </section>
       <script id="mesh-data" type="application/json">{"counts":{"clean":9387,"low":701,"elevated":1493,"high":2726}}</script>
       <div class="risk-chart" aria-label="Filter the example mesh by static risk score">
         <button type="button" class="risk-row" data-risk="clean" aria-pressed="false" style="--risk-color:#65C7B0"><span class="risk-name">Clean score</span><span class="risk-track"><span style="--bar:65.611%;--risk-color:#65C7B0"></span></span><strong>9,387</strong></button>
