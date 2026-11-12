@@ -1,0 +1,66 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-11-12T20:06:19.943467+00:00",
+  "scope": "Complete URLs enumerated by the two skill sitemaps in the public sitemap index at collection time. This is not the full 1,351,617 historical count shown on the homepage.",
+  "counts": {
+    "enumerated": 20000,
+    "attempted": 19577,
+    "scanned": 14307,
+    "complete": 13730,
+    "partial": 577,
+    "failed": 5270
+  },
+  "unattempted": 423,
+  "repositoriesCompleted": 2090,
+  "statusCounts": {
+    "scanned": 14307,
+    "missing_skill": 1397,
+    "ambiguous_skill": 1573,
+    "http_404": 292,
+    "repository_error": 2008
+  },
+  "riskCounts": {
+    "clean": 9387,
+    "low": 701,
+    "elevated": 1493,
+    "high": 2726
+  },
+  "riskScoreBands": {
+    "clean": "0",
+    "low": "1-24",
+    "elevated": "25-49",
+    "high": "50-100"
+  },
+  "scanner": {
+    "package": "@remitlabs/core",
+    "version": "0.1.1",
+    "checkoutCommit": "1005ef319595337f1d72fc3bbd8b2759c09f6a5f",
+    "hashes": {
+      "packages/core/src/static-scan.ts": "165f9fef0f0106ae53d4a1339fd79de11e56fa24d5bad241c0d291330355845a",
+      "packages/core/src/scan-rules.ts": "b2528522e77d35c9ea11cf356478ff20b456cdd6b91f7ae211323a8b1798e2ec",
+      "packages/core/dist/static-scan.js": "f879308236f448e2be4d0d53882e787d7573b275a1405ceb568e5e0e320b5b3a",
+      "packages/core/dist/scan-rules.js": "1cd25ebbe713449c6e82b5cd7acb25d8130285d12e3946807434e7a1d076f147",
+      "packages/core/src/frontmatter.ts": "edf8b77bda4e7e89946653b93696ddc0dcb68159db4767db8a33a28362f2fae2",
+      "packages/core/dist/frontmatter.js": "c5dad2a2148ca0c5d5caf000ca60bec489c8551ed7b91e23bc08006a483ee659"
+    },
+    "frozenEngineHashes": {
+      "static-scan.js": "f879308236f448e2be4d0d53882e787d7573b275a1405ceb568e5e0e320b5b3a",
+      "scan-rules.js": "1cd25ebbe713449c6e82b5cd7acb25d8130285d12e3946807434e7a1d076f147"
+    },
+    "bridgeSha256": "d5350d541c7739f189b66c2018e3b5e8e7c8ddf5b76cacf89e4e16df0ff9d4ee",
+    "runnerSha256": "48c31ce99f00ea2768e89e6c8e73d6f8d931b4acc941f5ea035f2b40ea08f125",
+    "ruleCount": 64
+  },
+  "limitations": [
+    "Static rules only; no downloaded skill code was executed.",
+    "All behavioral decisions remain unknown. Zero findings does not prove safety.",
+    "The inventory is the public sitemap snapshot, not the entire homepage historical count.",
+    "Archives use the default branch as retrieved; SHA256 and available commit metadata identify the snapshot.",
+    "Partial scans retain their risk scores and are counted separately from complete scans.",
+    "Symlinks, hardlinks, protected filenames and nonregular entries are excluded and reported.",
+    "Files beyond512KiB are retained as512KiB+1 to preserve the scanner oversize flag. File digests reflect retained scan bytes."
+  ],
+  "uniqueContentScanned": 13921,
+  "report": "/data/REMIT-01-RS-001_R1_PublicSkillScan_2026-11-13.json.gz",
+  "reportSha256": "0801c6057d4e2d2f8a84da3fb6978723717e29b941c2069528eb8b3b116a7d52"
+}

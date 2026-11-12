@@ -17,9 +17,10 @@ colors:
   action-ink: "#17120A"
   ok: "#8FD694"
   deny: "#EA7767"
-  risk-clean: "#7D9C90"
-  risk-low: "#BBC6A9"
-  risk-elevated: "#C7954E"
+  risk-clean: "#65C7B0"
+  risk-low: "#79ADFF"
+  risk-elevated: "#F3BC5C"
+  risk-high: "#FF788C"
 typography:
   display:
     fontFamily: "Archivo, Helvetica Neue, Helvetica, Arial, sans-serif"
@@ -106,7 +107,7 @@ R-01. The latest user-approved tutorial-first, single-column direction supersede
 
 Amber is the action accent. Casing, surface, raise and sunk create the charcoal layers. Hair and hair-lit define dividers and interactive borders. Ink carries headings. Dim and faint share the current secondary text value.
 
-Risk-clean, risk-low, risk-elevated and amber encode the mesh and risk graph. Ok and deny remain semantic report colors.
+Teal, blue, amber and coral encode the mesh and risk graph. Circle, diamond, triangle and square markers supplement the colors. Ok and deny remain semantic report colors.
 
 **The accent rule.** Use amber for actions and selected states. Use green and red for reported data states.
 
@@ -120,7 +121,7 @@ The hero is centered with a 24ch heading limit. Homepage section introductions u
 
 The page uses fluid gutters. Heroes and inner-page reading sections have a centered 1000px maximum width. Homepage introductions use 760px, the tutorial and mesh use up to 1440px, and the risk graph and evidence disclosures use 840px.
 
-The homepage order is introduction, recorded tutorial and command, early traction, mesh and risk graph, then the final scan action. Pricing uses vertically stacked plan disclosures. Trust details, ledgers and supporting grids follow a single column.
+R-02. The latest opening-screen request supersedes the earlier tutorial-first placement. Headline, command and early traction share the opening viewport. The tutorial follows and starts at 35% visibility, then pauses when it leaves view. Mesh and risk graph follow the tutorial. Pricing uses vertically stacked plan disclosures. Trust details, ledgers and supporting grids follow a single column.
 
 **The reading order rule.** Give each section one heading and one reading path. Place supporting explanations in native disclosures when the reader can choose to expand them.
 
@@ -140,7 +141,7 @@ Use the control radius for buttons, mesh controls and graph rows. Use the visual
 - Primary actions use amber with dark text and a lighter amber hover. Secondary actions use subdued text and a hairline border. Keyboard focus uses a 2px amber outline with 3px offset.
 - Command fields show selectable monospace text and a copy button. Copy feedback lasts 1700ms, with a manual-copy message when clipboard access fails.
 - The recorded tutorial uses native video controls and a caption. Enlarge opens a native dialog. Closing pauses its video. Reduced-motion preference pauses autoplay videos.
-- The local canvas mesh shows 123 entries from the documented example and four directory hubs. Its accessible group contains the motion controls. Graph rows toggle risk highlights and expose selection with `aria-pressed`. Selecting the same row clears the filter. The textual status announces the selected count. The graph shows 101 clean, 1 low, 15 elevated and 6 high scores. Positions and edges are illustrative.
+- The local canvas mesh reads measured counts from embedded JSON. Large populations aggregate up to 2,400 illustrated nodes, with the entries-per-node scale disclosed. Graph values always show full measured counts. Positions and edges are illustrative.
 - Mesh motion pauses through its control, outside the viewport and while the document is hidden. Reduced-motion preference starts it paused. A textual fallback remains until the canvas is ready.
 - Plan, evidence and trust disclosures use native `details` and `summary`. Community starts expanded on pricing. Supporting report values remain visible when the relevant disclosure opens.
 - Cards and chips retain their shared charcoal fills and semantic report states where used by reading pages.

@@ -10,6 +10,32 @@
   var hover = window.matchMedia('(hover:hover) and (pointer:fine)').matches;
   if (reduce) document.querySelectorAll('video[autoplay]').forEach(function (video) { video.autoplay = false; video.pause(); });
 
+  /* Keep the opening content in one screen and start the tutorial on arrival. */
+  var masthead = document.querySelector('.mast');
+  if (masthead && 'ResizeObserver' in window) {
+    new ResizeObserver(function () {
+      document.documentElement.style.setProperty('--mast-height', masthead.offsetHeight + 'px');
+    }).observe(masthead);
+  }
+  document.querySelectorAll('[data-scroll-video]').forEach(function (video) {
+    var inView = false;
+    function updateVisibility(visible) {
+      if (visible === inView) return;
+      inView = visible;
+      video.dataset.inView = visible ? 'true' : 'false';
+      if (!visible) video.pause();
+      else if (!reduce && !(dialog && dialog.open)) {
+        var playback = video.play();
+        if (playback && playback.catch) playback.catch(function () {});
+      }
+    }
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(function (entries) {
+        updateVisibility(entries[0].intersectionRatio >= .35);
+      }, { threshold: [0, .35] }).observe(video);
+    }
+  });
+
   /* ---------- 1. copy ---------- */
   function wireCopy(root) {
     root.querySelectorAll('[data-copy]').forEach(function (btn) {
@@ -63,10 +89,12 @@
   if (dialog && typeof dialog.showModal === 'function') {
     var dVideo = dialog.querySelector('video');
     var pageVideos = document.querySelectorAll('.film video');
+    var pausedForDialog = [];
     document.querySelectorAll('[data-demo-open]').forEach(function (a) {
       a.addEventListener('click', function (e) {
         e.preventDefault();
-        pageVideos.forEach(function (v) { try { v.pause(); } catch (err) {} });
+        pausedForDialog = Array.from(pageVideos).filter(function (video) { return !video.paused; });
+        pageVideos.forEach(function (video) { video.pause(); });
         dialog.showModal();
         try { dVideo.currentTime = 0; } catch (err) {}
         var p = dVideo.play();
@@ -74,7 +102,15 @@
       });
     });
     dialog.querySelector('[data-demo-close]').addEventListener('click', function () { dialog.close(); });
-    dialog.addEventListener('close', function () { try { dVideo.pause(); if (!reduce) pageVideos.forEach(function (v) { var p = v.play(); if (p && p.catch) p.catch(function () {}); }); } catch (e) {} });
+    dialog.addEventListener('close', function () {
+      dVideo.pause();
+      if (reduce) return;
+      pausedForDialog.forEach(function (video) {
+        if (video.hasAttribute('data-scroll-video') && video.dataset.inView !== 'true') return;
+        var playback = video.play();
+        if (playback && playback.catch) playback.catch(function () {});
+      });
+    });
     dialog.addEventListener('click', function (e) { if (e.target === dialog) dialog.close(); });
   }
 
@@ -245,9 +281,22 @@
     var width = 0;
     var height = 0;
     var riskColors = {
-      clean: '#7D9C90', low: '#BBC6A9', elevated: '#C7954E', high: '#FFB454'
+      clean: '#65C7B0', low: '#79ADFF', elevated: '#F3BC5C', high: '#FF788C'
     };
     var riskCounts = { clean: 101, low: 1, elevated: 15, high: 6 };
+    var dataset = document.getElementById('mesh-data');
+    if (dataset) {
+      try {
+        var counts = JSON.parse(dataset.textContent).counts;
+        var valid = Object.keys(riskCounts).every(function (risk) {
+          return Number.isSafeInteger(counts[risk]) && counts[risk] >= 0;
+        });
+        if (valid && Object.values(counts).reduce(function (sum, value) { return sum + value; }, 0) > 0) riskCounts = counts;
+      } catch (error) { console.warn('Remit mesh data could not be read', error); }
+    }
+    var totalEntries = Object.values(riskCounts).reduce(function (sum, count) { return sum + count; }, 0);
+    var entriesPerNode = Math.ceil(totalEntries / 2400);
+    status.textContent = 'All ' + totalEntries.toLocaleString('en-US') + ' entries';
     var riskLabels = { clean: 'clean score', low: 'low risk', elevated: 'elevated', high: 'high risk' };
     var hubs = [
       { x: -1.2, y: -.5, z: .3 }, { x: .9, y: -.6, z: -.4 },
@@ -259,17 +308,20 @@
       seed = (seed * 16807) % 2147483647;
       return (seed - 1) / 2147483646;
     }
-    for (var index = 0; index < 123; index++) {
-      var hub = hubs[index % hubs.length];
-      var risk = index < 101 ? 'clean' : index === 101 ? 'low' : index < 117 ? 'elevated' : 'high';
-      nodes.push({
-        x: hub.x + (random() - .5) * 1.75,
-        y: hub.y + (random() - .5) * 1.2,
-        z: hub.z + (random() - .5) * 1.8,
-        risk: risk,
-        hub: index % hubs.length
-      });
-    }
+    Object.keys(riskCounts).forEach(function (risk) {
+      var count = Math.ceil(riskCounts[risk] / entriesPerNode);
+      for (var index = 0; index < count; index++) {
+        var hubIndex = nodes.length % hubs.length;
+        var hub = hubs[hubIndex];
+        nodes.push({
+          x: hub.x + (random() - .5) * 1.75,
+          y: hub.y + (random() - .5) * 1.2,
+          z: hub.z + (random() - .5) * 1.8,
+          risk: risk,
+          hub: hubIndex
+        });
+      }
+    });
 
     function project(node) {
       var rotation = angle + pointer.x;
@@ -277,8 +329,9 @@
       var z = -node.x * Math.sin(rotation) + node.z * Math.cos(rotation);
       var y = node.y + z * pointer.y;
       var perspective = 4.8 / (5 - z);
-      var scale = Math.min(width / 5.5, height / 3.6);
-      return { x: width / 2 + x * scale * perspective, y: height / 2 + y * scale * perspective, depth: perspective };
+      var scaleX = Math.min(width / 5.8, height / 2.4);
+      var scaleY = Math.min((height - 60) / 3.6, width / 4);
+      return { x: width / 2 + x * scaleX * perspective, y: (height - 50) / 2 + y * scaleY * perspective, depth: perspective };
     }
 
     function draw() {
@@ -289,7 +342,8 @@
         var point = projected[i];
         var hub = projectedHubs[node.hub];
         var highlighted = !selectedRisk || selectedRisk === node.risk;
-        context.strokeStyle = highlighted ? 'rgba(125,156,144,.26)' : 'rgba(125,156,144,.045)';
+        var edgeOpacity = Math.min(.26, 45 / nodes.length);
+        context.strokeStyle = 'rgba(125,156,144,' + (highlighted ? edgeOpacity : edgeOpacity * .15) + ')';
         context.lineWidth = .7;
         context.beginPath();
         context.moveTo(hub.x, hub.y);
@@ -309,9 +363,23 @@
         var point = projected[i];
         context.globalAlpha = !selectedRisk || selectedRisk === node.risk ? 1 : .12;
         context.fillStyle = riskColors[node.risk];
-        var radius = (node.risk === 'high' ? 4 : node.risk === 'elevated' ? 3.1 : 2.3) * point.depth;
+        var densityScale = Math.max(.55, Math.sqrt(123 / nodes.length));
+        var radius = (node.risk === 'high' ? 4 : node.risk === 'elevated' ? 3.1 : 2.3) * point.depth * densityScale;
         context.beginPath();
-        context.arc(point.x, point.y, radius, 0, Math.PI * 2);
+        if (node.risk === 'high') {
+          context.rect(point.x - radius, point.y - radius, radius * 2, radius * 2);
+        } else if (node.risk === 'elevated') {
+          context.moveTo(point.x, point.y - radius * 1.3);
+          context.lineTo(point.x + radius * 1.2, point.y + radius);
+          context.lineTo(point.x - radius * 1.2, point.y + radius);
+          context.closePath();
+        } else if (node.risk === 'low') {
+          context.moveTo(point.x, point.y - radius * 1.3);
+          context.lineTo(point.x + radius * 1.3, point.y);
+          context.lineTo(point.x, point.y + radius * 1.3);
+          context.lineTo(point.x - radius * 1.3, point.y);
+          context.closePath();
+        } else context.arc(point.x, point.y, radius, 0, Math.PI * 2);
         context.fill();
       });
       context.globalAlpha = 1;
@@ -355,8 +423,8 @@
         document.querySelectorAll('[data-risk]').forEach(function (item) {
           item.setAttribute('aria-pressed', item.dataset.risk === selectedRisk ? 'true' : 'false');
         });
-        var count = selectedRisk ? riskCounts[selectedRisk] : 123;
-        status.textContent = selectedRisk ? count + ' ' + riskLabels[selectedRisk] + (count === 1 ? ' entry' : ' entries') : 'All 123 entries';
+        var count = selectedRisk ? riskCounts[selectedRisk] : totalEntries;
+        status.textContent = selectedRisk ? count.toLocaleString('en-US') + ' ' + riskLabels[selectedRisk] + (count === 1 ? ' entry' : ' entries') : 'All ' + totalEntries.toLocaleString('en-US') + ' entries';
         draw();
       });
     });

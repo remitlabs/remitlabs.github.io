@@ -1080,3 +1080,48 @@ th {
 .tally span { font: 400 .875rem/1.55 var(--sans); }
 .grid:has(.info-detail) { border: 0; background: transparent; gap: 0; }
 .article blockquote { border-left-width: 1px; }
+
+/* Headline, command and traction share the opening viewport. */
+.opening {
+  min-height: calc(100svh - var(--mast-height, 76px));
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: clamp(1.25rem, 3vh, 2.5rem);
+  padding: clamp(1.5rem, 4vh, 3rem) 0;
+}
+.opening .home-hero { width: 100%; max-width: 1280px; margin: 0 auto; padding: 0; }
+.opening .home-hero h1 { font-size: clamp(2.5rem, 5.5vw, 6rem); max-width: 23ch; }
+.opening .home-hero .lede { max-width: 70ch; }
+.opening .home-hero .cta-row { margin-top: 1.2rem; }
+.opening .home-hero .note { margin-top: .65rem; }
+.opening .install { width: 100%; max-width: 760px; margin: 0 auto; }
+.opening .cmd { font-size: 1rem; padding: 1rem; }
+.opening .install .note { max-width: 70ch; margin-top: .75rem; text-align: center; }
+.opening .traction { max-width: 800px; margin: 0 auto; padding: 0; }
+.opening .traction p { margin-bottom: .5rem; }
+.tutorial { padding-top: 1.5rem; }
+@media (max-width: 700px) {
+  .opening { gap: 1.25rem; padding-block: 1.5rem; }
+  .opening .home-hero h1 { font-size: clamp(2.25rem, 7.5vw, 3.25rem); }
+  .opening .cmd { font-size: .75rem; padding: .75rem .6rem; }
+  .opening .cmd code { white-space: normal; overflow-wrap: anywhere; }
+  .opening .install .note { font-size: .8rem; }
+  .opening .traction p { font-size: .9rem; }
+  .opening .traction small { font-size: .75rem; }
+}
+
+.risk-name { display: inline-flex; align-items: center; gap: .5rem; }
+.risk-name::before { content: ""; width: 8px; height: 8px; flex: none; background: var(--risk-color); border-radius: 50%; }
+[data-risk="low"] .risk-name::before { border-radius: 0; transform: rotate(45deg); }
+[data-risk="elevated"] .risk-name::before { border-radius: 0; clip-path: polygon(50% 0,100% 100%,0 100%); }
+[data-risk="high"] .risk-name::before { border-radius: 0; }
+
+.risk-row { grid-template-columns: 120px minmax(0, 1fr) 76px; }
+.risk-row strong { font-size: 1.15rem; }
+@media (max-width: 700px) {
+  .risk-row { grid-template-columns: 96px minmax(0, 1fr) 60px; }
+  .risk-row strong { font-size: 1rem; }
+}
+
+.risk-track span { min-width: 0; }
