@@ -3,13 +3,13 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Remit vs Socket, Snyk, and skill registries</title>
-<meta name="description" content="An honest comparison: what package scanners, registries, platform signing, and Remit each answer — and where each one stops.">
+<title>Compare skill security checks | Remit</title>
+<meta name="description" content="Questions to evaluate skill scans, container tests, version controls and revocation alongside your current tools.">
 <meta name="theme-color" content="#0A0C0B">
 <link rel="canonical" href="https://remitlabs.github.io/compare.html">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Remit vs Socket, Snyk, and skill registries">
-<meta property="og:description" content="Different tools answer different questions. Here is exactly where each one stops.">
+<meta property="og:title" content="Compare skill security checks | Remit">
+<meta property="og:description" content="Questions to evaluate skill scans, container tests, version controls and revocation alongside your current tools.">
 <meta property="og:url" content="https://remitlabs.github.io/compare.html">
 <meta property="og:image" content="https://remitlabs.github.io/assets/og.png">
 <meta name="twitter:card" content="summary_large_image">
@@ -23,10 +23,10 @@
 {
   "@context": "https://schema.org",
   "@type": "Article",
-  "headline": "Remit vs Socket, Snyk, and skill registries",
-  "description": "An honest comparison of package scanners, registries, platform signing, and Remit.",
+  "headline": "Compare skill security checks | Remit",
+  "description": "A practical guide to evaluating skill scans, test results, version controls and revocation.",
   "datePublished": "2026-11-08",
-  "dateModified": "2026-11-08",
+  "dateModified": "2026-11-12",
   "author": { "@type": "Person", "name": "Prahalad Singh" },
   "publisher": { "@type": "Organization", "name": "Remit Labs" },
   "mainEntityOfPage": "https://remitlabs.github.io/compare.html"
@@ -36,124 +36,88 @@
 <body>
 <div class="wrap">
   <header class="mast">
-    <a class="brand" href="/">remit <em>— agent-skill trust layer</em></a>
+    <a class="brand" href="/">remit <em>checks for AI agent skills</em></a>
     <nav class="nav" aria-label="primary">
-      <a href="/pricing.html">pricing</a>
-      <a href="/security.html">security</a>
-      <a href="/compare.html">compare</a>
-      <a href="/docs.html">docs</a>
-      <a href="/blog/">blog</a>
-      <a class="pill" href="/#install">run the audit</a>
+      <a href="/pricing.html">Pricing</a>
+      <a href="/security.html">Security</a>
+      <a href="/docs.html">Setup guide</a>
+      <a class="pill" href="/#install">Scan your skills</a>
     </nav>
   </header>
 
   <main>
     <section class="hero" style="grid-template-columns:1fr;padding-bottom:1rem">
       <div>
-        <h1 data-reveal style="font-size:clamp(2.4rem,5.6vw,4.1rem);line-height:1.04">Different tools answer<br><span style="color:var(--dim)">different questions.</span></h1>
-        <p class="lede" data-reveal style="max-width:52ch;margin-top:1.2rem">Most "vs" pages pretend the other product is bad. They are not. Socket and Snyk are good at packages and code. Registries are good at distribution. Platform signing is good at first-party trust. Remit is the lifecycle and evidence layer across agents.</p>
+        <h1>Choose the checks your team needs.</h1>
+        <p class="lede" style="max-width:60ch">Remit checks the skills your coding agents load and tracks the versions you review. Use these questions to compare it with your current tools.</p>
       </div>
     </section>
-
     <section class="tail" style="border-top:0;padding-top:1rem;margin-top:0">
-      <h2 class="sec-head" data-reveal>Where each one stops</h2>
-      <div class="table-wrap" data-reveal>
+      <h2 class="sec-head">What to look for</h2>
+      <div class="table-wrap">
         <table class="compare-table">
-          <thead>
-            <tr><th>Question</th><th>Socket</th><th>Snyk</th><th>Registries</th><th>Platform-native</th><th>Remit</th></tr>
-          </thead>
+          <thead><tr><th>Your question</th><th>What Remit provides</th><th>What to verify in any tool</th></tr></thead>
           <tbody>
-            <tr><td><b>Is this package malicious?</b></td><td class="yes">Yes</td><td class="yes">Yes</td><td class="part">Partly</td><td class="part">Per vendor</td><td class="part">Static rules</td></tr>
-            <tr><td><b>What can this skill touch?</b></td><td class="no">No</td><td class="part">Partial</td><td class="no">No</td><td class="part">Per vendor</td><td class="yes">Declared + observed</td></tr>
-            <tr><td><b>Did the bytes change since install?</b></td><td class="no">No</td><td class="no">No</td><td class="part">Partial</td><td class="part">Per vendor</td><td class="yes">Digest + diff</td></tr>
-            <tr><td><b>Who approved it?</b></td><td class="no">No</td><td class="no">No</td><td class="no">No</td><td class="part">Per vendor</td><td class="yes">Yes (Team)</td></tr>
-            <tr><td><b>Can I revoke it across agents?</b></td><td class="no">No</td><td class="no">No</td><td class="no">No</td><td class="part">Per vendor</td><td class="yes">Signed feed</td></tr>
-            <tr><td><b>One policy across Claude / Codex / Cursor?</b></td><td class="no">No</td><td class="no">No</td><td class="no">No</td><td class="no">No</td><td class="yes">Yes</td></tr>
-            <tr><td><b>Context cost / on-demand load?</b></td><td class="no">No</td><td class="no">No</td><td class="no">No</td><td class="part">Partial</td><td class="yes">Router</td></tr>
-            <tr><td><b>Works offline, no account?</b></td><td class="no">No</td><td class="no">No</td><td class="no">No</td><td class="no">No</td><td class="yes">Yes</td></tr>
+            <tr><td>What do my skills contain?</td><td>64 file-checking rules for instructions and scripts.</td><td>Which files and patterns does the scan cover?</td></tr>
+            <tr><td>What happens when a skill runs?</td><td>Optional tests in a temporary container using Docker or Podman.</td><td>Does the report show observed behavior and missing checks?</td></tr>
+            <tr><td>Has a reviewed version changed?</td><td>A saved content hash and comparison on update.</td><td>Can you identify and review the exact change?</td></tr>
+            <tr><td>Can I block a withdrawn version?</td><td>A signed revocation list checked by the MCP router.</td><td>How do computers receive and apply a revocation?</td></tr>
+            <tr><td>Can I start locally?</td><td>A free local CLI and dashboard without an account.</td><td>What gets installed, uploaded or changed?</td></tr>
+            <tr><td>Can teammates manage approvals?</td><td>Planned for the hosted team service, currently in development.</td><td>Which team features can you use today?</td></tr>
           </tbody>
         </table>
       </div>
-      <p class="table-hint">swipe the table sideways →</p>
-      <p class="table-note">"Yes" means the capability exists in the product as described on 2026-11-08. "Partial" means a related but narrower capability. Verify current competitor features before quoting this table.</p>
+      <p class="table-hint">Scroll sideways to read the table.</p>
     </section>
-
     <section class="tail">
-      <h2 class="sec-head" data-reveal>The honest answers</h2>
-      <div class="ledger" data-reveal>
-        <div class="row">
-          <div class="t">you have socket or snyk</div>
-          <p>Keep them. They cover dependencies and code, and Snyk's ToxicSkills research is why teams are paying attention. Run the free Remit audit next to them and compare what each one sees about the <b>skill artifact</b>: declared scope, observed behavior, digest history, and revocation. A scan report is not an install gate or a kill switch.</p>
-        </div>
-        <div class="row">
-          <div class="t">you use skills.sh or clawhub</div>
-          <p>Keep using them for discovery. Install counts are popularity, not evidence. In August 2026 a typosquatting campaign on skills.sh reached <b>1.7 million installs</b> before it was pulled (<a href="https://www.csoonline.com/article/4206851/trojanized-ai-skills-gain-1-7m-installs-in-agent-targeted-attack.html">Zenity</a>). Unit 42 crawled all 49,943 OpenClaw skills and found <b>80.0%</b> did something their own description did not mention (<a href="https://unit42.paloaltonetworks.com/ai-agent-supply-chain-risks/">Unit 42, June 2026</a>). Remit is the trust layer under the registry, not a replacement for it. A registry with a receipt is more valuable to everyone.</p>
-        </div>
-        <div class="row">
-          <div class="t">you rely on platform signing</div>
-          <p>That is necessary and not sufficient. A team running three agents still needs one neutral policy and one audit answer across all three. Vendors will not build a competitor-neutral control plane. That is the job Remit does.</p>
-        </div>
-        <div class="row">
-          <div class="t">you read every skill by hand</div>
-          <p>That is the most thorough control available, and it does not scale past 50 skills or survive a maintainer changing one at 2am. Remit automates the read, records what it saw, and tells you when the bytes change. It does not replace judgment; it gives judgment a memory.</p>
-        </div>
-        <div class="row">
-          <div class="t">you block all skills</div>
-          <p>Then you do not have the productivity problem yet. When you allow them, start with the free audit. No pitch needed.</p>
-        </div>
+      <h2 class="sec-head">How Remit fits your workflow</h2>
+      <div class="ledger">
+        <div class="row"><div class="t">Package scanners</div><p>If you use tools such as Socket or Snyk, check whether your setup also reviews agent skill instructions and later updates. Run a local Remit scan to compare the findings for your skills.</p></div>
+        <div class="row"><div class="t">Skill registries</div><p>Registries help you find skills. Before loading one, review its instructions, scripts and requested access. Remit records findings and identifies the exact version checked.</p></div>
+        <div class="row"><div class="t">Platform signing</div><p>Check what a vendor's signature verifies and which agents it covers. Remit applies a skill policy across its supported coding agents.</p></div>
+        <div class="row"><div class="t">Manual review</div><p>Read the instructions and code that matter to your setup. Remit helps locate risk patterns, records findings and highlights version changes for another review.</p></div>
       </div>
     </section>
-
     <section class="tail">
-      <h2 class="sec-head" data-reveal>What Remit does not claim</h2>
-      <div class="grid two" data-reveal>
-        <div class="card"><h3>Not a guarantee</h3><p>A finding is a rule match. A canary is one observed run. A clean receipt is not proof that a skill is benign.</p></div>
-        <div class="card"><h3>Not a firewall</h3><p>Runtime guardrails for prompts and models are a different layer. Remit governs the artifact the agent loads.</p></div>
-        <div class="card"><h3>Not a registry</h3><p>Discovery is solved by better-funded products. Remit adds evidence and lifecycle to whatever registry you already use.</p></div>
-        <div class="card"><h3>Not finished</h3><p>The local tool ships today. The team control plane is in design-partner development, and I label it that way.</p></div>
-      </div>
+      <h2 class="sec-head">Read the limits with the findings.</h2>
+      <p class="prose">File checks can miss harmful behavior. A container test records one run. Remit's router can check only the skills loaded through it. The local CLI is available in public beta, and shared team features are in development.</p>
+      <div class="cta-row" style="margin-top:1.4rem"><a class="cta" href="/security.html">Read the security limits</a><a class="cta ghost" href="/pricing.html">See free and planned team features</a></div>
     </section>
-
     <section class="tail">
-      <h2 class="sec-head" data-reveal>Run the free audit and judge the evidence.</h2>
-      <p class="prose" data-reveal>If it finds nothing you did not know, you have lost five minutes.</p>
-      <div class="install" data-reveal style="margin-top:1.2rem">
-        <div class="cmd"><span class="p">$</span><code>npx @remitlabs/cli@latest start</code><button type="button" data-copy>copy</button></div>
-      </div>
-      <div class="cta-row" data-reveal style="margin-top:1rem">
-        <a class="cta" href="/pricing.html">see pricing</a>
-        <a class="cta ghost" href="/security.html">read the security model</a>
-      </div>
+      <h2 class="sec-head">Check your installed skills.</h2>
+      <p class="prose">Run this command in your terminal. Remit opens a local report with installed skills, duplicate entries and findings. The scan leaves your existing skill files unchanged.</p>
+      <div class="install"><div class="cmd"><span class="p">$</span><code>npx @remitlabs/cli@latest start</code><button type="button" data-copy>Copy</button></div></div>
+      <p class="note">npm downloads Remit when needed. Requires Node 22.5+.</p>
     </section>
   </main>
 
   <footer class="foot">
     <div class="col">
-      <span class="brand">remit <em>— agent-skill trust layer</em></span>
+      <span class="brand">remit <em>checks for AI agent skills</em></span>
       <p>built by <a href="https://www.npmjs.com/org/remitlabs" style="display:inline;color:var(--ink)">remitlabs</a> · cli: skillctl · Apache-2.0</p>
     </div>
     <div class="col">
       <h4>Product</h4>
-      <a href="/pricing.html">pricing</a>
-      <a href="/security.html">security</a>
-      <a href="/compare.html">compare</a>
-      <a href="/docs.html">docs</a>
+      <a href="/pricing.html">Pricing</a>
+      <a href="/security.html">Security</a>
+      <a href="/compare.html">Compare checks</a>
+      <a href="/docs.html">Setup guide</a>
     </div>
     <div class="col">
       <h4>Learn</h4>
-      <a href="/blog/">blog</a>
+      <a href="/blog/">Guides</a>
       <a href="/blog/audit-claude-code-skills.html">audit your skills</a>
       <a href="/blog/mcp-security-checklist.html">mcp checklist</a>
-      <a href="/llms.txt">llms.txt</a>
+      <a href="/llms.txt">Summary for AI tools</a>
     </div>
     <div class="col">
       <h4>Elsewhere</h4>
-      <a href="https://www.npmjs.com/package/@remitlabs/cli">npm</a>
-      <a href="https://github.com/remitlabs">github</a>
-      <a href="/.well-known/security.txt">security.txt</a>
+      <a href="https://www.npmjs.com/package/@remitlabs/cli">npm package</a>
+      <a href="https://github.com/remitlabs">GitHub</a>
+      <a href="/.well-known/security.txt">Security contact</a>
     </div>
     <div class="bottom">
-      <span>don't trust the page — <a href="/#install" style="display:inline">run the audit</a></span>
+      <span>Inspect your installed skills. <a href="/#install" style="display:inline">Scan your skills</a></span>
       <span>© 2026 Remit Labs · public beta</span>
     </div>
   </footer>

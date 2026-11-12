@@ -3,19 +3,19 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Remit — audit and revoke AI agent skills</title>
-<meta name="description" content="Audit every AI agent skill on your machine, see what it can touch, pin it by digest, and block revoked versions at load. Free, local-first, Apache-2.0.">
+<title>Remit | Check your AI agent skills</title>
+<meta name="description" content="Check AI skill files for risky patterns, review test results and track approved versions. Free local scans for Claude Code, Codex, Cursor and OpenCode.">
 <meta name="theme-color" content="#0A0C0B">
 <link rel="canonical" href="https://remitlabs.github.io/">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Remit">
-<meta property="og:title" content="Remit — audit and revoke AI agent skills">
-<meta property="og:description" content="Audit every AI agent skill on your machine, see what it can touch, pin it by digest, and block revoked versions at load. Free, local-first, Apache-2.0.">
+<meta property="og:title" content="Remit | Check your AI agent skills">
+<meta property="og:description" content="Check AI skill files for risky patterns, review test results and track approved versions. Free local scans for Claude Code, Codex, Cursor and OpenCode.">
 <meta property="og:url" content="https://remitlabs.github.io/">
 <meta property="og:image" content="https://remitlabs.github.io/assets/og.png">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Remit — audit and revoke AI agent skills">
-<meta name="twitter:description" content="Audit every AI agent skill on your machine, see what it can touch, pin it by digest, and block revoked versions at load.">
+<meta name="twitter:title" content="Remit | Check your AI agent skills">
+<meta name="twitter:description" content="Check AI skill files for risky patterns, review test results and track approved versions. Free local scans for Claude Code, Codex, Cursor and OpenCode.">
 <meta name="twitter:image" content="https://remitlabs.github.io/assets/og.png">
 <link rel="icon" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect width="32" height="32" rx="6" fill="%230A0C0B"/><rect x="7" y="7" width="4" height="18" fill="%23FFB454"/><path d="M14 7h7a5 5 0 010 10h-7z" fill="none" stroke="%23EDF1E9" stroke-width="2.4"/><path d="M20 17l5 8" stroke="%23EDF1E9" stroke-width="2.4"/></svg>'>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -47,7 +47,7 @@
       "name": "Remit",
       "applicationCategory": "DeveloperApplication",
       "operatingSystem": "macOS, Linux, Windows",
-      "description": "Least-privilege and lifecycle control for AI agent skills: audit, behavioral canary, digest pinning, and revocation.",
+      "description": "Local file checks, optional container tests and version controls for AI agent skills.",
       "softwareVersion": "0.1.1",
       "license": "https://www.apache.org/licenses/LICENSE-2.0",
       "url": "https://remitlabs.github.io/",
@@ -62,36 +62,36 @@
 <div class="wrap">
 
   <header class="mast">
-    <a class="brand" href="/">remit <em>agent-skill trust layer</em></a>
+    <a class="brand" href="/">remit <em>checks for AI agent skills</em></a>
     <nav class="nav" aria-label="primary">
-      <a href="/pricing.html">pricing</a>
-      <a href="/security.html">security</a>
-      <a href="/docs.html">docs</a>
-      <a class="pill" href="#install">run the audit</a>
+      <a href="/pricing.html">Pricing</a>
+      <a href="/security.html">Security</a>
+      <a href="/docs.html">Setup guide</a>
+      <a class="pill" href="#install">Scan your skills</a>
     </nav>
   </header>
 
   <main id="main" class="home">
     <section class="hero">
       <div class="hero-copy">
-        <h1>Know what your AI agent skills can touch.</h1>
-        <p class="lede">Remit audits the skills Claude Code, Codex, Cursor and OpenCode already load. See what each skill can read, write and reach, then decide what to trust.</p>
+        <h1>Check what your AI skills can access.</h1>
+        <p class="lede">Remit checks the instruction files and scripts used by Claude Code, Codex, Cursor and OpenCode. See risky patterns in the skills you use before letting your agent run them.</p>
         <div class="install" id="install">
           <div class="cmd cmd-hero"><span class="p">$</span><code>npx @remitlabs/cli@latest start</code><button type="button" data-copy>Copy</button></div>
           <div class="cta-row">
-            <button class="cta solid" type="button" data-copy="npx @remitlabs/cli@latest start">Copy audit command</button>
-            <a class="cta ghost" href="https://www.npmjs.com/package/@remitlabs/cli">View on npm</a>
+            <button class="cta solid" type="button" data-copy="npx @remitlabs/cli@latest start">Copy scan command</button>
+            <a class="cta ghost" href="https://www.npmjs.com/package/@remitlabs/cli">View package on npm</a>
           </div>
-          <p class="note">Free local audit. No account required.<br>Node 22.5+ on macOS, Linux or Windows.</p>
+          <p class="note">Free to use. No account required.<br>Requires Node 22.5+ on macOS, Linux or Windows.</p>
         </div>
-        <p class="hero-reassurance">The scan reads your skill files without changing them. Reports open locally at <code>127.0.0.1:8787</code>.</p>
+        <p class="hero-reassurance">Run this command in your terminal. npm downloads Remit when needed. The scan leaves your skill files unchanged and opens a report on your computer.</p>
       </div>
       <div class="hero-visual" id="demo">
         <figure class="film-figure">
           <div class="film">
             <video src="assets/cli-demo.mp4" poster="assets/cli-demo-poster.jpg" muted loop playsinline autoplay preload="auto" controls aria-label="26-second recorded CLI demo showing audit, explain, pin and revoke"></video>
           </div>
-          <figcaption><span>Watch the CLI run through audit, explain, pin and revoke.</span><button class="text-link" type="button" data-demo-open>Open larger</button></figcaption>
+          <figcaption><span>Watch a 26-second demo of the scan and version controls.</span><button class="text-link" type="button" data-demo-open>Enlarge video</button></figcaption>
         </figure>
       </div>
     </section>
@@ -99,33 +99,33 @@
     <section class="home-traction" aria-label="Early traction">
       <p><strong>600+ npm downloads</strong> without promoting Remit anywhere.</p>
       <p><strong>2 brand partnership offers</strong> received so far.</p>
-      <small>Reported by the founder, November 2026. Downloads count package downloads.</small>
+      <small>Founder-reported, November 2026. The npm count includes repeat downloads.</small>
     </section>
 
     <section class="home-section home-workflow" aria-labelledby="workflow-title">
       <div class="home-section-intro">
-        <h2 id="workflow-title">A skill is a document, a program, and a permission slip.</h2>
-        <p>A description tells you what a skill claims to do. The instructions and scripts beside it determine what your agent may actually do with your files, keys and network access.</p>
-        <p>Remit gives you evidence before you grant that authority, and controls for the versions you keep.</p>
-        <a class="text-link" href="/docs.html">Read the getting-started guide</a>
+        <h2 id="workflow-title">Check a skill before trusting it.</h2>
+        <p>A skill gives your AI agent instructions and may include code to run. It can ask the agent to read private files, send data online or change your settings.</p>
+        <p>Remit shows you the files and patterns worth reviewing. You choose which skills to keep.</p>
+        <a class="text-link" href="/docs.html">Read the setup guide</a>
       </div>
       <div class="home-steps">
-        <div><h3>Audit what you already have</h3><p>Run the command above. Remit reads <code>SKILL.md</code> and its scripts, checks them against 64 static rules, and shows findings in your local dashboard.</p></div>
-        <div><h3>See what actually ran</h3><p>With Docker or Podman available, run a canary in a disposable container. Its receipt records observed behavior, the rules that fired, and any missing coverage.</p></div>
-        <div><h3>Keep control after installing</h3><p>Pin a skill to its content digest, review changes on update, and use the signed revocation feed to block revoked digests at load time.</p></div>
+        <div><h3>Scan your installed skills</h3><p>The scan reads <code>SKILL.md</code> and its scripts. It checks 64 known risk patterns and lists the findings in a local report.</p></div>
+        <div><h3>Test how a skill behaves</h3><p>With Docker or Podman, you can also test a skill in a temporary container. The report shows the activity observed and which checks were missed. The test runs without your agent or model.</p></div>
+        <div><h3>Review later changes</h3><p>Record the version you reviewed and compare later updates. Remit's router loads skills for your agent. After syncing the signed blocklist, it blocks listed versions.</p></div>
       </div>
     </section>
 
     <section class="home-section home-evidence" id="receipt" aria-labelledby="evidence-title">
       <div class="home-section-intro">
-        <h2 id="evidence-title">See the findings. Check the coverage.</h2>
-        <p>One documented audit found 123 skill registrations across four agent directories, including 114 duplicate registrations of the same content.</p>
-        <p>Every receipt identifies the rules that fired, the evidence available and the skill's digest. If the canary did not run, Remit reports the missing evidence and keeps the decision unknown.</p>
-        <p class="home-disclosure">This example comes from the founder's machine in October 2026. Your results will differ. A score measures findings and needs to be read with its coverage.</p>
-        <a class="text-link" href="/docs.html#receipt">Learn to read a receipt</a>
+        <h2 id="evidence-title">See what the scan found.</h2>
+        <p>On the founder's computer, one scan found 123 skill entries across four agent directories. Of those entries, 114 repeated the same content.</p>
+        <p>Each skill gets a report, called a receipt. It identifies the version checked, the findings and the checks that ran. If a test run is missing, the decision stays unknown.</p>
+        <p class="home-disclosure">This October 2026 example is from one computer. Your results will differ. Read the findings and missing checks alongside the score.</p>
+        <a class="text-link" href="/docs.html#receipt">Read an example report</a>
       </div>
       <aside class="panel" aria-label="Static risk scores from one documented audit">
-        <div class="panel-head"><span>Example audit</span><span>123 registrations</span></div>
+        <div class="panel-head"><span>Example file scan</span><span>123 entries</span></div>
         <div class="panel-body">
           <div class="split" role="img" aria-label="Static risk scores of 101 clean, 1 low, 15 elevated and 6 high risk">
             <i class="ok" style="width:82.1%"></i><i class="low" style="width:.8%"></i><i class="elev" style="width:12.2%"></i><i class="high" style="width:4.9%"></i>
@@ -140,58 +140,58 @@
         <dl class="home-receipt">
           <div><dt>Example skill</dt><dd>ad-creative</dd></div>
           <div><dt>Decision</dt><dd>Unknown</dd></div>
-          <div><dt>Static scan</dt><dd>Complete</dd></div>
-          <div><dt>Canary</dt><dd>Not run</dd></div>
+          <div><dt>File checks</dt><dd>Complete</dd></div>
+          <div><dt>Test run</dt><dd>Not run</dd></div>
         </dl>
-        <p class="home-panel-note">Missing runtime evidence is visible in the receipt.</p>
+        <p class="home-panel-note">The report says when a test has not run.</p>
       </aside>
     </section>
 
     <section class="home-section home-start" aria-labelledby="start-title">
       <div class="home-section-intro">
-        <h2 id="start-title">Start with a read-only audit.</h2>
-        <p>The audit runs on your machine and the core works offline. Remit is open source under Apache-2.0, so you can inspect the code and reproduce the findings.</p>
-        <p>A static rule can miss compiled or encrypted code. A container receipt describes one observed run. The canary observes behavior by default and enforces egress only with an allowlist.</p>
-        <p>Use the evidence to make an informed decision about each skill.</p>
-        <div class="home-resource-links"><a href="/security.html">Security model and limits</a><a href="/pricing.html">Free and team plans</a></div>
+        <h2 id="start-title">Understand the limits before you start.</h2>
+        <p>The scan runs on your computer. Its file checks work offline once Remit is installed. The source code is available under the Apache-2.0 license.</p>
+        <p>A scan can miss harmful code, including compiled or encrypted files. A test shows what happened during one run. Network blocking during a test requires an explicit list of allowed destinations.</p>
+        <p>Use the report to decide what to inspect, keep or remove.</p>
+        <div class="home-resource-links"><a href="/security.html">Security model and limits</a><a href="/pricing.html">Free and planned team plans</a></div>
       </div>
       <div class="home-start-action">
-        <h3>Run your first audit</h3>
-        <p>Copy this command into your terminal. It scans the skill directories your agents already use and opens the local reports view.</p>
+        <h3>Run your first scan</h3>
+        <p>Copy this command, paste it into your terminal and run it. Remit checks the skill directories your agents use and opens your report.</p>
         <div class="cmd"><span class="p">$</span><code>npx @remitlabs/cli@latest start</code><button type="button" data-copy>Copy</button></div>
-        <div class="cta-row"><button class="cta solid" type="button" data-copy="npx @remitlabs/cli@latest start">Copy audit command</button><a class="cta ghost" href="/docs.html">Installation guide</a></div>
-        <p class="note">The local audit is free. Team coordination is in design-partner development.</p>
+        <div class="cta-row"><button class="cta solid" type="button" data-copy="npx @remitlabs/cli@latest start">Copy scan command</button><a class="cta ghost" href="/docs.html">Installation guide</a></div>
+        <p class="note">The local scan is free. Shared team features are in development.</p>
       </div>
     </section>
   </main>
 
   <footer class="foot">
     <div class="col">
-      <span class="brand">remit <em>agent-skill trust layer</em></span>
+      <span class="brand">remit <em>checks for AI agent skills</em></span>
       <p>built by <a href="https://www.npmjs.com/org/remitlabs" style="display:inline;color:var(--ink)">remitlabs</a> · cli: skillctl · Apache-2.0</p>
     </div>
     <div class="col">
       <h4>Product</h4>
-      <a href="/pricing.html">pricing</a>
-      <a href="/security.html">security</a>
-      <a href="/compare.html">compare</a>
-      <a href="/docs.html">docs</a>
+      <a href="/pricing.html">Pricing</a>
+      <a href="/security.html">Security</a>
+      <a href="/compare.html">Compare checks</a>
+      <a href="/docs.html">Setup guide</a>
     </div>
     <div class="col">
       <h4>Learn</h4>
-      <a href="/blog/">blog</a>
+      <a href="/blog/">Guides</a>
       <a href="/blog/audit-claude-code-skills.html">audit your skills</a>
       <a href="/blog/mcp-security-checklist.html">mcp checklist</a>
-      <a href="/llms.txt">llms.txt</a>
+      <a href="/llms.txt">Summary for AI tools</a>
     </div>
     <div class="col">
       <h4>Elsewhere</h4>
-      <a href="https://www.npmjs.com/package/@remitlabs/cli">npm</a>
-      <a href="https://github.com/remitlabs">github</a>
-      <a href="/.well-known/security.txt">security.txt</a>
+      <a href="https://www.npmjs.com/package/@remitlabs/cli">npm package</a>
+      <a href="https://github.com/remitlabs">GitHub</a>
+      <a href="/.well-known/security.txt">Security contact</a>
     </div>
     <div class="bottom">
-      <span>don’t trust the page — <a href="#install">run the audit</a></span>
+      <span>Inspect your installed skills. <a href="#install">Scan your skills</a></span>
       <span>© 2026 Remit Labs · public beta</span>
     </div>
   </footer>
@@ -202,15 +202,15 @@
     <span class="lbl">start here</span>
     <code>npx @remitlabs/cli@latest start</code>
     <button type="button" data-copy>copy</button>
-    <a class="docs" href="/docs.html">docs</a>
+    <a class="docs" href="/docs.html">Setup guide</a>
     <button class="close" type="button" data-cmdbar-close aria-label="Hide this bar">✕</button>
   </div>
 </div>
 
 <dialog class="demo-dialog" id="demo-dialog" aria-label="Remit CLI demo, full size">
-  <div class="dd-head"><span>see it run · 26s · no audio</span><button type="button" data-demo-close aria-label="Close demo">close ✕</button></div>
+  <div class="dd-head"><span>Recorded demo · 26 seconds · silent</span><button type="button" data-demo-close aria-label="Close demo">close ✕</button></div>
   <video controls playsinline preload="none" src="assets/cli-demo.mp4" poster="assets/cli-demo-poster.jpg" aria-label="Full-size CLI demo: audit, explain, pin, revoke"></video>
-  <p>audit → explain → pin → revoke. Recorded from the CLI in a demo session; your fleet will differ.</p>
+  <p>Recorded CLI demo showing a scan, its findings, version pinning and a blocked version. Your results will differ.</p>
 </dialog>
 
 <script src="site.js" defer></script>

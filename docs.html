@@ -3,13 +3,13 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Docs — install, commands, and concepts — Remit</title>
-<meta name="description" content="Install Remit, run the audit, understand the receipt, and learn the commands. Node 22.5+, no account, local-first.">
+<title>Setup guide | Remit</title>
+<meta name="description" content="Run a local skill scan, read your report and learn the commands for testing behavior, saving approved versions and applying revocations.">
 <meta name="theme-color" content="#0A0C0B">
 <link rel="canonical" href="https://remitlabs.github.io/docs.html">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Docs — Remit">
-<meta property="og:description" content="Install Remit, run the audit, understand the receipt, and learn the commands.">
+<meta property="og:title" content="Setup guide | Remit">
+<meta property="og:description" content="Run a local skill scan, read your report and learn the commands for testing behavior, saving approved versions and applying revocations.">
 <meta property="og:url" content="https://remitlabs.github.io/docs.html">
 <meta property="og:image" content="https://remitlabs.github.io/assets/og.png">
 <meta name="twitter:card" content="summary_large_image">
@@ -23,14 +23,12 @@
 <body>
 <div class="wrap">
   <header class="mast">
-    <a class="brand" href="/">remit <em>— agent-skill trust layer</em></a>
+    <a class="brand" href="/">remit <em>checks for AI agent skills</em></a>
     <nav class="nav" aria-label="primary">
-      <a href="/pricing.html">pricing</a>
-      <a href="/security.html">security</a>
-      <a href="/compare.html">compare</a>
-      <a href="/docs.html">docs</a>
-      <a href="/blog/">blog</a>
-      <a class="pill" href="/#install">run the audit</a>
+      <a href="/pricing.html">Pricing</a>
+      <a href="/security.html">Security</a>
+      <a href="/docs.html">Setup guide</a>
+      <a class="pill" href="/#install">Scan your skills</a>
     </nav>
   </header>
 
@@ -47,16 +45,16 @@
     </nav>
 
     <div class="docs-body">
-      <h1 style="font-size:clamp(2.2rem,4.6vw,3.2rem);line-height:1.05;margin-bottom:1rem">Install, audit, and understand the receipt.</h1>
-      <p>Remit is a local-first CLI and dashboard for AI agent skills. It scans the skills your agents already use, records static findings, runs a behavioral canary when a container is available, pins installs by digest, and blocks revoked digests at load time.</p>
+      <h1 style="font-size:clamp(2.2rem,4.6vw,3.2rem);line-height:1.05;margin-bottom:1rem">Run a scan and read your results.</h1>
+      <p>Remit checks the skills your AI coding agents use. Start with a file scan and review the local report. You can then test behavior in a container, save an approved version and block revoked versions.</p>
 
       <h2 id="install">Install</h2>
       <div class="cmd" style="margin-bottom:.8rem"><span class="p">$</span><code>npx @remitlabs/cli@latest start</code><button type="button" data-copy>copy</button></div>
-      <p><code>start</code> scans your real agent skill directories, starts the local app on <code>127.0.0.1:8787</code>, and opens the reports view with the highest-severity findings first. Nothing is installed or modified by the scan. <a href="/#demo">See the 26-second demo</a> for the audit → explain → pin → revoke loop.</p>
-      <p>If you plan to use the Claude Code hook, install globally so the hook path survives npx cache cleanup:</p>
+      <p><code>start</code> scans your real agent skill directories, starts the local app on <code>127.0.0.1:8787</code>, and opens the reports view with the highest-severity findings first. The scan leaves your existing skill files unchanged. npm may download Remit to run the command. <a href="/#demo">See the 26-second demo</a> to see the scan, reports and version controls.</p>
+      <p>For the Claude Code hook, use a global install so its command remains available after npm clears its temporary cache.</p>
       <pre><code>npm i -g @remitlabs/cli
 skillctl setup</code></pre>
-      <p><b>Requirements:</b> Node.js 22.5 or newer (the local index uses <code>node:sqlite</code>). Docker or Podman is optional. Without a container runtime, Remit runs static-only and reports <code>unknown</code> where behavioral evidence is missing.</p>
+      <p>Use Node.js 22.5 or newer. Remit uses its built-in SQLite support. Docker or Podman is optional and enables container tests. With file checks alone, decisions stay <code>unknown</code> where behavior has not been tested.</p>
 
       <h2 id="first-run">First run</h2>
       <p>The first run does three things:</p>
@@ -65,46 +63,46 @@ skillctl setup</code></pre>
         <li><b>Scans</b> each skill with 64 static rules and records a content digest.</li>
         <li><b>Reports</b> findings, duplicates, declared scope, and context cost in the local dashboard.</li>
       </ul>
-      <p>It does not install, modify, or upload anything. The canary only runs when Docker or Podman is present and you ask for it.</p>
+      <p>The scan reads your existing skill files without changing them or uploading their content. A container test runs only when you request it and Docker or Podman is available.</p>
 
       <h2 id="commands">Commands</h2>
       <div class="table-wrap">
         <table>
           <thead><tr><th>Command</th><th>What it does</th></tr></thead>
           <tbody>
-            <tr><td><code>skillctl start</code></td><td>Scan agent skill dirs, start the local app, open reports.</td></tr>
-            <tr><td><code>skillctl setup</code></td><td>Merge (never replace) agent MCP config and the Claude Code hook, with a timestamped backup.</td></tr>
-            <tr><td><code>skillctl doctor --json</code></td><td>Environment and capability report.</td></tr>
+            <tr><td><code>skillctl start</code></td><td>Scan agent skill directories and open the local reports.</td></tr>
+            <tr><td><code>skillctl setup</code></td><td>Remit backs up your settings, then merges its MCP configuration and Claude Code hook.</td></tr>
+            <tr><td><code>skillctl doctor --json</code></td><td>Show your environment and the checks it supports.</td></tr>
             <tr><td><code>skillctl audit</code></td><td>Audit installed skill directories.</td></tr>
-            <tr><td><code>skillctl add owner/repo@skill</code></td><td>Preview digest, evidence, and decision, then commit.</td></tr>
-            <tr><td><code>skillctl status</code></td><td>Active / monitor / review / blocked / unknown / parked.</td></tr>
-            <tr><td><code>skillctl explain &lt;name&gt;</code></td><td>Why allowed, what coverage is missing, receipt limits.</td></tr>
-            <tr><td><code>skillctl canary &lt;dir&gt;</code></td><td>Run the behavioral canary (needs Docker or Podman).</td></tr>
-            <tr><td><code>skillctl sync</code></td><td>Verify and apply the signed daily feed.</td></tr>
-            <tr><td><code>skillctl report</code></td><td>Auditor-facing fleet posture (markdown or JSON).</td></tr>
-            <tr><td><code>skillctl scorecard &lt;name&gt;</code></td><td>Risk + canary + lockfile + eval evidence.</td></tr>
-            <tr><td><code>skillctl hook-guard</code></td><td>PreToolUse guard; observe-only until <code>REMIT_ENFORCE=1</code>.</td></tr>
-            <tr><td><code>skillctl find "ship to prod"</code></td><td>Semantic search over the local index.</td></tr>
+            <tr><td><code>skillctl add owner/repo@skill</code></td><td>Review the exact version, evidence and decision before installing.</td></tr>
+            <tr><td><code>skillctl status</code></td><td>List skills and their current status.</td></tr>
+            <tr><td><code>skillctl explain &lt;name&gt;</code></td><td>Explain the decision, missing checks and report limits.</td></tr>
+            <tr><td><code>skillctl canary &lt;dir&gt;</code></td><td>Test behavior in a temporary container using Docker or Podman.</td></tr>
+            <tr><td><code>skillctl sync</code></td><td>Verify and apply the signed revocation list.</td></tr>
+            <tr><td><code>skillctl report</code></td><td>Export a report of installed skills and findings as Markdown or JSON.</td></tr>
+            <tr><td><code>skillctl scorecard &lt;name&gt;</code></td><td>Show risk findings, test results, pinned versions and evaluation evidence.</td></tr>
+            <tr><td><code>skillctl hook-guard</code></td><td>Check tool calls through the PreToolUse hook. It records activity until <code>REMIT_ENFORCE=1</code>.</td></tr>
+            <tr><td><code>skillctl find "ship to prod"</code></td><td>Search your local skills by meaning.</td></tr>
             <tr><td><code>skillctl stop</code></td><td>Stop the local app.</td></tr>
           </tbody>
         </table>
       </div>
-      <p>The MCP router enforces the same assessment at load time. Hard blocks always refuse. Review-level skills refuse unless <code>REMIT_MCP_ALLOW_REVIEW=1</code>. Legacy skills with no receipt still load unless you opt into <code>REMIT_MCP_REQUIRE_EVIDENCE=1</code>.</p>
+      <p>The MCP router checks a skill before loading it. It refuses blocked skills. Review-level skills load only when <code>REMIT_MCP_ALLOW_REVIEW=1</code>. Skills without receipts can still load by default. Set <code>REMIT_MCP_REQUIRE_EVIDENCE=1</code> to require evidence.</p>
 
       <h2 id="concepts">Concepts</h2>
       <ul>
-        <li><b>Skill</b> — a <code>SKILL.md</code> package plus optional scripts and assets that an agent can load.</li>
-        <li><b>Remit</b> — the declared scope of what a skill may do: read, write, network, exec.</li>
-        <li><b>Digest</b> — a content hash that identifies the exact skill bytes.</li>
-        <li><b>Receipt</b> — a digest-bound record of what was observed in one run, including coverage and limits.</li>
-        <li><b>Lockfile</b> — the pinned digest record used to detect rug pulls.</li>
-        <li><b>Canary</b> — a disposable-container run that observes behavior with fake secrets and a logging proxy.</li>
-        <li><b>Revocation feed</b> — a signed list of revoked or drifted digests that clients verify and apply.</li>
-        <li><b>MCP router</b> — the load-time gate that applies policy and revocation before a skill reaches the model.</li>
+        <li><b>Skill.</b> An instruction file named <code>SKILL.md</code>, with any scripts or assets your agent can load.</li>
+        <li><b>Remit.</b> The actions a skill says it needs, including reading files, writing files, network access and running commands.</li>
+        <li><b>Digest.</b> A content hash that identifies the exact version of a skill.</li>
+        <li><b>Receipt.</b> A report tied to a specific skill version. It records findings, completed checks and limits.</li>
+        <li><b>Lockfile.</b> A record of approved versions that helps identify later changes.</li>
+        <li><b>Canary.</b> A test in a temporary container using fake secrets and a network logging proxy.</li>
+        <li><b>Revocation feed.</b> A signed list of withdrawn or changed versions that Remit verifies and applies.</li>
+        <li><b>MCP router.</b> The component that checks policy and revocations before loading a skill for your agent.</li>
       </ul>
 
       <h2 id="receipt">The receipt</h2>
-      <p>Every verdict ships with its evidence: the rule hits, the canary diff when it ran, the pinned digest, and the signed-feed status. A receipt is one observed run. It is re-runnable, and it states what it could not see.</p>
+      <p>A receipt shows why Remit reached a decision. It lists rule matches, container results when available, the exact version and its revocation status. Read its missing checks as well as its findings.</p>
       <pre><code>{
   "name": "summarize-notes",
   "remit": { "read": ["~/Documents/notes/**"], "write": [], "network": [], "exec": [] },
@@ -112,35 +110,35 @@ skillctl setup</code></pre>
   "sha256": "9f8e…",
   "limits": "one observed run · not a guarantee"
 }</code></pre>
-      <p>A finding is a rule match, not proof of intent. A clean receipt is not proof that a skill is benign. Use it to decide what to inspect, pin, or remove — not as a safety badge.</p>
+      <p>A rule match needs review. Even a report without findings can miss harmful behavior. Use the report to decide what to inspect, pin or remove.</p>
 
       <h2 id="team">Team setup</h2>
-      <p>The hosted team control plane is in design-partner development. It adds a shared fleet, roles, approvals, scheduled scans, alerts, retained evidence, and a compliance export. The local CLI already works; the team layer is the paid direction.</p>
-      <p>To evaluate it, run the free audit, then <a href="mailto:singhgaurprahalad@gmail.com?subject=Remit%20design%20partner">book a 15-minute call</a>. Design partners get 50% off for six months.</p>
+      <p>The hosted team service is in development. Planned features include shared reports across computers, roles, approvals, scheduled scans, alerts, evidence history and compliance exports. The local CLI is available now.</p>
+      <p>To discuss the planned service, run the free scan, then <a href="mailto:singhgaurprahalad@gmail.com?subject=Remit%20design%20partner">Email about a 15-minute call</a>. Design partners get 50% off for six months.</p>
 
       <h2 id="troubleshooting">Troubleshooting</h2>
       <h3>No Docker or Podman</h3>
-      <p>The static scan runs; behavioral evidence is <code>unknown</code>. Install a container runtime for a canary receipt, or use the hosted canary when the team tier ships.</p>
+      <p>File checks still run. Behavior remains <code>unknown</code> where it has not been tested. Install Docker or Podman to run a local container test.</p>
       <h3>Node version</h3>
       <p>Remit needs Node 22.5+ because the local index uses <code>node:sqlite</code>. Check with <code>node -v</code>. Use a version manager if needed.</p>
       <h3>The hook disappears after npx</h3>
       <p>Install globally (<code>npm i -g @remitlabs/cli</code>) and re-run <code>skillctl setup</code>. The npx cache can be cleaned between runs.</p>
       <h3>Windows</h3>
-      <p>The CLI runs on Windows, but some container and hook paths are less tested. If something fails, open an issue with <code>skillctl doctor --json</code> output.</p>
+      <p>The CLI supports Windows. Container and hook paths have had less testing there. If something fails, include <code>skillctl doctor --json</code> output in an issue after checking it for private information.</p>
       <h3>Nothing found</h3>
       <p>Point the audit at a directory, or check that your agent stores skills in a path Remit knows. <code>skillctl doctor</code> lists the detected agent directories.</p>
 
       <h2 id="limits">Limits</h2>
       <ul>
-        <li>A <b>finding</b> is a rule match. It is not proof of intent, and a clean scan is not proof that a skill is benign.</li>
-        <li>A <b>canary receipt</b> is one observed run in a container. It is not a guarantee that the skill cannot escape, exfiltrate, or behave differently on another host.</li>
-        <li>The canary is <b>observer-first</b> by default. It enforces egress destinations only when you pass <code>--egress allowlist</code>. It observes HTTP(S) proxy traffic, not TLS bodies, and it does not run the agent or the model.</li>
+        <li>A <b>finding</b> is a pattern to investigate. File checks alone cannot establish whether a skill is safe.</li>
+        <li>A <b>canary receipt</b> records one container test. A skill may behave differently on another computer or when a condition changes. Container isolation also has limits.</li>
+        <li>The canary <b>records activity</b> by default. Restrict network destinations with <code>--egress allowlist</code>. It sees traffic through the HTTP(S) proxy but cannot read encrypted TLS content. It runs without the agent or model.</li>
         <li>Static coverage can be <b>partial</b> when files are oversized, opaque, or symlinked. The scan reports that state; it does not silently treat it as clean.</li>
       </ul>
-      <p>Remit is defense in depth, not a clean bill of health.</p>
+      <p>Review the report together with its limits before approving a skill.</p>
 
       <div class="cta-row" style="margin-top:2rem">
-        <a class="cta" href="https://www.npmjs.com/package/@remitlabs/cli">install from npm</a>
+        <a class="cta" href="https://www.npmjs.com/package/@remitlabs/cli">View package on npm</a>
         <a class="cta ghost" href="/security.html">security model</a>
       </div>
     </div>
@@ -148,31 +146,31 @@ skillctl setup</code></pre>
 
   <footer class="foot">
     <div class="col">
-      <span class="brand">remit <em>— agent-skill trust layer</em></span>
+      <span class="brand">remit <em>checks for AI agent skills</em></span>
       <p>built by <a href="https://www.npmjs.com/org/remitlabs" style="display:inline;color:var(--ink)">remitlabs</a> · cli: skillctl · Apache-2.0</p>
     </div>
     <div class="col">
       <h4>Product</h4>
-      <a href="/pricing.html">pricing</a>
-      <a href="/security.html">security</a>
-      <a href="/compare.html">compare</a>
-      <a href="/docs.html">docs</a>
+      <a href="/pricing.html">Pricing</a>
+      <a href="/security.html">Security</a>
+      <a href="/compare.html">Compare checks</a>
+      <a href="/docs.html">Setup guide</a>
     </div>
     <div class="col">
       <h4>Learn</h4>
-      <a href="/blog/">blog</a>
+      <a href="/blog/">Guides</a>
       <a href="/blog/audit-claude-code-skills.html">audit your skills</a>
       <a href="/blog/mcp-security-checklist.html">mcp checklist</a>
-      <a href="/llms.txt">llms.txt</a>
+      <a href="/llms.txt">Summary for AI tools</a>
     </div>
     <div class="col">
       <h4>Elsewhere</h4>
-      <a href="https://www.npmjs.com/package/@remitlabs/cli">npm</a>
-      <a href="https://github.com/remitlabs">github</a>
-      <a href="/.well-known/security.txt">security.txt</a>
+      <a href="https://www.npmjs.com/package/@remitlabs/cli">npm package</a>
+      <a href="https://github.com/remitlabs">GitHub</a>
+      <a href="/.well-known/security.txt">Security contact</a>
     </div>
     <div class="bottom">
-      <span>don't trust the page — <a href="/#install" style="display:inline">run the audit</a></span>
+      <span>Inspect your installed skills. <a href="/#install" style="display:inline">Scan your skills</a></span>
       <span>© 2026 Remit Labs · public beta</span>
     </div>
   </footer>

@@ -23,9 +23,9 @@
         var original = btn.textContent;
         try {
           await navigator.clipboard.writeText(text);
-          btn.textContent = 'copied';
+          btn.textContent = 'Copied';
         } catch (e) {
-          btn.textContent = 'select + copy';
+          btn.textContent = 'Copy manually';
         }
         setTimeout(function () { btn.textContent = original; }, 1700);
       });
