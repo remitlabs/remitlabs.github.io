@@ -2,6 +2,7 @@
 (() => {
   const mesh = document.querySelector('[data-mesh]');
   if (!mesh) return;
+  const workspace = mesh.closest('.mesh-workspace');
   const canvas = mesh.querySelector('canvas');
   const context = canvas.getContext('2d');
   if (!context) return;
@@ -9,9 +10,9 @@
   const help = document.querySelector('[data-mesh-help]');
   const results = document.querySelector('[data-mesh-results]');
   const detail = document.querySelector('[data-skill-detail]');
-  const motion = mesh.querySelector('[data-mesh-motion]');
-  const status = mesh.querySelector('[data-mesh-status]');
-  const level = mesh.querySelector('[data-mesh-zoom-level]');
+  const motion = workspace.querySelector('[data-mesh-motion]');
+  const status = workspace.querySelector('[data-mesh-status]');
+  const level = workspace.querySelector('[data-mesh-zoom-level]');
   const reduced = matchMedia('(prefers-reduced-motion: reduce)');
   const colors = { clean: '#65C7B0', low: '#79ADFF', elevated: '#F3BC5C', high: '#FF788C' };
   const labels = { clean: 'Clean score', low: 'Low risk', elevated: 'Elevated', high: 'High risk' };
@@ -37,10 +38,10 @@
     const rotatedX = x * Math.cos(angle) + z * Math.sin(angle);
     const depth = z * Math.cos(angle) - x * Math.sin(angle);
     const perspective = 4.8 / (5 - depth);
-    const scaleX = Math.min(width / 5.8, (height - 65) / 2.4);
-    const scaleY = Math.min(width / 4, (height - 100) / 4);
+    const scaleX = Math.min(width / 5.8, height / 2.4);
+    const scaleY = Math.min(width / 4, (height - 100) / 3.3);
     return { x: width / 2 + rotatedX * scaleX * perspective * zoom + panX,
-      y: (height - 65) / 2 + y * scaleY * perspective * zoom + panY };
+      y: height / 2 + y * scaleY * perspective * zoom + panY };
   }
   function shape(x, y, radius, risk) {
     context.beginPath();
@@ -64,7 +65,7 @@
       if (filter && group.risk !== filter) continue;
       const center = project(group.x, group.y, group.z);
       const margin = zoom * 24;
-      if (center.x < -margin || center.x > width + margin || center.y < -margin || center.y > height - 55 + margin) continue;
+      if (center.x < -margin || center.x > width + margin || center.y < -margin || center.y > height + margin) continue;
       context.strokeStyle = colors[group.risk] + '19';
       if (!individual) {
         const hub = project(group.hub[0], group.hub[1], group.hub[2]);
@@ -74,16 +75,16 @@
       members.forEach((index, member) => {
         const point = individual ? project(group.x + Math.cos(member * 2.4) * .055 * member,
           group.y + Math.sin(member * 2.4) * .055 * member, group.z) : center;
-        if (point.x < 0 || point.x > width || point.y < 0 || point.y > height - 65) return;
+        if (point.x < 0 || point.x > width || point.y < 0 || point.y > height) return;
         const radius = Math.min(individual ? 4 : 3.2, 1.4 + zoom * .7);
         context.fillStyle = colors[group.risk];
         shape(point.x, point.y, radius, group.risk);
         hits.push({ ...point, index: individual ? index : null, group });
-        if (index === selected && individual) {
+        if (selected !== null && (individual ? index === selected : group.members.includes(selected))) {
           context.strokeStyle = '#ffffff'; context.beginPath();
           context.arc(point.x, point.y, radius + 5, 0, Math.PI * 2); context.stroke();
           context.fillStyle = '#edf0e8'; context.font = '12px sans-serif';
-          context.fillText(skills[index].name.slice(0, 35), Math.min(point.x + 10, width - 200), Math.max(16, point.y - 10));
+          context.fillText(skills[selected].name.slice(0, 35), Math.min(point.x + 10, width - 200), Math.max(16, point.y - 10));
         }
       });
     }
@@ -106,11 +107,11 @@
       cancelAnimationFrame(frame); frame = null;
     }
   }
-  function setZoom(value, x = width / 2, y = (height - 65) / 2) {
+  function setZoom(value, x = width / 2, y = height / 2) {
     const next = Math.max(.6, Math.min(12, value));
     const ratio = next / zoom;
     panX = x - width / 2 - (x - width / 2 - panX) * ratio;
-    panY = y - (height - 65) / 2 - (y - (height - 65) / 2 - panY) * ratio;
+    panY = y - height / 2 - (y - height / 2 - panY) * ratio;
     zoom = next; draw();
   }
   function showSkill(index, focusNode = true) {
@@ -119,7 +120,7 @@
     detail.replaceChildren(); detail.hidden = false;
     const close = element('button', 'Close details'); close.type = 'button';
     close.addEventListener('click', () => { selected = null; detail.hidden = true; updateMotion(); draw(); });
-    detail.append(close, element('h3', skill.name), element('p', skill.source, 'note'));
+    detail.append(element('h3', skill.name), element('p', skill.source, 'note'));
     const list = element('dl');
     for (const [label, value] of [['Static score', `${skill.score}/100 · ${labels[skill.risk]}`],
       ['Files checked', format(skill.files)], ['Findings', format(skill.findings)],
@@ -140,13 +141,19 @@
         const link = element('a', 'View skill on skills.sh'); link.href = url.href; link.target = '_blank'; link.rel = 'noopener noreferrer'; detail.append(link);
       }
     } catch { /* Invalid source URLs are omitted. */ }
+    detail.append(close);
     if (focusNode) {
-      filter = null; syncFilters(); zoom = Math.max(3, zoom); panX = 0; panY = 0;
+      filter = null;
+      syncFilters();
+    }
+    if (focusNode && zoom >= 2) {
+      panX = 0;
+      panY = 0;
       const group = groups.find(item => item.members.includes(index));
       const member = group.members.indexOf(index);
       const point = project(group.x + Math.cos(member * 2.4) * .055 * member,
         group.y + Math.sin(member * 2.4) * .055 * member, group.z);
-      panX = width / 2 - point.x; panY = (height - 65) / 2 - point.y;
+      panX = width / 2 - point.x; panY = height / 2 - point.y;
     }
     help.textContent = `${skill.name} selected. Close details or resume motion to keep exploring.`;
     updateMotion(); draw();
@@ -201,8 +208,8 @@
       const retry = element('button', 'Retry'); retry.type = 'button'; retry.addEventListener('click', load); help.append(retry);
     } finally { loading = false; }
   }
-  mesh.querySelectorAll('[data-mesh-zoom]').forEach(button => button.addEventListener('click', () => setZoom(zoom * (button.dataset.meshZoom === 'in' ? 1.5 : 1 / 1.5))));
-  mesh.querySelector('[data-mesh-reset]').addEventListener('click', () => {
+  workspace.querySelectorAll('[data-mesh-zoom]').forEach(button => button.addEventListener('click', () => setZoom(zoom * (button.dataset.meshZoom === 'in' ? 1.5 : 1 / 1.5))));
+  workspace.querySelector('[data-mesh-reset]').addEventListener('click', () => {
     zoom = 1; panX = panY = 0; selected = null; filter = null; detail.hidden = true;
     results.replaceChildren(); search.value = ''; help.textContent = 'Search by skill name or repository, or select a node.'; syncFilters(); updateMotion(); draw();
   });
